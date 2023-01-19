@@ -1,6 +1,43 @@
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import toast from 'react-hot-toast';
+import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 
-export default function Home() {
+import { GetServerSideProps } from 'next';
+import WalletConnectButton from '@/features/wallet/components/WalletConnectButton/WalletConnectButton';
+
+export default function Home({ address: cachedAddress }: { address?: string }) {
+  const { address, isConnected } = useAccount();
+
+  const { connectAsync, connectors, isLoading } = useConnect();
+  const { disconnectAsync } = useDisconnect();
+
+  const handleConnectWalletClick = async () => {
+    const response = await toast.promise(
+      connectAsync({
+        connector: connectors[0],
+      }),
+      {
+        loading: 'Connecting...',
+        success: <b>Connected!</b>,
+        error: <b>Could not connect.</b>,
+      },
+    );
+
+    setCookie('address', response.account);
+  };
+
+  const handleDisconnectWalletClick = async () => {
+    await toast.promise(disconnectAsync(), {
+      loading: 'Disconnecting...',
+      success: <b>Disconnected!</b>,
+      error: <b>Could not disconnect.</b>,
+    });
+
+    deleteCookie('address');
+  };
+
   return (
     <>
       <Head>
@@ -10,13 +47,61 @@ export default function Home() {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <section className="h-screen w-screen flex flex-col items-center justify-center bg-[#1e1e1e]">
-        <img
-          className="w-[50%] lg:w-[50%] xl:w-[40%]"
-          src="/logo.svg"
-          alt="inverter logo"
-        />
-      </section>
+      <div className="container mx-auto">
+        <nav className="py-10 flex justify-between items-center">
+          <div className="flex items-center space-x-8">
+            <img
+              className="w-20 h-20 contrast-0"
+              src="/logo.svg"
+              alt="inverter logo"
+            />
+
+            <ul className="items-center space-x-8 font-medium hidden md:flex">
+              <li>
+                <a href="#">Create</a>
+              </li>
+
+              <li>
+                <a href="#">Projects</a>
+              </li>
+
+              <li>
+                <a href="#">Funds</a>
+              </li>
+
+              <li>
+                <a href="#">My account</a>
+              </li>
+            </ul>
+          </div>
+
+          <WalletConnectButton
+            address={cachedAddress || address}
+            isConnected={isConnected}
+            isLoading={isLoading}
+            onConnectWalletClick={handleConnectWalletClick}
+            onDisconnectWalletClick={handleDisconnectWalletClick}
+          />
+        </nav>
+      </div>
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<{
+  address?: string;
+}> = async ({ req, res }) => {
+  const address = getCookie('address', { req, res });
+
+  if (!address) {
+    return {
+      props: {},
+    };
+  }
+
+  return {
+    props: {
+      address: address.toString(),
+    },
+  };
+};
