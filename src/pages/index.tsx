@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import dynamic from 'next/dynamic';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import toast from 'react-hot-toast';
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
