@@ -10,7 +10,7 @@ export default function Home({ address: cachedAddress }: { address?: string }) {
   const { address, isConnected } = useAccount();
 
   const { connectAsync, connectors, isLoading } = useConnect();
-  const { disconnectAsync } = useDisconnect();
+  const { disconnectAsync, isSuccess: isDisconnected } = useDisconnect();
 
   const handleConnectWalletClick = async () => {
     const response = await toast.promise(
@@ -35,6 +35,16 @@ export default function Home({ address: cachedAddress }: { address?: string }) {
     });
 
     deleteCookie('address');
+  };
+
+  const handleCopyAddressClick = () => {
+    if (!address) {
+      return;
+    }
+
+    navigator.clipboard.writeText(address);
+
+    toast.success('Copied address to clipboard!');
   };
 
   return (
@@ -75,11 +85,12 @@ export default function Home({ address: cachedAddress }: { address?: string }) {
           </div>
 
           <WalletConnectButton
-            address={cachedAddress || address}
+            address={isDisconnected ? address : address || cachedAddress}
             isConnected={isConnected}
             isLoading={isLoading}
             onConnectWalletClick={handleConnectWalletClick}
             onDisconnectWalletClick={handleDisconnectWalletClick}
+            onCopyAddressClick={handleCopyAddressClick}
           />
         </nav>
       </div>

@@ -8,6 +8,7 @@ type Props = {
   isConnected: boolean;
   onConnectWalletClick: () => void;
   onDisconnectWalletClick: () => void;
+  onCopyAddressClick: () => void;
 };
 
 function WalletConnectButton({
@@ -16,6 +17,7 @@ function WalletConnectButton({
   isLoading,
   onConnectWalletClick,
   onDisconnectWalletClick,
+  onCopyAddressClick,
 }: Props) {
   const formatAddress = (address?: string) => {
     if (!address) {
@@ -43,22 +45,16 @@ function WalletConnectButton({
     }
 
     if (address || isConnected) {
-      return onDisconnectWalletClick;
+      return () => false;
     }
 
     return onConnectWalletClick;
-  }, [
-    address,
-    isConnected,
-    isLoading,
-    onConnectWalletClick,
-    onDisconnectWalletClick,
-  ]);
+  }, [address, isConnected, isLoading, onConnectWalletClick]);
 
   const renderButton = useMemo(() => {
     return (
       <button
-        className="h-fit bg-[#262626] text-white font-medium py-2 px-4 rounded-full outline-none"
+        className="h-fit bg-[#262626] text-white font-medium py-2 px-4 rounded-full outline-none select-none"
         onClick={buttonFunction}
       >
         {buttonText}
@@ -69,7 +65,10 @@ function WalletConnectButton({
   return (
     <>
       {address || isConnected ? (
-        <DropdownMenu onDisconnectWalletClick={onDisconnectWalletClick}>
+        <DropdownMenu
+          onDisconnectWalletClick={onDisconnectWalletClick}
+          onCopyAddressClick={onCopyAddressClick}
+        >
           {renderButton}
         </DropdownMenu>
       ) : (
