@@ -1,15 +1,13 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-
+import { Toaster } from 'react-hot-toast';
 import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi';
 
 import { publicProvider } from 'wagmi/providers/public';
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
-import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { Toaster } from 'react-hot-toast';
 
 const { chains, provider, webSocketProvider } = configureChains(
   [mainnet],
@@ -29,14 +27,7 @@ const client = createClient({
     new CoinbaseWalletConnector({
       chains,
       options: {
-        appName: 'wagmi',
-      },
-    }),
-    new InjectedConnector({
-      chains,
-      options: {
-        name: 'Injected',
-        shimDisconnect: true,
+        appName: 'Inverter',
       },
     }),
   ],

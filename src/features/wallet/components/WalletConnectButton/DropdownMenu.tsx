@@ -26,7 +26,7 @@ const DropdownMenu = ({
           <div>{children}</div>
         </DropdownMenuPrimitive.Trigger>
 
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           {open && (
             <Content
               forceMount

@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import toast from 'react-hot-toast';
-import { deleteCookie, getCookie, setCookie } from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 
 import { GetServerSideProps } from 'next';
 import WalletConnectButton from '@/features/wallet/components/WalletConnectButton/WalletConnectButton';
@@ -9,23 +9,8 @@ import WalletConnectButton from '@/features/wallet/components/WalletConnectButto
 export default function Home({ address: cachedAddress }: { address?: string }) {
   const { address, isConnected } = useAccount();
 
-  const { connectAsync, connectors, isLoading } = useConnect();
+  const { isLoading } = useConnect();
   const { disconnectAsync, isSuccess: isDisconnected } = useDisconnect();
-
-  const handleConnectWalletClick = async () => {
-    const response = await toast.promise(
-      connectAsync({
-        connector: connectors[0],
-      }),
-      {
-        loading: 'Connecting...',
-        success: <b>Connected!</b>,
-        error: <b>Could not connect.</b>,
-      },
-    );
-
-    setCookie('address', response.account);
-  };
 
   const handleDisconnectWalletClick = async () => {
     await toast.promise(disconnectAsync(), {
@@ -88,7 +73,6 @@ export default function Home({ address: cachedAddress }: { address?: string }) {
             address={isDisconnected ? address : address || cachedAddress}
             isConnected={isConnected}
             isLoading={isLoading}
-            onConnectWalletClick={handleConnectWalletClick}
             onDisconnectWalletClick={handleDisconnectWalletClick}
             onCopyAddressClick={handleCopyAddressClick}
           />

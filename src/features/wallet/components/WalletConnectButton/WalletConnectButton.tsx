@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 
 import DropdownMenu from '@/features/wallet/components/WalletConnectButton/DropdownMenu';
+import WalletConnectModal from '@/features/wallet/components/WalletConnectButton/WalletConnectModal';
 
 type Props = {
   address?: string;
   isLoading: boolean;
   isConnected: boolean;
-  onConnectWalletClick: () => void;
   onDisconnectWalletClick: () => void;
   onCopyAddressClick: () => void;
 };
@@ -15,7 +15,6 @@ function WalletConnectButton({
   address,
   isConnected,
   isLoading,
-  onConnectWalletClick,
   onDisconnectWalletClick,
   onCopyAddressClick,
 }: Props) {
@@ -39,28 +38,13 @@ function WalletConnectButton({
     return 'Connect Wallet';
   }, [address, isConnected, isLoading]);
 
-  const buttonFunction = useMemo(() => {
-    if (isLoading) {
-      return () => false;
-    }
-
-    if (address || isConnected) {
-      return () => false;
-    }
-
-    return onConnectWalletClick;
-  }, [address, isConnected, isLoading, onConnectWalletClick]);
-
   const renderButton = useMemo(() => {
     return (
-      <button
-        className="h-fit bg-[#262626] text-white font-medium py-2 px-4 rounded-full outline-none select-none"
-        onClick={buttonFunction}
-      >
+      <button className="h-fit bg-[#262626] text-white font-medium py-2 px-4 rounded-full outline-none select-none">
         {buttonText}
       </button>
     );
-  }, [buttonFunction, buttonText]);
+  }, [buttonText]);
 
   return (
     <>
@@ -72,7 +56,7 @@ function WalletConnectButton({
           {renderButton}
         </DropdownMenu>
       ) : (
-        renderButton
+        <WalletConnectModal>{renderButton}</WalletConnectModal>
       )}
     </>
   );
