@@ -15,8 +15,8 @@ export default function Home({ address: cachedAddress }: { address?: string }) {
   const handleDisconnectWalletClick = async () => {
     await toast.promise(disconnectAsync(), {
       loading: 'Disconnecting...',
-      success: <b>Disconnected!</b>,
-      error: <b>Could not disconnect.</b>,
+      success: 'Disconnected!',
+      error: 'Could not disconnect.',
     });
 
     deleteCookie('address');

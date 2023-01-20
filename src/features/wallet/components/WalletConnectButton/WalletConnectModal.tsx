@@ -23,8 +23,8 @@ const WalletConnectModal = ({ children }: DialogProps) => {
       }),
       {
         loading: 'Connecting...',
-        success: <b>Connected!</b>,
-        error: <b>Could not connect.</b>,
+        success: 'Connected!',
+        error: 'Could not connect.',
       },
     );
 
