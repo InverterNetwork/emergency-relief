@@ -30,6 +30,7 @@ import {
 import { waitForTransaction } from 'wagmi/actions';
 import { useRecoilState } from 'recoil';
 import _ from 'lodash';
+import Link from 'next/link';
 
 import { parseEther } from 'ethers/lib/utils.js';
 import { toast } from 'react-hot-toast';
@@ -48,7 +49,8 @@ import {
 
 import Header from '@/components/Header/Header';
 import Button from '@/components/Button/Button';
-import Link from 'next/link';
+import useIsMounted from '@/hooks/useIsMounted.hook';
+import ProjectCard from '@/features/projects/components/ProjectCard/ProjectCard';
 
 type Props = {
   address: string | null;
@@ -65,6 +67,7 @@ export default function Home({
   const { data: signer } = useSigner();
   const { isSuccess: isDisconnected } = useDisconnect();
   const { chain } = useNetwork();
+  const isMounted = useIsMounted();
 
   const address = isDisconnected
     ? clientSideAdress
@@ -407,209 +410,188 @@ export default function Home({
               </div>
             </div>
 
-            <div
-              className={cx('bg-[#F1F1EF] p-6 rounded-3xl', {
-                'group insufficient-balance': isInsufficientBalance,
-              })}
-            >
-              <div className="flex justify-between">
-                <h2 className="text-4xl font-semibold">
-                  Donate in {chain?.nativeCurrency.symbol || 'ETH'}
-                </h2>
+            {isMounted && (
+              <div
+                className={cx('bg-[#F1F1EF] p-6 rounded-3xl', {
+                  'group insufficient-balance': isInsufficientBalance,
+                })}
+              >
+                <div className="flex justify-between">
+                  <h2 className="text-4xl font-semibold">
+                    Donate in {chain?.nativeCurrency.symbol || 'ETH'}
+                  </h2>
 
-                <div>
-                  <SelectPrimitive.Root
-                    value={selectedChainName}
-                    onValueChange={handleSwitchChain}
-                  >
-                    <SelectPrimitive.Trigger asChild aria-label="Food">
-                      <Button variant="secondary">
-                        <SelectPrimitive.Value />
-                        <SelectPrimitive.Icon>
-                          <ChevronDownIcon className="w-6 h-6" />
-                        </SelectPrimitive.Icon>
-                      </Button>
-                    </SelectPrimitive.Trigger>
-                    <SelectPrimitive.Content className="z-20">
-                      <SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700">
-                        <ChevronUpIcon />
-                      </SelectPrimitive.ScrollUpButton>
-                      <SelectPrimitive.Viewport className="bg-white p-2 rounded-lg shadow-lg">
-                        <SelectPrimitive.Group>
-                          {chains.map((chain) => (
-                            <SelectPrimitive.Item
-                              key={chain.value}
-                              value={chain.value}
-                              className={cx(
-                                'relative flex items-center px-8 py-2 rounded-md text-gray-700 font-medium focus:bg-gray-100',
-                                'radix-disabled:opacity-50',
-                                'focus:outline-none select-none',
-                              )}
-                            >
-                              <SelectPrimitive.ItemText>
-                                {chain.label}
-                              </SelectPrimitive.ItemText>
-                              <SelectPrimitive.ItemIndicator className="absolute left-2 inline-flex items-center">
-                                <CheckIcon />
-                              </SelectPrimitive.ItemIndicator>
-                            </SelectPrimitive.Item>
-                          ))}
-                        </SelectPrimitive.Group>
-                      </SelectPrimitive.Viewport>
-                      <SelectPrimitive.ScrollDownButton className="flex items-center justify-center text-gray-700">
-                        <ChevronDownIcon />
-                      </SelectPrimitive.ScrollDownButton>
-                    </SelectPrimitive.Content>
-                  </SelectPrimitive.Root>
-                </div>
-              </div>
-
-              <span className="mt-2">
-                Your donation will go to
-                <b className="block text-xs">{selectedChainDonationAddress}</b>
-              </span>
-
-              <div className="max-w-md mx-auto">
-                <div>
-                  <div className="h-16 bg-[#E7E5E3] rounded-xl flex mt-7 relative">
-                    <input
-                      className={cx(
-                        'flex-1 bg-transparent pl-4 py-3 font-bold border focus:outline-black rounded-xl',
-                        {
-                          'border border-[#B33A41] focus:outline-[#B33A41] text-[#B33A41]':
-                            address && isInsufficientBalance,
-                        },
-                      )}
-                      type="text"
-                      placeholder="0.05"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                    />
-
-                    {address && tokens && tokens.length > 0 && (
-                      <div className="absolute h-full right-4 flex items-center justify-center space-x-4">
-                        <SelectPrimitive.Root
-                          value={selectedTokenSymbol}
-                          onValueChange={setSelectedTokenSymbol}
-                        >
-                          <SelectPrimitive.Trigger asChild aria-label="Food">
-                            <Button variant="secondary">
-                              <SelectPrimitive.Value />
-                              <SelectPrimitive.Icon>
-                                <ChevronDownIcon className="w-6 h-6" />
-                              </SelectPrimitive.Icon>
-                            </Button>
-                          </SelectPrimitive.Trigger>
-                          <SelectPrimitive.Content>
-                            <SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700">
-                              <ChevronUpIcon />
-                            </SelectPrimitive.ScrollUpButton>
-                            <SelectPrimitive.Viewport className="bg-white p-2 rounded-lg shadow-lg">
-                              <SelectPrimitive.Group>
-                                {tokens.map((token) => (
-                                  <SelectPrimitive.Item
-                                    key={token.value}
-                                    value={token.value}
-                                    className={cx(
-                                      'relative flex items-center px-8 py-2 rounded-md text-gray-700 font-medium focus:bg-gray-100',
-                                      'radix-disabled:opacity-50',
-                                      'focus:outline-none select-none',
-                                    )}
-                                  >
-                                    <SelectPrimitive.ItemText>
-                                      {token.label}
-                                    </SelectPrimitive.ItemText>
-                                    <SelectPrimitive.ItemIndicator className="absolute left-2 inline-flex items-center">
-                                      <CheckIcon />
-                                    </SelectPrimitive.ItemIndicator>
-                                  </SelectPrimitive.Item>
-                                ))}
-                              </SelectPrimitive.Group>
-                            </SelectPrimitive.Viewport>
-                            <SelectPrimitive.ScrollDownButton className="flex items-center justify-center text-gray-700">
-                              <ChevronDownIcon />
-                            </SelectPrimitive.ScrollDownButton>
-                          </SelectPrimitive.Content>
-                        </SelectPrimitive.Root>
-                      </div>
-                    )}
+                  <div>
+                    <SelectPrimitive.Root
+                      value={selectedChainName}
+                      onValueChange={handleSwitchChain}
+                    >
+                      <SelectPrimitive.Trigger asChild aria-label="Food">
+                        <Button variant="secondary">
+                          <SelectPrimitive.Value />
+                          <SelectPrimitive.Icon>
+                            <ChevronDownIcon className="w-6 h-6" />
+                          </SelectPrimitive.Icon>
+                        </Button>
+                      </SelectPrimitive.Trigger>
+                      <SelectPrimitive.Content className="z-20">
+                        <SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700">
+                          <ChevronUpIcon />
+                        </SelectPrimitive.ScrollUpButton>
+                        <SelectPrimitive.Viewport className="bg-white p-2 rounded-lg shadow-lg">
+                          <SelectPrimitive.Group>
+                            {chains.map((chain) => (
+                              <SelectPrimitive.Item
+                                key={chain.value}
+                                value={chain.value}
+                                className={cx(
+                                  'relative flex items-center px-8 py-2 rounded-md text-gray-700 font-medium focus:bg-gray-100',
+                                  'radix-disabled:opacity-50',
+                                  'focus:outline-none select-none',
+                                )}
+                              >
+                                <SelectPrimitive.ItemText>
+                                  {chain.label}
+                                </SelectPrimitive.ItemText>
+                                <SelectPrimitive.ItemIndicator className="absolute left-2 inline-flex items-center">
+                                  <CheckIcon />
+                                </SelectPrimitive.ItemIndicator>
+                              </SelectPrimitive.Item>
+                            ))}
+                          </SelectPrimitive.Group>
+                        </SelectPrimitive.Viewport>
+                        <SelectPrimitive.ScrollDownButton className="flex items-center justify-center text-gray-700">
+                          <ChevronDownIcon />
+                        </SelectPrimitive.ScrollDownButton>
+                      </SelectPrimitive.Content>
+                    </SelectPrimitive.Root>
                   </div>
                 </div>
-                <div className="text-xs mt-3">
-                  <p>
-                    Balance: {balance?.formatted || '0'} {balance?.symbol || ''}
-                  </p>
-                  <p>Network fees might apply</p>
-                </div>
 
-                {address ? (
-                  <Button
-                    className="mt-3 w-full"
-                    disabled={isButtonDisabled}
-                    variant={
-                      address && (isInsufficientBalance || !isSupportedChain)
-                        ? 'error'
-                        : 'primary'
-                    }
-                    onClick={handleDonatePress}
-                  >
-                    {isTransactionLoading
-                      ? 'Sending...'
-                      : isInsufficientBalance
-                      ? 'Insufficient funds'
-                      : !isSupportedChain
-                      ? 'Unsupported chain'
-                      : 'Donate'}
-                  </Button>
-                ) : (
-                  <Button
-                    className="mt-3 w-full"
-                    onClick={() => setShowWalletConnectModal(true)}
-                  >
-                    Connect wallet to donate
-                  </Button>
-                )}
+                <span className="mt-2">
+                  Your donation will go to
+                  <b className="block text-xs">
+                    {selectedChainDonationAddress}
+                  </b>
+                </span>
+
+                <div className="max-w-md mx-auto">
+                  <div>
+                    <div className="h-16 bg-[#E7E5E3] rounded-xl flex mt-7 relative">
+                      <input
+                        className={cx(
+                          'flex-1 bg-transparent pl-4 py-3 font-bold border focus:outline-black rounded-xl',
+                          {
+                            'border border-[#B33A41] focus:outline-[#B33A41] text-[#B33A41]':
+                              address && isInsufficientBalance,
+                          },
+                        )}
+                        type="text"
+                        placeholder="0.05"
+                        value={amount}
+                        onChange={(e) => setAmount(e.target.value)}
+                      />
+
+                      {address && tokens && tokens.length > 0 && (
+                        <div className="absolute h-full right-4 flex items-center justify-center space-x-4">
+                          <SelectPrimitive.Root
+                            value={selectedTokenSymbol}
+                            onValueChange={setSelectedTokenSymbol}
+                          >
+                            <SelectPrimitive.Trigger asChild aria-label="Food">
+                              <Button variant="secondary">
+                                <SelectPrimitive.Value />
+                                <SelectPrimitive.Icon>
+                                  <ChevronDownIcon className="w-6 h-6" />
+                                </SelectPrimitive.Icon>
+                              </Button>
+                            </SelectPrimitive.Trigger>
+                            <SelectPrimitive.Content>
+                              <SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700">
+                                <ChevronUpIcon />
+                              </SelectPrimitive.ScrollUpButton>
+                              <SelectPrimitive.Viewport className="bg-white p-2 rounded-lg shadow-lg">
+                                <SelectPrimitive.Group>
+                                  {tokens.map((token) => (
+                                    <SelectPrimitive.Item
+                                      key={token.value}
+                                      value={token.value}
+                                      className={cx(
+                                        'relative flex items-center px-8 py-2 rounded-md text-gray-700 font-medium focus:bg-gray-100',
+                                        'radix-disabled:opacity-50',
+                                        'focus:outline-none select-none',
+                                      )}
+                                    >
+                                      <SelectPrimitive.ItemText>
+                                        {token.label}
+                                      </SelectPrimitive.ItemText>
+                                      <SelectPrimitive.ItemIndicator className="absolute left-2 inline-flex items-center">
+                                        <CheckIcon />
+                                      </SelectPrimitive.ItemIndicator>
+                                    </SelectPrimitive.Item>
+                                  ))}
+                                </SelectPrimitive.Group>
+                              </SelectPrimitive.Viewport>
+                              <SelectPrimitive.ScrollDownButton className="flex items-center justify-center text-gray-700">
+                                <ChevronDownIcon />
+                              </SelectPrimitive.ScrollDownButton>
+                            </SelectPrimitive.Content>
+                          </SelectPrimitive.Root>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="text-xs mt-3">
+                    <p>
+                      Balance: {balance?.formatted || '0'}{' '}
+                      {balance?.symbol || ''}
+                    </p>
+                    <p>Network fees might apply</p>
+                  </div>
+
+                  {address ? (
+                    <Button
+                      className="mt-3 w-full"
+                      disabled={isButtonDisabled}
+                      variant={
+                        address && (isInsufficientBalance || !isSupportedChain)
+                          ? 'error'
+                          : 'primary'
+                      }
+                      onClick={handleDonatePress}
+                    >
+                      {isTransactionLoading
+                        ? 'Sending...'
+                        : isInsufficientBalance
+                        ? 'Insufficient funds'
+                        : !isSupportedChain
+                        ? 'Unsupported chain'
+                        : 'Donate'}
+                    </Button>
+                  ) : (
+                    <Button
+                      className="mt-3 w-full"
+                      onClick={() => setShowWalletConnectModal(true)}
+                    >
+                      Connect wallet to donate
+                    </Button>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="bg-[#F1F1EF] p-6 space-y-3 rounded-3xl">
               <h2 className="text-2xl font-semibold">Other organisations</h2>
 
               <div className="grid md:grid-cols-3 xl:grid-cols-4 grid-cols-1 gap-3">
-                {projects.slice(0, 8).map((p, index) => (
-                  <div
-                    key={index}
-                    className="bg-[#E7E5E3] p-6 flex flex-col items-center justify-center rounded-xl space-y-2"
-                  >
-                    <Image
-                      className="rounded-full h-24 w-24"
-                      src={{
-                        src: p.logo_image_url || '/world.png',
-                        width: 200,
-                        height: 200,
-                      }}
-                      alt={p.name}
-                    />
-
-                    <span className="block font-bold text-lg text-center">
-                      {p.name}
-                    </span>
-
-                    <style>{`
-                      .description {
-                          overflow: hidden;
-                          text-overflow: ellipsis;
-                          display: -webkit-box;
-                          -webkit-line-clamp: 3;
-                          line-clamp: 3;
-                          -webkit-box-orient: vertical;
-                      }
-                    `}</style>
-
-                    <span className="block text-xs text-center description">
-                      {p.summary}
-                    </span>
-                  </div>
+                {projects.slice(0, 8).map((p) => (
+                  <ProjectCard
+                    key={p.id}
+                    id={p.id}
+                    logoImageUrl={p.logo_image_url || ''}
+                    name={p.name}
+                    summary={p.summary}
+                  />
                 ))}
               </div>
 
@@ -629,7 +611,7 @@ export default function Home({
                   key={index}
                   className="flex bg-[#F1F1EF] rounded-2xl p-2 space-x-3 items-center"
                 >
-                  <div className="h-6 w-6 xl:h-12 xl:w-12 border-[2px] border-[#69D396] rounded-full aspect-square">
+                  <div className="h-10 w-10 xl:h-12 xl:w-12 border-[2px] border-[#69D396] rounded-full aspect-square">
                     <ArrowDownIcon className="h-full w-full" color="#69D396" />
                   </div>
 
@@ -659,6 +641,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   res,
   query,
 }) => {
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59',
+  );
+
   const address = getCookie('address', { req, res });
 
   const project = await getProjectById(query.id as string);

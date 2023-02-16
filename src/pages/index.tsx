@@ -124,6 +124,11 @@ export default function Home({ address: cachedAddress }: { address?: string }) {
 export const getServerSideProps: GetServerSideProps<{
   address?: string;
 }> = async ({ req, res }) => {
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59',
+  );
+
   const address = getCookie('address', { req, res });
 
   if (!address) {

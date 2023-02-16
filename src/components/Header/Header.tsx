@@ -1,5 +1,6 @@
 import Button from '@/components/Button/Button';
 import WalletConnectButton from '@/features/wallet/components/WalletConnectButton/WalletConnectButton';
+import useIsMounted from '@/hooks/useIsMounted.hook';
 import { deleteCookie, setCookie } from 'cookies-next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -14,6 +15,7 @@ type Props = {
 const Header = ({ cachedAddress }: Props) => {
   const route = useRouter();
   const { address, isConnected } = useAccount();
+  const isMounted = useIsMounted();
 
   const { isLoading, data } = useConnect();
   const { disconnectAsync, isSuccess: isDisconnected } = useDisconnect();
@@ -50,8 +52,8 @@ const Header = ({ cachedAddress }: Props) => {
   };
 
   return (
-    <header className="flex justify-between items-center">
-      <div className="p-3 flex space-x-5 bg-[#F1F1EF] rounded-full">
+    <header className="flex-col md:flex-row gap-y-8 flex justify-between items-center">
+      <div className="p-3 flex space-x-5 bg-[#F1F1EF] rounded-full order-1 md:-order-1">
         <Link href="/">
           <Button variant={checkRoute('/') ? 'primary' : 'text'}>About</Button>
         </Link>
@@ -63,13 +65,15 @@ const Header = ({ cachedAddress }: Props) => {
         </Link>
       </div>
 
-      <WalletConnectButton
-        address={isDisconnected ? address : address || cachedAddress}
-        isConnected={isConnected}
-        isLoading={isLoading}
-        onDisconnectWalletClick={handleDisconnectWalletClick}
-        onCopyAddressClick={handleCopyAddressClick}
-      />
+      {isMounted && (
+        <WalletConnectButton
+          address={isDisconnected ? address : address || cachedAddress}
+          isConnected={isConnected}
+          isLoading={isLoading}
+          onDisconnectWalletClick={handleDisconnectWalletClick}
+          onCopyAddressClick={handleCopyAddressClick}
+        />
+      )}
     </header>
   );
 };
