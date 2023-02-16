@@ -2,20 +2,19 @@ import Head from 'next/head';
 import { getCookie } from 'cookies-next';
 import { GetServerSideProps } from 'next';
 import * as SelectPrimitive from '@radix-ui/react-select';
-
-import Header from '@/components/Header/Header';
-import Button from '@/components/Button/Button';
 import Image from 'next/image';
 import {
   CheckIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   ArrowDownIcon,
+  InstagramLogoIcon,
+  TwitterLogoIcon,
+  DiscordLogoIcon,
 } from '@radix-ui/react-icons';
 import Web from '@/components/Icons/Web';
-import Discord from '@/components/Icons/Discord';
-import Twitter from '@/components/Icons/Twitter';
 import cx from 'classnames';
+import { useEffect, useMemo, useState } from 'react';
 import {
   useAccount,
   useBalance,
@@ -30,27 +29,38 @@ import {
 } from 'wagmi';
 import { waitForTransaction } from 'wagmi/actions';
 import { useRecoilState } from 'recoil';
+import _ from 'lodash';
 
-import { showWalletConnectModalAtom } from '@/features/wallet/components/WalletConnectButton/store/modals.store';
-import { useEffect, useMemo, useState } from 'react';
 import { parseEther } from 'ethers/lib/utils.js';
 import { toast } from 'react-hot-toast';
 import { isNumberString } from 'class-validator';
-import { getProjectById } from '@/features/projects/project.service';
+
+import { showWalletConnectModalAtom } from '@/features/wallet/components/WalletConnectButton/store/modals.store';
+import {
+  getProjectById,
+  getProjects,
+} from '@/features/projects/project.service';
 import { Project } from '@/features/projects/entity/project.entity';
-import _ from 'lodash';
 import {
   getNetworkByName,
   isNetworkSupported,
 } from '@/features/wallet/chain.service';
 
+import Header from '@/components/Header/Header';
+import Button from '@/components/Button/Button';
+import Link from 'next/link';
+
+type Props = {
+  address: string | null;
+  project: Project;
+  projects: Project[];
+};
+
 export default function Home({
   address: cachedAddress,
   project,
-}: {
-  address: string | null;
-  project: Project;
-}) {
+  projects,
+}: Props) {
   const { address: clientSideAdress } = useAccount();
   const { data: signer } = useSigner();
   const { isSuccess: isDisconnected } = useDisconnect();
@@ -60,7 +70,7 @@ export default function Home({
     ? clientSideAdress
     : clientSideAdress || cachedAddress;
 
-  const [showWalletConnectModal, setShowWalletConnectModal] = useRecoilState(
+  const [, setShowWalletConnectModal] = useRecoilState(
     showWalletConnectModalAtom,
   );
   const [lastTransactionHash, setLastTransactionHash] = useState('');
@@ -81,8 +91,8 @@ export default function Home({
 
   const chains = useMemo(() => {
     const chains = project.donation_addresses.map((address) => ({
-      value: address.chain!,
-      label: getNetworkByName(address.chain!)?.name,
+      value: address.chain,
+      label: getNetworkByName(address.chain)?.name,
     }));
 
     if (chain) {
@@ -290,6 +300,22 @@ export default function Home({
     project,
   });
 
+  const renderSocialLinkIcon = (platform: string) => {
+    if (platform.includes('twitter')) {
+      return <TwitterLogoIcon className="w-8 h-8" />;
+    }
+
+    if (platform.includes('instagram')) {
+      return <InstagramLogoIcon className="w-8 h-8" />;
+    }
+
+    if (platform.includes('discord')) {
+      return <DiscordLogoIcon className="w-8 h-8" />;
+    }
+
+    return <Web className="w-8 h-8" />;
+  };
+
   return (
     <>
       <Head>
@@ -309,7 +335,7 @@ export default function Home({
                 <Image
                   className="rounded-3xl h-full"
                   src={{
-                    src: '/turkey.png',
+                    src: project.banner_image_url || '/turkey.png',
                     width: 1000,
                     height: 500,
                   }}
@@ -326,7 +352,7 @@ export default function Home({
                     <Image
                       className="rounded-full h-40 w-40 border-[8px] border-white"
                       src={{
-                        src: '/world.png',
+                        src: project.logo_image_url || '/world.png',
                         width: 160,
                         height: 160,
                       }}
@@ -337,31 +363,23 @@ export default function Home({
               </div>
 
               <div className="pt-20 mt-3 flex flex-col items-center justify-center flex-1 space-y-3">
-                <h1 className="text-4xl font-semibold">Earthquake</h1>
+                <h1 className="text-4xl font-semibold">{project.name}</h1>
 
                 <div className="flex space-x-3">
-                  <div className="p-2 bg-[#E7E5E3] rounded-full">
-                    <Web className="h-8 w-8" />
-                  </div>
-
-                  <div className="p-2 bg-[#E7E5E3] rounded-full">
-                    <Discord className="h-8 w-8" />
-                  </div>
-
-                  <div className="p-2 bg-[#E7E5E3] rounded-full">
-                    <Twitter className="h-8 w-8" />
-                  </div>
+                  {project.social_profiles.map((profile) => (
+                    <Link key={profile.platform} href={profile.link}>
+                      <div className="p-2 bg-[#E7E5E3] rounded-full">
+                        {renderSocialLinkIcon(profile.platform)}
+                      </div>
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>
 
             <div className="bg-[#F1F1EF] p-6 space-y-3 rounded-3xl">
               <h2 className="text-2xl font-semibold">About</h2>
-              <span className="block">
-                We are a small group of academics that would like to coordinate
-                research on reward systems in web3. We would like to dedicate
-                ourselves to finding.
-              </span>
+              <span className="block">{project.description}</span>
 
               <a className="block font-bold" href="#">
                 See More
@@ -371,14 +389,21 @@ export default function Home({
             <div className="bg-[#F1F1EF] p-6 space-y-3 rounded-3xl">
               <h2 className="text-2xl font-semibold">Credentials</h2>
 
-              <div className="flex w-fit h-10 px-3 rounded-full items-center justify-center bg-[#E7E5E3] space-x-2">
-                <CheckIcon
-                  className="bg-black rounded-full w-7 h-7"
-                  color="white"
-                />
-                <span className="block font-bold text-lg">
-                  Verified by Paribu
-                </span>
+              <div className="flex gap-3 flex-wrap">
+                {project.credentials.map((credential, i) => (
+                  <div key={i}>
+                    <div className="flex w-fit h-10 px-3 rounded-full items-center justify-center bg-[#E7E5E3] space-x-2">
+                      <CheckIcon
+                        className="bg-black rounded-full w-7 h-7"
+                        color="white"
+                      />
+
+                      <span className="block font-bold text-lg">
+                        {credential.statement}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -444,137 +469,148 @@ export default function Home({
                 <b className="block text-xs">{selectedChainDonationAddress}</b>
               </span>
 
-              <div className="h-16 bg-[#E7E5E3] rounded-xl flex mt-7 relative">
-                <input
-                  className={cx(
-                    'flex-1 bg-transparent pl-4 py-3 font-bold border focus:outline-black rounded-xl',
-                    {
-                      'border border-[#B33A41] focus:outline-[#B33A41] text-[#B33A41]':
-                        address && isInsufficientBalance,
-                    },
-                  )}
-                  type="text"
-                  placeholder="0.05"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                />
+              <div className="max-w-md mx-auto">
+                <div>
+                  <div className="h-16 bg-[#E7E5E3] rounded-xl flex mt-7 relative">
+                    <input
+                      className={cx(
+                        'flex-1 bg-transparent pl-4 py-3 font-bold border focus:outline-black rounded-xl',
+                        {
+                          'border border-[#B33A41] focus:outline-[#B33A41] text-[#B33A41]':
+                            address && isInsufficientBalance,
+                        },
+                      )}
+                      type="text"
+                      placeholder="0.05"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                    />
 
-                {address && tokens && tokens.length > 0 && (
-                  <div className="absolute h-full right-4 flex items-center justify-center space-x-4">
-                    <SelectPrimitive.Root
-                      value={selectedTokenSymbol}
-                      onValueChange={setSelectedTokenSymbol}
-                    >
-                      <SelectPrimitive.Trigger asChild aria-label="Food">
-                        <Button variant="secondary">
-                          <SelectPrimitive.Value />
-                          <SelectPrimitive.Icon>
-                            <ChevronDownIcon className="w-6 h-6" />
-                          </SelectPrimitive.Icon>
-                        </Button>
-                      </SelectPrimitive.Trigger>
-                      <SelectPrimitive.Content>
-                        <SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700">
-                          <ChevronUpIcon />
-                        </SelectPrimitive.ScrollUpButton>
-                        <SelectPrimitive.Viewport className="bg-white p-2 rounded-lg shadow-lg">
-                          <SelectPrimitive.Group>
-                            {tokens.map((token) => (
-                              <SelectPrimitive.Item
-                                key={token.value}
-                                value={token.value}
-                                className={cx(
-                                  'relative flex items-center px-8 py-2 rounded-md text-gray-700 font-medium focus:bg-gray-100',
-                                  'radix-disabled:opacity-50',
-                                  'focus:outline-none select-none',
-                                )}
-                              >
-                                <SelectPrimitive.ItemText>
-                                  {token.label}
-                                </SelectPrimitive.ItemText>
-                                <SelectPrimitive.ItemIndicator className="absolute left-2 inline-flex items-center">
-                                  <CheckIcon />
-                                </SelectPrimitive.ItemIndicator>
-                              </SelectPrimitive.Item>
-                            ))}
-                          </SelectPrimitive.Group>
-                        </SelectPrimitive.Viewport>
-                        <SelectPrimitive.ScrollDownButton className="flex items-center justify-center text-gray-700">
-                          <ChevronDownIcon />
-                        </SelectPrimitive.ScrollDownButton>
-                      </SelectPrimitive.Content>
-                    </SelectPrimitive.Root>
+                    {address && tokens && tokens.length > 0 && (
+                      <div className="absolute h-full right-4 flex items-center justify-center space-x-4">
+                        <SelectPrimitive.Root
+                          value={selectedTokenSymbol}
+                          onValueChange={setSelectedTokenSymbol}
+                        >
+                          <SelectPrimitive.Trigger asChild aria-label="Food">
+                            <Button variant="secondary">
+                              <SelectPrimitive.Value />
+                              <SelectPrimitive.Icon>
+                                <ChevronDownIcon className="w-6 h-6" />
+                              </SelectPrimitive.Icon>
+                            </Button>
+                          </SelectPrimitive.Trigger>
+                          <SelectPrimitive.Content>
+                            <SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700">
+                              <ChevronUpIcon />
+                            </SelectPrimitive.ScrollUpButton>
+                            <SelectPrimitive.Viewport className="bg-white p-2 rounded-lg shadow-lg">
+                              <SelectPrimitive.Group>
+                                {tokens.map((token) => (
+                                  <SelectPrimitive.Item
+                                    key={token.value}
+                                    value={token.value}
+                                    className={cx(
+                                      'relative flex items-center px-8 py-2 rounded-md text-gray-700 font-medium focus:bg-gray-100',
+                                      'radix-disabled:opacity-50',
+                                      'focus:outline-none select-none',
+                                    )}
+                                  >
+                                    <SelectPrimitive.ItemText>
+                                      {token.label}
+                                    </SelectPrimitive.ItemText>
+                                    <SelectPrimitive.ItemIndicator className="absolute left-2 inline-flex items-center">
+                                      <CheckIcon />
+                                    </SelectPrimitive.ItemIndicator>
+                                  </SelectPrimitive.Item>
+                                ))}
+                              </SelectPrimitive.Group>
+                            </SelectPrimitive.Viewport>
+                            <SelectPrimitive.ScrollDownButton className="flex items-center justify-center text-gray-700">
+                              <ChevronDownIcon />
+                            </SelectPrimitive.ScrollDownButton>
+                          </SelectPrimitive.Content>
+                        </SelectPrimitive.Root>
+                      </div>
+                    )}
                   </div>
+                </div>
+                <div className="text-xs mt-3">
+                  <p>
+                    Balance: {balance?.formatted || '0'} {balance?.symbol || ''}
+                  </p>
+                  <p>Network fees might apply</p>
+                </div>
+
+                {address ? (
+                  <Button
+                    className="mt-3 w-full"
+                    disabled={isButtonDisabled}
+                    variant={
+                      address && (isInsufficientBalance || !isSupportedChain)
+                        ? 'error'
+                        : 'primary'
+                    }
+                    onClick={handleDonatePress}
+                  >
+                    {isTransactionLoading
+                      ? 'Sending...'
+                      : isInsufficientBalance
+                      ? 'Insufficient funds'
+                      : !isSupportedChain
+                      ? 'Unsupported chain'
+                      : 'Donate'}
+                  </Button>
+                ) : (
+                  <Button
+                    className="mt-3 w-full"
+                    onClick={() => setShowWalletConnectModal(true)}
+                  >
+                    Connect wallet to donate
+                  </Button>
                 )}
               </div>
-
-              <div className="text-xs mt-3">
-                <p>
-                  = USD 96,128.03 / Balance {balance?.formatted || '0'}{' '}
-                  {balance?.symbol || ''}
-                </p>
-                <p>Network fees might apply</p>
-              </div>
-
-              {address ? (
-                <Button
-                  className="mt-3 w-full"
-                  disabled={isButtonDisabled}
-                  variant={
-                    address && (isInsufficientBalance || !isSupportedChain)
-                      ? 'error'
-                      : 'primary'
-                  }
-                  onClick={handleDonatePress}
-                >
-                  {isTransactionLoading
-                    ? 'Sending...'
-                    : isInsufficientBalance
-                    ? 'Insufficient funds'
-                    : !isSupportedChain
-                    ? 'Unsupported chain'
-                    : 'Donate'}
-                </Button>
-              ) : (
-                <Button
-                  className="mt-3 w-full"
-                  onClick={() => setShowWalletConnectModal(true)}
-                >
-                  Connect wallet to donate
-                </Button>
-              )}
             </div>
 
             <div className="bg-[#F1F1EF] p-6 space-y-3 rounded-3xl">
               <h2 className="text-2xl font-semibold">Other organisations</h2>
 
               <div className="grid md:grid-cols-3 xl:grid-cols-4 grid-cols-1 gap-3">
-                {Array(8)
-                  .fill('')
-                  .map((_, index) => (
-                    <div
-                      key={index}
-                      className="bg-[#E7E5E3] p-6 flex flex-col items-center justify-center rounded-xl space-y-2"
-                    >
-                      <Image
-                        className="rounded-full h-24 w-24"
-                        src={{
-                          src: '/world.png',
-                          width: 200,
-                          height: 200,
-                        }}
-                        alt="Organisation"
-                      />
+                {projects.slice(0, 8).map((p, index) => (
+                  <div
+                    key={index}
+                    className="bg-[#E7E5E3] p-6 flex flex-col items-center justify-center rounded-xl space-y-2"
+                  >
+                    <Image
+                      className="rounded-full h-24 w-24"
+                      src={{
+                        src: p.logo_image_url || '/world.png',
+                        width: 200,
+                        height: 200,
+                      }}
+                      alt={p.name}
+                    />
 
-                      <span className="block font-bold text-lg text-center">
-                        Earthquake
-                      </span>
+                    <span className="block font-bold text-lg text-center">
+                      {p.name}
+                    </span>
 
-                      <span className="block text-xs text-center">
-                        We are a small group of academics who like pancakes
-                      </span>
-                    </div>
-                  ))}
+                    <style>{`
+                      .description {
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          display: -webkit-box;
+                          -webkit-line-clamp: 3;
+                          line-clamp: 3;
+                          -webkit-box-orient: vertical;
+                      }
+                    `}</style>
+
+                    <span className="block text-xs text-center description">
+                      {p.summary}
+                    </span>
+                  </div>
+                ))}
               </div>
 
               <a className="block font-bold" href="#">
@@ -618,18 +654,21 @@ export default function Home({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  address: string | null;
-  project: Project;
-}> = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  req,
+  res,
+  query,
+}) => {
   const address = getCookie('address', { req, res });
 
-  const project = await getProjectById('10');
+  const project = await getProjectById(query.id as string);
+  const projects = await getProjects();
 
   return {
     props: {
       address: address?.toString() || null,
       project,
+      projects,
     },
   };
 };

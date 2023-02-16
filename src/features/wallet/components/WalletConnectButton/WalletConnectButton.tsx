@@ -1,8 +1,7 @@
-import React, { useMemo } from 'react';
+import React from 'react';
+import { useRecoilState } from 'recoil';
 
 import DropdownMenu from '@/features/wallet/components/WalletConnectButton/DropdownMenu';
-import WalletConnectModal from '@/features/wallet/components/WalletConnectButton/WalletConnectModal';
-import { useRecoilState } from 'recoil';
 import { showWalletConnectModalAtom } from '@/features/wallet/components/WalletConnectButton/store/modals.store';
 
 type Props = {
@@ -19,7 +18,7 @@ function WalletConnectButton({
   onDisconnectWalletClick,
   onCopyAddressClick,
 }: Props) {
-  const [_, setShowWalletConnectModal] = useRecoilState(
+  const [, setShowWalletConnectModal] = useRecoilState(
     showWalletConnectModalAtom,
   );
 

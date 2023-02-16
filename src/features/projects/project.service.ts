@@ -6,19 +6,20 @@ import {
   isNetworkSupported,
 } from '@/features/wallet/chain.service';
 
-export const getProjectById = async (id: string) => {
-  const { data } = await http.get<Project>(urls.getProject(id));
+const prepareProjectForDisplay = (project: Project) => {
+  const clonedProject = { ...project };
 
-  data.donation_addresses.map((address) => {
+  clonedProject.donation_addresses.forEach((address) => {
     address.chain = identityNetworkName(address.chain) || address.chain;
   });
 
-  data.donation_addresses = data.donation_addresses.filter((address) =>
-    isNetworkSupported(identityNetworkName(address.chain) || address.chain),
+  clonedProject.donation_addresses = clonedProject.donation_addresses.filter(
+    (address) =>
+      isNetworkSupported(identityNetworkName(address.chain) || address.chain),
   );
 
   if (process.env.NODE_ENV === 'development') {
-    data.donation_addresses.push({
+    clonedProject.donation_addresses.push({
       chain: 'goerli',
       address: '0x4BF07c675dB5a562816848e3a5bFA993510450D2',
     });
@@ -34,5 +35,19 @@ export const getProjectById = async (id: string) => {
     // });
   }
 
-  return data;
+  return clonedProject;
+};
+
+export const getProjectById = async (id: string) => {
+  const { data } = await http.get<Project>(urls.getProject(id));
+
+  return prepareProjectForDisplay(data);
+};
+
+export const getProjects = async () => {
+  const { data } = await http.get<Project[]>(urls.getProjects);
+
+  const projects = data.map((project) => prepareProjectForDisplay(project));
+
+  return projects;
 };

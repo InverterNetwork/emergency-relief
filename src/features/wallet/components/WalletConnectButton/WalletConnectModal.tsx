@@ -1,10 +1,9 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { Transition } from '@headlessui/react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import { Connector } from '@wagmi/core';
 import { clsx } from 'clsx';
-import { setCookie } from 'cookies-next';
 import { toast } from 'react-hot-toast';
 import { useConnect } from 'wagmi';
 import { useRecoilState } from 'recoil';
