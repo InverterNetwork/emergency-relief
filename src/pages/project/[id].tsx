@@ -11,6 +11,7 @@ import {
   InstagramLogoIcon,
   TwitterLogoIcon,
   DiscordLogoIcon,
+  CheckCircledIcon,
 } from '@radix-ui/react-icons';
 import Web from '@/components/Icons/Web';
 import cx from 'classnames';
@@ -317,6 +318,26 @@ export default function Home({
     return <Web className="w-8 h-8" />;
   };
 
+  const renderCredential = (statement: string, url: string | null) => {
+    const renderContent = () => (
+      <div className="flex w-fit h-10 px-3 rounded-full items-center justify-center bg-[#E7E5E3] space-x-2 select-none">
+        <CheckIcon className="bg-black rounded-full w-7 h-7" color="white" />
+
+        <span className="block font-bold text-lg">{statement}</span>
+      </div>
+    );
+
+    if (url) {
+      return (
+        <Link href={url} target="_blank">
+          {renderContent()}
+        </Link>
+      );
+    }
+
+    return <>{renderContent()}</>;
+  };
+
   return (
     <>
       <Head>
@@ -393,16 +414,10 @@ export default function Home({
               <div className="flex gap-3 flex-wrap">
                 {project.credentials.map((credential, i) => (
                   <div key={i}>
-                    <div className="flex w-fit h-10 px-3 rounded-full items-center justify-center bg-[#E7E5E3] space-x-2">
-                      <CheckIcon
-                        className="bg-black rounded-full w-7 h-7"
-                        color="white"
-                      />
-
-                      <span className="block font-bold text-lg">
-                        {credential.statement}
-                      </span>
-                    </div>
+                    {renderCredential(
+                      credential.statement,
+                      credential.reference,
+                    )}
                   </div>
                 ))}
               </div>
@@ -416,7 +431,7 @@ export default function Home({
               >
                 <div className="flex justify-between">
                   <h2 className="text-4xl font-semibold">
-                    Donate in {chain?.nativeCurrency.symbol || 'ETH'}
+                    Donate on {chain?.nativeCurrency.symbol || 'ETH'}
                   </h2>
 
                   <div>

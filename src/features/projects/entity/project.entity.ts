@@ -31,5 +31,5 @@ export type Partner = {
 
 export type Credential = {
   statement: string;
-  reference: string;
+  reference: string | null;
 };

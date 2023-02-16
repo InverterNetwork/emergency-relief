@@ -47,11 +47,13 @@ const homesteadTokens = [
     name: 'BUSD',
     symbol: 'BUSD',
     address: '0x4fabb145d64652a948d72533023f6e7a623c7c53',
+    abi: erc20ABI,
   },
   {
     name: 'MATIC',
     symbol: 'MATIC',
     address: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
+    abi: erc20ABI,
   },
 ];
 
@@ -84,21 +86,9 @@ const bscTokens = [
 
 const avalancheTokens = [
   {
-    name: 'USDT.e',
-    symbol: 'USDT.e',
-    address: '0xc7198437980c041c805A1EDcbA50c1Ce5db95118',
-    abi: erc20ABI,
-  },
-  {
     name: 'USDt',
     symbol: 'USDt',
     address: '0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7',
-    abi: erc20ABI,
-  },
-  {
-    name: 'USDC.e',
-    symbol: 'USDC.e',
-    address: '0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664',
     abi: erc20ABI,
   },
   {
@@ -120,6 +110,7 @@ const maticTokens = [
     name: 'WETH',
     symbol: 'WETH',
     address: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
+    abi: erc20ABI,
   },
   {
     name: 'USDT',
@@ -131,6 +122,7 @@ const maticTokens = [
     name: 'BNB',
     symbol: 'BNB',
     address: '0x3BA4c387f786bFEE076A58914F5Bd38d668B42c3',
+    abi: erc20ABI,
   },
   {
     name: 'USDC',
@@ -234,7 +226,6 @@ const networks = {
     symbol: 'ETH',
     name: 'Ethereum',
     chain: 'ethereum',
-    address: '0xe1935271D1993434A1a59fE08f24891Dc5F398Cd',
     id: 1,
     tokens: getTokensByChain('homestead'),
   },
@@ -242,7 +233,6 @@ const networks = {
     symbol: 'BNB',
     name: 'Binance Coin',
     chain: 'binance smart chain',
-    address: '0xB67705398fEd380a1CE02e77095fed64f8aCe463',
     id: 56,
     tokens: getTokensByChain('bsc'),
   },
@@ -250,7 +240,6 @@ const networks = {
     symbol: 'AVAX',
     name: 'Avalanche',
     chain: 'avalanche',
-    address: '0x868D27c361682462536DfE361f2e20B3A6f4dDD8',
     id: 43114,
     tokens: getTokensByChain('avalanche'),
   },
@@ -258,7 +247,6 @@ const networks = {
     symbol: 'ETH',
     name: 'Goerli',
     chain: 'goerli',
-    address: '0x4BF07c675dB5a562816848e3a5bFA993510450D2',
     id: 5,
     tokens: getTokensByChain('goerli'),
   },
@@ -266,7 +254,6 @@ const networks = {
     symbol: 'ETH',
     name: 'Optimism',
     chain: 'optimism',
-    address: '0x4BF07c675dB5a562816848e3a5bFA993510450D2',
     id: 10,
     tokens: getTokensByChain('optimism'),
   },
@@ -274,7 +261,6 @@ const networks = {
     symbol: 'MATIC',
     name: 'Polygon',
     chain: 'matic',
-    address: '0x4BF07c675dB5a562816848e3a5bFA993510450D2',
     id: 137,
     tokens: getTokensByChain('matic'),
   },
