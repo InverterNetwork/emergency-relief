@@ -7,17 +7,19 @@ import { clsx } from 'clsx';
 import { setCookie } from 'cookies-next';
 import { toast } from 'react-hot-toast';
 import { useConnect } from 'wagmi';
+import { useRecoilState } from 'recoil';
 
-interface DialogProps {
-  children: React.ReactNode;
-}
+import { showWalletConnectModalAtom } from '@/features/wallet/components/WalletConnectButton/store/modals.store';
 
-const WalletConnectModal = ({ children }: DialogProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+const WalletConnectModal = () => {
+  const [showWalletConnectModal, setShowWalletConnectModal] = useRecoilState(
+    showWalletConnectModalAtom,
+  );
+
   const { connectors, connectAsync } = useConnect();
 
   const handleConnectorClick = async (connector: Connector) => {
-    const response = await toast.promise(
+    await toast.promise(
       connectAsync({
         connector: connector,
       }),
@@ -27,15 +29,15 @@ const WalletConnectModal = ({ children }: DialogProps) => {
         error: 'Could not connect.',
       },
     );
-
-    setCookie('address', response.account);
   };
 
   return (
-    <DialogPrimitive.Root open={isOpen} onOpenChange={setIsOpen}>
-      <DialogPrimitive.Trigger asChild>{children}</DialogPrimitive.Trigger>
+    <DialogPrimitive.Root
+      open={showWalletConnectModal}
+      onOpenChange={setShowWalletConnectModal}
+    >
       <DialogPrimitive.Portal forceMount>
-        <Transition.Root show={isOpen}>
+        <Transition.Root show={showWalletConnectModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

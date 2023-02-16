@@ -33,7 +33,7 @@ const DropdownMenu = ({
               align="end"
               sideOffset={5}
               className={cx(
-                'w-36 rounded-lg px-1.5 py-1 shadow-md',
+                'w-36 rounded-lg px-1.5 py-1 shadow-md z-10',
                 'bg-[#262626]',
               )}
               initial={{ opacity: 0, translateY: 10, scale: 0.9 }}
