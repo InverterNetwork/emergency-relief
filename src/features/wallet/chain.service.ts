@@ -276,6 +276,9 @@ export const identityNetworkName = (
     case 'ethereum':
       return 'homestead';
 
+    case 'polygon':
+      return 'matic';
+
     default:
       return networkName;
   }

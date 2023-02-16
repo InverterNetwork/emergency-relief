@@ -191,12 +191,14 @@ export default function Home({
     hash: (lastTransactionHash as `0x${string}`) || '',
   });
 
-  const isSupportedChain = tokens.length > 0;
+  const isSupportedChain = tokens.length > 1;
 
   useEffect(() => {
     if (!chain) {
       return;
     }
+
+    console.log(chain);
 
     setSelectedChainName(chain.network);
     setSelectedTokenSymbol(chain.nativeCurrency.symbol);
@@ -299,6 +301,7 @@ export default function Home({
       amount: Number(amount),
       lastTransactionHash,
       project,
+      isNetworkSupported,
     });
   }
 
@@ -567,7 +570,10 @@ export default function Home({
                       className="mt-3 w-full"
                       disabled={isButtonDisabled}
                       variant={
-                        address && (isInsufficientBalance || !isSupportedChain)
+                        address &&
+                        (isInsufficientBalance ||
+                          !isSupportedChain ||
+                          !selectedChainDonationAddress)
                           ? 'error'
                           : 'primary'
                       }
@@ -577,7 +583,7 @@ export default function Home({
                         ? 'Sending...'
                         : isInsufficientBalance
                         ? 'Insufficient funds'
-                        : !isSupportedChain
+                        : !isSupportedChain || !selectedChainDonationAddress
                         ? 'Unsupported chain'
                         : 'Donate'}
                     </Button>

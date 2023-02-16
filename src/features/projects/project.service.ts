@@ -24,15 +24,15 @@ const prepareProjectForDisplay = (project: Project) => {
       address: '0x4BF07c675dB5a562816848e3a5bFA993510450D2',
     });
 
-    clonedProject.donation_addresses.push({
-      chain: 'optimism',
-      address: '0x4BF07c675dB5a562816848e3a5bFA993510450D2',
-    });
+    // clonedProject.donation_addresses.push({
+    //   chain: 'optimism',
+    //   address: '0x4BF07c675dB5a562816848e3a5bFA993510450D2',
+    // });
 
-    clonedProject.donation_addresses.push({
-      chain: 'matic',
-      address: '0x4BF07c675dB5a562816848e3a5bFA993510450D2',
-    });
+    // clonedProject.donation_addresses.push({
+    //   chain: 'matic',
+    //   address: '0x4BF07c675dB5a562816848e3a5bFA993510450D2',
+    // });
   }
 
   return clonedProject;
