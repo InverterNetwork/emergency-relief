@@ -71,6 +71,12 @@ const bscTokens = [
     abi: erc20ABI,
   },
   {
+    name: 'BUSD',
+    symbol: 'BUSD',
+    address: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
+    abi: erc20ABI,
+  },
+  {
     name: 'DAI',
     symbol: 'DAI',
     address: '0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3',
@@ -86,8 +92,8 @@ const bscTokens = [
 
 const avalancheTokens = [
   {
-    name: 'USDt',
-    symbol: 'USDt',
+    name: 'USDT',
+    symbol: 'USDT',
     address: '0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7',
     abi: erc20ABI,
   },
@@ -100,7 +106,7 @@ const avalancheTokens = [
   {
     name: 'DAI',
     symbol: 'DAI',
-    address: '0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a',
+    address: '0xd586E7F844cEa2F87f50152665BCbc2C279D8d70',
     abi: erc20ABI,
   },
 ];
@@ -116,12 +122,6 @@ const maticTokens = [
     name: 'USDT',
     symbol: 'USDT',
     address: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
-    abi: erc20ABI,
-  },
-  {
-    name: 'BNB',
-    symbol: 'BNB',
-    address: '0x3BA4c387f786bFEE076A58914F5Bd38d668B42c3',
     abi: erc20ABI,
   },
   {
