@@ -11,7 +11,6 @@ import {
   InstagramLogoIcon,
   TwitterLogoIcon,
   DiscordLogoIcon,
-  CheckCircledIcon,
 } from '@radix-ui/react-icons';
 import Web from '@/components/Icons/Web';
 import cx from 'classnames';
