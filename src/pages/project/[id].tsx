@@ -648,8 +648,10 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 
   const address = getCookie('address', { req, res });
 
-  const project = await getProjectById(query.id as string);
-  const projects = await getProjects();
+  const [project, projects] = await Promise.all([
+    getProjectById(query.id as string),
+    getProjects(),
+  ]);
 
   return {
     props: {
