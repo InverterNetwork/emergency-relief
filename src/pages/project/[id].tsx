@@ -193,8 +193,6 @@ export default function Home({
   const isSupportedChain = tokens.length > 0;
 
   useEffect(() => {
-    console.log(chain);
-
     if (!chain) {
       return;
     }
@@ -260,8 +258,6 @@ export default function Home({
 
     setLastTransactionHash(tx.hash as `0x${string}`);
 
-    console.log(tx);
-
     await toast.promise(
       waitForTransaction({
         hash: tx.hash as `0x${string}`,
@@ -284,24 +280,26 @@ export default function Home({
     return sendToken();
   };
 
-  console.log({
-    selectedChainName,
-    selectedChain: selectedChain,
-    selectedTokenSymbol,
-    nativeTokenBalanceData,
-    tokenBalance,
-    tokens,
-    selectedToken,
-    selectedChainDonationAddress,
-    chain,
-    contract,
-    isNativeToken,
-    balance,
-    isInsufficientBalance,
-    amount: Number(amount),
-    lastTransactionHash,
-    project,
-  });
+  if (process.env.NODE_ENV === 'development') {
+    console.log({
+      selectedChainName,
+      selectedChain: selectedChain,
+      selectedTokenSymbol,
+      nativeTokenBalanceData,
+      tokenBalance,
+      tokens,
+      selectedToken,
+      selectedChainDonationAddress,
+      chain,
+      contract,
+      isNativeToken,
+      balance,
+      isInsufficientBalance,
+      amount: Number(amount),
+      lastTransactionHash,
+      project,
+    });
+  }
 
   const renderSocialLinkIcon = (platform: string) => {
     if (platform.includes('twitter')) {
