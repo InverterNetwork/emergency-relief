@@ -10,10 +10,8 @@ import {
   ArrowDownIcon,
   InstagramLogoIcon,
   TwitterLogoIcon,
-  DiscordLogoIcon,
   LinkedInLogoIcon,
 } from '@radix-ui/react-icons';
-import Web from '@/components/Icons/Web';
 import cx from 'classnames';
 import { useEffect, useMemo, useState } from 'react';
 import {
@@ -37,7 +35,7 @@ import { parseEther } from 'ethers/lib/utils.js';
 import { toast } from 'react-hot-toast';
 import { isNumberString } from 'class-validator';
 
-import { showWalletConnectModalAtom } from '@/features/wallet/components/WalletConnectButton/store/modals.store';
+import ProjectCard from '@/features/projects/components/ProjectCard/ProjectCard';
 import {
   getProjectById,
   getProjects,
@@ -46,15 +44,19 @@ import {
   Project,
   SocialProfilePlatform,
 } from '@/features/projects/entity/project.entity';
+
+import { showWalletConnectModalAtom } from '@/features/wallet/components/WalletConnectButton/store/modals.store';
 import {
   getNetworkByName,
   isNetworkSupported,
 } from '@/features/wallet/chain.service';
 
+import useIsMounted from '@/hooks/useIsMounted.hook';
+
+import Web from '@/components/Icons/Web';
 import Header from '@/components/Header/Header';
 import Button from '@/components/Button/Button';
-import useIsMounted from '@/hooks/useIsMounted.hook';
-import ProjectCard from '@/features/projects/components/ProjectCard/ProjectCard';
+import { createTransaction } from '@/features/transactions/transaction.service';
 
 type Props = {
   address: string | null;
@@ -142,9 +144,11 @@ export default function Home({
     return tokens;
   }, [chain, selectedChain?.tokens]);
 
-  const selectedChainDonationAddress = project.donationWallets.find(
+  const selectedChainDonationWallet = project.donationWallets.find(
     (address) => address.chain === selectedChainName,
-  )?.address;
+  );
+
+  const selectedChainDonationAddress = selectedChainDonationWallet?.address;
 
   const { data: tokenBalance } = useBalance({
     address: address as `0x${string}`,
@@ -178,7 +182,20 @@ export default function Home({
   const { sendTransaction } = useSendTransaction({
     ...config,
     onSuccess: async (data) => {
+      if (!selectedChainDonationWallet || !selectedToken) {
+        return;
+      }
+
       setLastTransactionHash(data.hash as `0x${string}`);
+
+      createTransaction({
+        amount,
+        fromWallet: address as `0x${string}`,
+        toWalletId: selectedChainDonationWallet.id,
+        projectId: project.id,
+        transactionHash: data.hash as `0x${string}`,
+        token: selectedToken.symbol as string,
+      });
 
       await toast.promise(waitForTransaction(data), {
         loading: 'Waiting for transaction',
@@ -251,7 +268,7 @@ export default function Home({
   };
 
   const sendToken = async () => {
-    if (!contract) {
+    if (!contract || !selectedChainDonationWallet || !selectedToken) {
       return;
     }
 
@@ -261,6 +278,15 @@ export default function Home({
     );
 
     setLastTransactionHash(tx.hash as `0x${string}`);
+
+    createTransaction({
+      amount,
+      fromWallet: address as `0x${string}`,
+      toWalletId: selectedChainDonationWallet.id,
+      projectId: project.id,
+      transactionHash: tx.hash as `0x${string}`,
+      token: selectedToken.symbol as string,
+    });
 
     await toast.promise(
       waitForTransaction({
@@ -359,7 +385,7 @@ export default function Home({
             <div className="bg-[#F1F1EF] p-2 pb-3 rounded-3xl">
               <div className="relative flex justify-center">
                 <Image
-                  className="rounded-3xl h-full"
+                  className="rounded-3xl h-52 object-cover"
                   src={{
                     src: project.bannerImageUrl || '/turkey.png',
                     width: 1000,
@@ -376,7 +402,7 @@ export default function Home({
                     />
 
                     <Image
-                      className="rounded-full h-40 w-40 border-[8px] border-white"
+                      className="rounded-full h-40 w-40 border-[8px] border-white bg-[#E7E5E3] object-contain"
                       src={{
                         src: project.logoImageUrl || '/world.png',
                         width: 160,

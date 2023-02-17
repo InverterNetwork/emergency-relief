@@ -17,7 +17,7 @@ const ProjectCard = ({ id, logoImageUrl, name, summary }: Props) => {
         className="bg-[#E7E5E3] p-6 flex flex-col items-center justify-center rounded-xl space-y-2"
       >
         <Image
-          className="rounded-full h-24 w-24"
+          className="rounded-full h-24 w-24 object-contain"
           src={{
             src: logoImageUrl || '/world.png',
             width: 200,

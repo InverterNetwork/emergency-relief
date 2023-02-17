@@ -4,6 +4,7 @@ const urls = {
   getOrganizations: `organizations`,
   getProject: (id: string) => `projects/${id}`,
   getProjects: `projects`,
+  createTransaction: `transactions`,
 };
 
 export default urls;
