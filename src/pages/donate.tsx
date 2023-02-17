@@ -34,7 +34,7 @@ export default function Donate({ address: cachedAddress, projects }: Props) {
               <ProjectCard
                 key={project.id}
                 id={project.id}
-                logoImageUrl={project.logo_image_url || ''}
+                logoImageUrl={project.logoImageUrl || ''}
                 name={project.name}
                 summary={project.summary}
               />

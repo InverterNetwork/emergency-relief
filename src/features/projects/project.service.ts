@@ -9,27 +9,32 @@ import {
 const prepareProjectForDisplay = (project: Project) => {
   const clonedProject = { ...project };
 
-  clonedProject.donation_addresses.forEach((address) => {
+  clonedProject.donationWallets.forEach((address) => {
     address.chain = identityNetworkName(address.chain) || address.chain;
   });
 
-  clonedProject.donation_addresses = clonedProject.donation_addresses.filter(
+  clonedProject.donationWallets = clonedProject.donationWallets.filter(
     (address) =>
       isNetworkSupported(identityNetworkName(address.chain) || address.chain),
   );
 
   if (process.env.NODE_ENV === 'development') {
-    clonedProject.donation_addresses.push({
+    clonedProject.donationWallets.push({
+      id: -1,
+      projectId: clonedProject.id,
       chain: 'goerli',
+      chainId: 5,
       address: '0x4BF07c675dB5a562816848e3a5bFA993510450D2',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     });
 
-    // clonedProject.donation_addresses.push({
+    // clonedProject.donationWallets.push({
     //   chain: 'optimism',
     //   address: '0x4BF07c675dB5a562816848e3a5bFA993510450D2',
     // });
 
-    // clonedProject.donation_addresses.push({
+    // clonedProject.donationWallets.push({
     //   chain: 'matic',
     //   address: '0x4BF07c675dB5a562816848e3a5bFA993510450D2',
     // });

@@ -11,6 +11,7 @@ import {
   InstagramLogoIcon,
   TwitterLogoIcon,
   DiscordLogoIcon,
+  LinkedInLogoIcon,
 } from '@radix-ui/react-icons';
 import Web from '@/components/Icons/Web';
 import cx from 'classnames';
@@ -41,7 +42,10 @@ import {
   getProjectById,
   getProjects,
 } from '@/features/projects/project.service';
-import { Project } from '@/features/projects/entity/project.entity';
+import {
+  Project,
+  SocialProfilePlatform,
+} from '@/features/projects/entity/project.entity';
 import {
   getNetworkByName,
   isNetworkSupported,
@@ -80,7 +84,7 @@ export default function Home({
 
   const defaultChain = useMemo(() => {
     if (!chain) {
-      return project.donation_addresses[0].chain;
+      return project.donationWallets[0].chain;
     }
 
     if (isNetworkSupported(chain.network)) {
@@ -88,12 +92,12 @@ export default function Home({
     }
 
     return 'Unsupported';
-  }, [chain, project.donation_addresses]);
+  }, [chain, project.donationWallets]);
 
   const [selectedChainName, setSelectedChainName] = useState(defaultChain);
 
   const chains = useMemo(() => {
-    const chains = project.donation_addresses.map((address) => ({
+    const chains = project.donationWallets.map((address) => ({
       value: address.chain,
       label: getNetworkByName(address.chain)?.name,
     }));
@@ -106,7 +110,7 @@ export default function Home({
     }
 
     return _.uniqBy(chains, (chain) => chain.value);
-  }, [chain, project.donation_addresses]);
+  }, [chain, project.donationWallets]);
 
   const selectedChain = getNetworkByName(selectedChainName);
 
@@ -138,7 +142,7 @@ export default function Home({
     return tokens;
   }, [chain, selectedChain?.tokens]);
 
-  const selectedChainDonationAddress = project.donation_addresses.find(
+  const selectedChainDonationAddress = project.donationWallets.find(
     (address) => address.chain === selectedChainName,
   )?.address;
 
@@ -196,8 +200,6 @@ export default function Home({
     if (!chain) {
       return;
     }
-
-    console.log(chain);
 
     setSelectedChainName(chain.network);
     setSelectedTokenSymbol(chain.nativeCurrency.symbol);
@@ -305,16 +307,16 @@ export default function Home({
   }
 
   const renderSocialLinkIcon = (platform: string) => {
-    if (platform.includes('twitter')) {
+    if (platform === SocialProfilePlatform.TWITTER) {
       return <TwitterLogoIcon className="w-8 h-8" />;
     }
 
-    if (platform.includes('instagram')) {
+    if (platform === SocialProfilePlatform.INSTAGRAM) {
       return <InstagramLogoIcon className="w-8 h-8" />;
     }
 
-    if (platform.includes('discord')) {
-      return <DiscordLogoIcon className="w-8 h-8" />;
+    if (platform === SocialProfilePlatform.LINKEDIN) {
+      return <LinkedInLogoIcon className="w-8 h-8" />;
     }
 
     return <Web className="w-8 h-8" />;
@@ -359,7 +361,7 @@ export default function Home({
                 <Image
                   className="rounded-3xl h-full"
                   src={{
-                    src: project.banner_image_url || '/turkey.png',
+                    src: project.bannerImageUrl || '/turkey.png',
                     width: 1000,
                     height: 500,
                   }}
@@ -376,7 +378,7 @@ export default function Home({
                     <Image
                       className="rounded-full h-40 w-40 border-[8px] border-white"
                       src={{
-                        src: project.logo_image_url || '/world.png',
+                        src: project.logoImageUrl || '/world.png',
                         width: 160,
                         height: 160,
                       }}
@@ -390,8 +392,12 @@ export default function Home({
                 <h1 className="text-4xl font-semibold">{project.name}</h1>
 
                 <div className="flex space-x-3">
-                  {project.social_profiles.map((profile) => (
-                    <Link key={profile.platform} href={profile.link}>
+                  {project.socialProfiles.map((profile) => (
+                    <Link
+                      key={profile.platform}
+                      href={profile.profileUrl}
+                      target="_blank"
+                    >
                       <div className="p-2 bg-[#E7E5E3] rounded-full">
                         {renderSocialLinkIcon(profile.platform)}
                       </div>
@@ -404,10 +410,6 @@ export default function Home({
             <div className="bg-[#F1F1EF] p-6 space-y-3 rounded-3xl">
               <h2 className="text-2xl font-semibold">About</h2>
               <span className="block">{project.description}</span>
-
-              <a className="block font-bold" href="#">
-                See More
-              </a>
             </div>
 
             <div className="bg-[#F1F1EF] p-6 space-y-3 rounded-3xl">
@@ -418,7 +420,7 @@ export default function Home({
                   <div key={i}>
                     {renderCredential(
                       credential.statement,
-                      credential.reference,
+                      credential.credentialUrl,
                     )}
                   </div>
                 ))}
@@ -606,16 +608,16 @@ export default function Home({
                   <ProjectCard
                     key={p.id}
                     id={p.id}
-                    logoImageUrl={p.logo_image_url || ''}
+                    logoImageUrl={p.logoImageUrl || ''}
                     name={p.name}
                     summary={p.summary}
                   />
                 ))}
               </div>
 
-              <a className="block font-bold" href="#">
+              <Link className="block font-bold" href="/">
                 Browse More
-              </a>
+              </Link>
             </div>
           </main>
 
