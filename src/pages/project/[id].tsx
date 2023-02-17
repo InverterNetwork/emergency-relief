@@ -415,7 +415,9 @@ export default function Home({
               </div>
 
               <div className="pt-20 mt-3 flex flex-col items-center justify-center flex-1 space-y-3">
-                <h1 className="text-4xl font-semibold">{project.name}</h1>
+                <h1 className="text-4xl font-semibold text-center">
+                  {project.name}
+                </h1>
 
                 <div className="flex space-x-3">
                   {project.socialProfiles.map((profile) => (
@@ -641,7 +643,7 @@ export default function Home({
                 ))}
               </div>
 
-              <Link className="block font-bold" href="/">
+              <Link className="block font-bold" href="/donate">
                 Browse More
               </Link>
             </div>
@@ -671,10 +673,6 @@ export default function Home({
                   </div>
                 </div>
               ))}
-
-            <a className="block" href="#">
-              <span className="font-bold text-lg">See more</span>
-            </a>
           </aside>
         </div>
       </div>

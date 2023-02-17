@@ -29,8 +29,8 @@ export default function Home({ address: cachedAddress }: { address?: string }) {
               <span className="text-lg block">
                 Turkey has declared a state of emergency after two powerful
                 earthquakes, with magnitudes of 7.8 and 7.5, struck the country
-                on 6 February 2023, resulting in over 11,700 deaths, 3,450
-                collapsed buildings, and affecting over 23 million people.
+                on 6 February 2023, resulting in over 40k+ deaths, 6k+ collapsed
+                buildings, and affecting over 23 million people.
               </span>
 
               <Link href="/donate">
