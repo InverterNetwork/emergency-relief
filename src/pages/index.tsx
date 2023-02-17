@@ -34,7 +34,9 @@ export default function Home({ address: cachedAddress }: { address?: string }) {
               </span>
 
               <Link href="/donate">
-                <Button className="w-fit">Donate now</Button>
+                <Button className="!px-12" size="large">
+                  Donate now
+                </Button>
               </Link>
             </div>
 
