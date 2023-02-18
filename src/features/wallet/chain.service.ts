@@ -24,6 +24,10 @@ type Network = {
   chain: NetworkName;
   coinGeckoId: string | null;
   id: number;
+  blockExplorers: {
+    default: string;
+    [key: string]: string;
+  };
   tokens: Token[];
 };
 
@@ -270,6 +274,9 @@ const networks: Record<NetworkName, Network> = {
     chain: 'ethereum',
     coinGeckoId: 'ethereum',
     id: 1,
+    blockExplorers: {
+      default: 'https://etherscan.io',
+    },
     tokens: getTokensByChain('homestead') as Token[],
   },
   bsc: {
@@ -278,6 +285,9 @@ const networks: Record<NetworkName, Network> = {
     chain: 'binance smart chain',
     coinGeckoId: 'binancecoin',
     id: 56,
+    blockExplorers: {
+      default: 'https://bscscan.com',
+    },
     tokens: getTokensByChain('bsc') as Token[],
   },
   avalanche: {
@@ -286,6 +296,10 @@ const networks: Record<NetworkName, Network> = {
     chain: 'avalanche',
     coinGeckoId: 'avalanche-2',
     id: 43114,
+    blockExplorers: {
+      default: 'https://snowtrace.io',
+      xChain: 'https://explorer-xp.avax.network',
+    },
     tokens: getTokensByChain('avalanche') as Token[],
   },
   goerli: {
@@ -294,6 +308,9 @@ const networks: Record<NetworkName, Network> = {
     chain: 'goerli',
     coinGeckoId: null,
     id: 5,
+    blockExplorers: {
+      default: 'https://goerli.etherscan.io',
+    },
     tokens: getTokensByChain('goerli') as Token[],
   },
   optimism: {
@@ -302,6 +319,9 @@ const networks: Record<NetworkName, Network> = {
     chain: 'optimism',
     coinGeckoId: 'optimism',
     id: 10,
+    blockExplorers: {
+      default: 'https://optimistic.etherscan.io',
+    },
     tokens: getTokensByChain('optimism') as Token[],
   },
   matic: {
@@ -310,6 +330,9 @@ const networks: Record<NetworkName, Network> = {
     chain: 'matic',
     coinGeckoId: 'matic-network',
     id: 137,
+    blockExplorers: {
+      default: 'https://polygonscan.com',
+    },
     tokens: getTokensByChain('matic') as Token[],
   },
 };

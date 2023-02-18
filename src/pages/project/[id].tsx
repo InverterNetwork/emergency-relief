@@ -401,16 +401,16 @@ export default function Home({
     return formatNumber(amountAsInteger);
   }, [amount, selectedTokenPrice]);
 
-  const getBlockExplorer = (): string => {
-    console.log({ selectedChain });
+  const blockExplorerUrl = useMemo(() => {
     if (
       selectedChain?.name.toLowerCase() === 'avalanche' &&
       selectedChainDonationAddress?.startsWith('X-')
     ) {
-      return chain?.blockExplorers!['explorer-xp'].url as string;
+      return selectedChain.blockExplorers.xChain;
     }
-    return chain?.blockExplorers?.default.url as string;
-  };
+
+    return selectedChain?.blockExplorers.default;
+  }, [selectedChain, selectedChainDonationAddress]);
 
   return (
     <>
@@ -568,7 +568,7 @@ export default function Home({
                     <>
                       Your donation will go to
                       <Link
-                        href={`${getBlockExplorer()}/address/${selectedChainDonationAddress}`}
+                        href={`${blockExplorerUrl}/address/${selectedChainDonationAddress}`}
                         target="_blank"
                       >
                         <b className="block text-xs">
