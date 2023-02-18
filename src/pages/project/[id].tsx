@@ -13,6 +13,7 @@ import {
 } from '@radix-ui/react-icons';
 import { FaDonate } from 'react-icons/fa';
 import cx from 'classnames';
+import currency from 'currency.js';
 import { useEffect, useMemo, useState } from 'react';
 import {
   useAccount,
@@ -206,7 +207,7 @@ export default function Home({
       setLastTransactionHash(data.hash as `0x${string}`);
 
       createTransaction({
-        amount,
+        amount: currency(amount).toString(),
         fromWallet: address as `0x${string}`,
         toWalletId: selectedChainDonationWallet.id,
         projectId: project.id,
@@ -300,7 +301,7 @@ export default function Home({
     setLastTransactionHash(tx.hash as `0x${string}`);
 
     createTransaction({
-      amount,
+      amount: currency(amount).toString(),
       fromWallet: address as `0x${string}`,
       toWalletId: selectedChainDonationWallet.id,
       projectId: project.id,

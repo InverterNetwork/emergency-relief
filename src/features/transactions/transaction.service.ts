@@ -23,6 +23,7 @@ export const createTransaction = async (dto: CreateTransactionDto) => {
   const { data } = await http.post(
     urls.createTransaction,
     encryptedTransaction,
+    { headers: { 'Content-Type': 'text/plain' } },
   );
 
   return data;
