@@ -46,7 +46,7 @@ export default function Home({
 
             <div className="flex flex-1 flex-col justify-between col-span-12 lg:col-span-4 space-y-4">
               <div className="space-y-3 bg-[#F1F1EF] p-6 rounded-3xl">
-                <h2 className="text-4xl font-semibold">11,700+</h2>
+                <h2 className="text-4xl font-semibold">40,000+</h2>
                 <span className="block text-lg">
                   Death toll from the lates official figures
                 </span>
@@ -60,7 +60,7 @@ export default function Home({
               </div>
 
               <div className="space-y-3 bg-[#F1F1EF] p-6 rounded-3xl">
-                <h2 className="text-4xl font-semibold">3,450</h2>
+                <h2 className="text-4xl font-semibold">6,000+</h2>
                 <span className="block text-lg">
                   Collapsed buildings on people trapped in the ruble.
                 </span>
