@@ -56,7 +56,7 @@ const DropdownMenu = ({
                 )}
                 onSelect={onCopyAddressClick}
               >
-                <CopyIcon className="mr-2 h-3.5 w-3.5" />
+                <CopyIcon className="mr-2 h-3.5 w-3.5" color="#999999" />
 
                 <span className="flex-grow text-white">Copy Address</span>
               </DropdownMenuPrimitive.Item>
@@ -69,7 +69,7 @@ const DropdownMenu = ({
                 )}
                 onSelect={onDisconnectWalletClick}
               >
-                <ExitIcon className="mr-2 h-3.5 w-3.5" />
+                <ExitIcon className="mr-2 h-3.5 w-3.5" color="#999999" />
 
                 <span className="flex-grow text-white">Disconnect</span>
               </DropdownMenuPrimitive.Item>

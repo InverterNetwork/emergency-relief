@@ -3,6 +3,8 @@ import { useRecoilState } from 'recoil';
 
 import DropdownMenu from '@/features/wallet/components/WalletConnectButton/DropdownMenu';
 import { showWalletConnectModalAtom } from '@/features/wallet/components/WalletConnectButton/store/modals.store';
+import Button from '@/components/Button/Button';
+import { ChevronDownIcon } from '@radix-ui/react-icons';
 
 type Props = {
   address?: string;
@@ -37,17 +39,16 @@ function WalletConnectButton({
           onDisconnectWalletClick={onDisconnectWalletClick}
           onCopyAddressClick={onCopyAddressClick}
         >
-          <button className="h-fit bg-[#262626] text-white font-medium py-2 px-4 rounded-full outline-none select-none">
+          <Button
+            rightNode={<ChevronDownIcon className="h-5 w-5" color="white" />}
+          >
             {formatAddress(address)}
-          </button>
+          </Button>
         </DropdownMenu>
       ) : (
-        <button
-          className="h-fit bg-[#262626] text-white font-medium py-2 px-4 rounded-full outline-none select-none"
-          onClick={() => setShowWalletConnectModal(true)}
-        >
+        <Button onClick={() => setShowWalletConnectModal(true)}>
           Connect Wallet
-        </button>
+        </Button>
       )}
     </>
   );
