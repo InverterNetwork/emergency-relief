@@ -7,11 +7,11 @@ import {
   CheckIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  ArrowDownIcon,
   InstagramLogoIcon,
   TwitterLogoIcon,
   LinkedInLogoIcon,
 } from '@radix-ui/react-icons';
+import { FaDonate } from 'react-icons/fa';
 import cx from 'classnames';
 import { useEffect, useMemo, useState } from 'react';
 import {
@@ -57,17 +57,22 @@ import Web from '@/components/Icons/Web';
 import Header from '@/components/Header/Header';
 import Button from '@/components/Button/Button';
 import { createTransaction } from '@/features/transactions/transaction.service';
+import { getPriceOfTokens } from '@/features/markets/market.service';
+import { Market } from '@/features/markets/entity/market.entity';
+import { formatNumber } from '@/utils/number';
 
 type Props = {
   address: string | null;
   project: Project;
   projects: Project[];
+  prices: Market[];
 };
 
 export default function Home({
   address: cachedAddress,
   project,
   projects,
+  prices,
 }: Props) {
   const { address: clientSideAdress } = useAccount();
   const { data: signer } = useSigner();
@@ -170,6 +175,11 @@ export default function Home({
 
   const balance = isNativeToken ? nativeTokenBalanceData : tokenBalance;
 
+  const selectedTokenPrice = prices.find(
+    (price) =>
+      price.symbol.toLowerCase() === selectedTokenSymbol?.toLowerCase(),
+  );
+
   const [amount, setAmount] = useState('');
 
   const { config } = usePrepareSendTransaction({
@@ -182,7 +192,7 @@ export default function Home({
   const { sendTransaction } = useSendTransaction({
     ...config,
     onSuccess: async (data) => {
-      if (!selectedChainDonationWallet || !selectedToken) {
+      if (!selectedChainDonationWallet || !balance) {
         return;
       }
 
@@ -194,7 +204,7 @@ export default function Home({
         toWalletId: selectedChainDonationWallet.id,
         projectId: project.id,
         transactionHash: data.hash as `0x${string}`,
-        token: selectedToken.symbol as string,
+        token: balance.symbol as string,
       });
 
       await toast.promise(waitForTransaction(data), {
@@ -228,7 +238,10 @@ export default function Home({
 
   const isButtonDisabled = useMemo(() => {
     const sharedCondition =
-      !isSupportedChain || !amount || isInsufficientBalance;
+      !isSupportedChain ||
+      !amount ||
+      isInsufficientBalance ||
+      !isNumberString(amount);
 
     if (isNativeToken) {
       return sharedCondition || isTransactionLoading || !sendTransaction;
@@ -268,7 +281,7 @@ export default function Home({
   };
 
   const sendToken = async () => {
-    if (!contract || !selectedChainDonationWallet || !selectedToken) {
+    if (!contract || !selectedChainDonationWallet || !balance) {
       return;
     }
 
@@ -285,7 +298,7 @@ export default function Home({
       toWalletId: selectedChainDonationWallet.id,
       projectId: project.id,
       transactionHash: tx.hash as `0x${string}`,
-      token: selectedToken.symbol as string,
+      token: balance.symbol,
     });
 
     await toast.promise(
@@ -329,6 +342,8 @@ export default function Home({
       lastTransactionHash,
       project,
       isNetworkSupported,
+      prices,
+      selectedTokenPrice,
     });
   }
 
@@ -367,6 +382,17 @@ export default function Home({
 
     return <>{renderContent()}</>;
   };
+
+  const amountInUSD = useMemo(() => {
+    const amountAsInteger =
+      parseInt(amount) * (selectedTokenPrice?.current_price || 0);
+
+    if (typeof amountAsInteger !== 'number' || isNaN(amountAsInteger)) {
+      return 0;
+    }
+
+    return formatNumber(amountAsInteger);
+  }, [amount, selectedTokenPrice]);
 
   return (
     <>
@@ -587,10 +613,13 @@ export default function Home({
                     </div>
                   </div>
                   <div className="text-xs mt-3">
-                    <p>
-                      Balance: {balance?.formatted || '0'}{' '}
+                    {selectedTokenPrice && <span>= USD {amountInUSD} / </span>}
+
+                    <span>
+                      Balance: {formatNumber(balance?.formatted || '0')}{' '}
                       {balance?.symbol || ''}
-                    </p>
+                    </span>
+
                     <p>Network fees might apply</p>
                   </div>
 
@@ -610,10 +639,10 @@ export default function Home({
                     >
                       {isTransactionLoading
                         ? 'Sending...'
-                        : isInsufficientBalance
-                        ? 'Insufficient funds'
                         : !isSupportedChain || !selectedChainDonationAddress
                         ? 'Unsupported chain'
+                        : isInsufficientBalance
+                        ? 'Insufficient funds'
                         : 'Donate'}
                     </Button>
                   ) : (
@@ -652,27 +681,32 @@ export default function Home({
           <aside className="col-span-12 lg:col-span-3 space-y-3">
             <h2 className="text-2xl font-bold">Donation history</h2>
 
-            {Array(10)
-              .fill('')
-              .map((_, index) => (
-                <div
-                  key={index}
-                  className="flex bg-[#F1F1EF] rounded-2xl p-2 space-x-3 items-center"
-                >
-                  <div className="h-10 w-10 xl:h-12 xl:w-12 border-[2px] border-[#69D396] rounded-full aspect-square">
-                    <ArrowDownIcon className="h-full w-full" color="#69D396" />
-                  </div>
+            {project.transactions.length > 0 ? (
+              <>
+                {project.transactions.map((transaction) => (
+                  <div
+                    key={transaction.id}
+                    className="flex bg-[#F1F1EF] rounded-2xl p-2 space-x-3 items-center"
+                  >
+                    <FaDonate size={24} />
 
-                  <div className="flex flex-col">
-                    <span className="block font-bold text-lg">
-                      Celo Foundation
-                    </span>
-                    <span className="block mt-0.5">
-                      Donated 300k 3 days ago
-                    </span>
+                    <div className="flex flex-col">
+                      <span className="block font-bold text-sm">
+                        {transaction.fromWallet}
+                      </span>
+
+                      <span className="block mt-0.5">
+                        {transaction.amount} {transaction.token}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </>
+            ) : (
+              <div>
+                <span className="text-sm text-gray-500">No donations yet</span>
+              </div>
+            )}
           </aside>
         </div>
       </div>
@@ -692,9 +726,10 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 
   const address = getCookie('address', { req, res });
 
-  const [project, projects] = await Promise.all([
+  const [project, projects, prices] = await Promise.all([
     getProjectById(query.id as string),
     getProjects(),
+    getPriceOfTokens(),
   ]);
 
   return {
@@ -702,6 +737,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
       address: address?.toString() || null,
       project,
       projects,
+      prices,
     },
   };
 };

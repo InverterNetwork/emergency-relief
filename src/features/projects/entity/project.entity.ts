@@ -1,3 +1,5 @@
+import { Transaction } from '@/features/transactions/entity/transaction.entity';
+
 /**
  * Model OrganizationWallet
  *
@@ -108,6 +110,7 @@ export type Project = {
   socialProfiles: ProjectSocialProfile[];
   credentials: ProjectCredentials[];
   partners: ProjectPartner[];
+  transactions: Transaction[];
   createdAt: string;
   updatedAt: string;
 };

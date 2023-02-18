@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { erc20ABI } from 'wagmi';
 
 type NetworkName =
@@ -13,7 +14,7 @@ type Token = {
   name: string;
   symbol: string;
   address: string;
-  abi: any;
+  abi: typeof erc20ABI;
   coinGeckoId: string | null;
 };
 
@@ -70,7 +71,7 @@ const homesteadTokens: Token[] = [
     symbol: 'BUSD',
     address: '0x4fabb145d64652a948d72533023f6e7a623c7c53',
     abi: erc20ABI,
-    coinGeckoId: 'busd',
+    coinGeckoId: 'binance-busd',
   },
   {
     name: 'MATIC',
@@ -101,7 +102,7 @@ const bscTokens: Token[] = [
     symbol: 'BUSD',
     address: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
     abi: erc20ABI,
-    coinGeckoId: 'busd',
+    coinGeckoId: 'binance-usd',
   },
   {
     name: 'DAI',
@@ -269,7 +270,7 @@ const networks: Record<NetworkName, Network> = {
     chain: 'ethereum',
     coinGeckoId: 'ethereum',
     id: 1,
-    tokens: getTokensByChain('homestead')!,
+    tokens: getTokensByChain('homestead') as Token[],
   },
   bsc: {
     symbol: 'BNB',
@@ -277,7 +278,7 @@ const networks: Record<NetworkName, Network> = {
     chain: 'binance smart chain',
     coinGeckoId: 'binancecoin',
     id: 56,
-    tokens: getTokensByChain('bsc')!,
+    tokens: getTokensByChain('bsc') as Token[],
   },
   avalanche: {
     symbol: 'AVAX',
@@ -285,7 +286,7 @@ const networks: Record<NetworkName, Network> = {
     chain: 'avalanche',
     coinGeckoId: 'avalanche-2',
     id: 43114,
-    tokens: getTokensByChain('avalanche')!,
+    tokens: getTokensByChain('avalanche') as Token[],
   },
   goerli: {
     symbol: 'ETH',
@@ -293,7 +294,7 @@ const networks: Record<NetworkName, Network> = {
     chain: 'goerli',
     coinGeckoId: null,
     id: 5,
-    tokens: getTokensByChain('goerli')!,
+    tokens: getTokensByChain('goerli') as Token[],
   },
   optimism: {
     symbol: 'ETH',
@@ -301,7 +302,7 @@ const networks: Record<NetworkName, Network> = {
     chain: 'optimism',
     coinGeckoId: 'optimism',
     id: 10,
-    tokens: getTokensByChain('optimism')!,
+    tokens: getTokensByChain('optimism') as Token[],
   },
   matic: {
     symbol: 'MATIC',
@@ -309,8 +310,28 @@ const networks: Record<NetworkName, Network> = {
     chain: 'matic',
     coinGeckoId: 'matic-network',
     id: 137,
-    tokens: getTokensByChain('matic')!,
+    tokens: getTokensByChain('matic') as Token[],
   },
+};
+
+export const getAllCoinGeckoIds = () => {
+  const ids: string[] = [];
+
+  Object.values(networks).forEach((network) => {
+    if (network.coinGeckoId) {
+      ids.push(network.coinGeckoId);
+    }
+
+    network.tokens.forEach((token) => {
+      if (token.coinGeckoId) {
+        ids.push(token.coinGeckoId);
+      }
+    });
+  });
+
+  _(ids).uniq().filter(Boolean).value();
+
+  return ids;
 };
 
 export const identityNetworkName = (
