@@ -281,7 +281,7 @@ const networks: Record<NetworkName, Network> = {
   },
   bsc: {
     symbol: 'BNB',
-    name: 'Binance Coin',
+    name: 'BNB Smart Chain',
     chain: 'binance smart chain',
     coinGeckoId: 'binancecoin',
     id: 56,
