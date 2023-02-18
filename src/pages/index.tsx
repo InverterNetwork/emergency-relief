@@ -6,7 +6,11 @@ import Header from '@/components/Header/Header';
 import Button from '@/components/Button/Button';
 import Link from 'next/link';
 
-export default function Home({ address: cachedAddress }: { address?: string }) {
+export default function Home({
+  address: cachedAddress,
+}: {
+  address: string | null;
+}) {
   return (
     <>
       <Head>
@@ -17,7 +21,7 @@ export default function Home({ address: cachedAddress }: { address?: string }) {
       </Head>
 
       <div className="container mx-auto py-10">
-        <Header cachedAddress={cachedAddress} />
+        <Header cachedAddress={cachedAddress || undefined} />
 
         <main className="space-y-5 mt-8">
           <div className="grid grid-cols-12 gap-4 gap-y-8">
@@ -29,8 +33,8 @@ export default function Home({ address: cachedAddress }: { address?: string }) {
               <span className="text-lg block">
                 Turkey has declared a state of emergency after two powerful
                 earthquakes, with magnitudes of 7.8 and 7.5, struck the country
-                on 6 February 2023, resulting in over 11,700 deaths, 3,450
-                collapsed buildings, and affecting over 23 million people.
+                on 6 February 2023, resulting in over 40k+ deaths, 6k+ collapsed
+                buildings, and affecting over 23 million people.
               </span>
 
               <Link href="/donate">
@@ -67,55 +71,34 @@ export default function Home({ address: cachedAddress }: { address?: string }) {
           <div className="bg-[#F1F1EF] px-6 py-8 rounded-3xl">
             <h2 className="text-4xl font-semibold">About us</h2>
             <span className="mt-10 block text-lg">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              ultrices tortor vitae tristique ullamcorper. In mollis volutpat
-              mauris, et accumsan nisi placerat ac. Aenean eu dui velit.
-              Suspendisse elementum purus finibus sem facilisis, eu porta tortor
-              accumsan. Donec malesuada risus a urna feugiat, id sollicitudin
-              risus semper. Fusce aliquet nisi sapien, vel dignissim quam
-              tincidunt sit amet. Morbi molestie felis sit amet enim mattis
-              commodo. Praesent purus mi, varius congue turpis non, pharetra
-              tristique justo. Nam auctor tortor eget ultrices euismod. Nam
-              placerat mollis ligula, a ullamcorper ante. Sed id viverra diam.
-              Donec sem nibh, viverra vel velit quis, aliquam mattis ante. Duis
-              sit amet est ante.
+              Emergency Relief is a data commons API that is initiated by the
+              Inverter Network which is a community driven infrastructure
+              protocol for coordination and conditional streaming to foster
+              open-source software development & research. Inverter Network
+              collaborates directly with the development initiatives and
+              grassroots projects on the ground.
+              <br />
+              <br />
+              Our idea of creating the <Link href="/">
+                emergencyrelief.xyz
+              </Link>{' '}
+              is to enable direct and informed contributions to the NGOs that
+              are being mobilised in case of emergencies, this time that being
+              the earthquake in Turkey & Syria. We are onboarding widely
+              acclaimed verified NGOs to blockchain to help them receive fast,
+              secure, global, and transparent aid. We are also working with some
+              of them to create blockchain-based accountability methods to
+              facilitate sustainable funding for development projects in the
+              future.
+              <br />
+              <br />
+              We built this data commons with Giveth and Gitcoin to enable other
+              funding and donation platforms to easily work with those NGOs by
+              pulling their digital identities easily into their platforms. To
+              ensure the integrity and the transparency of those donations with
+              the disaster relief, we are only listing NGOs that are KYC
+              verified by Paribu Exchange, a major exchange in Turkey.
             </span>
-          </div>
-
-          <div className="bg-[#F1F1EF] px-6 py-8 rounded-3xl">
-            <h2 className="text-4xl font-semibold">Stats</h2>
-
-            <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-10">
-              <div className="bg-[#E7E5E3] p-6 rounded-3xl space-y-3">
-                <h3 className="text-4xl font-semibold">111M</h3>
-                <span className="block text-lg">Funded</span>
-              </div>
-
-              <div className="bg-[#E7E5E3] p-6 rounded-3xl space-y-3">
-                <h3 className="text-4xl font-semibold">111M</h3>
-                <span className="block text-lg">Funded</span>
-              </div>
-
-              <div className="bg-[#E7E5E3] p-6 rounded-3xl space-y-3">
-                <h3 className="text-4xl font-semibold">111M</h3>
-                <span className="block text-lg">Funded</span>
-              </div>
-
-              <div className="bg-[#E7E5E3] p-6 rounded-3xl space-y-3">
-                <h3 className="text-4xl font-semibold">111M</h3>
-                <span className="block text-lg">Funded</span>
-              </div>
-
-              <div className="bg-[#E7E5E3] p-6 rounded-3xl space-y-3">
-                <h3 className="text-4xl font-semibold">111M</h3>
-                <span className="block text-lg">Funded</span>
-              </div>
-
-              <div className="bg-[#E7E5E3] p-6 rounded-3xl space-y-3">
-                <h3 className="text-4xl font-semibold">111M</h3>
-                <span className="block text-lg">Funded</span>
-              </div>
-            </div>
           </div>
         </main>
       </div>
@@ -124,7 +107,7 @@ export default function Home({ address: cachedAddress }: { address?: string }) {
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  address?: string;
+  address: string | null;
 }> = async ({ req, res }) => {
   res.setHeader(
     'Cache-Control',
@@ -133,15 +116,9 @@ export const getServerSideProps: GetServerSideProps<{
 
   const address = getCookie('address', { req, res });
 
-  if (!address) {
-    return {
-      props: {},
-    };
-  }
-
   return {
     props: {
-      address: address.toString(),
+      address: address?.toString() || null,
     },
   };
 };

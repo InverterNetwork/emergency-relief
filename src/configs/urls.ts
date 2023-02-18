@@ -5,6 +5,8 @@ const urls = {
   getProject: (id: string) => `projects/${id}`,
   getProjects: `projects`,
   createTransaction: `transactions`,
+  getTransactionsByProjectId: (projectId: number) =>
+    `transactions/project/${projectId}`,
 };
 
 export default urls;

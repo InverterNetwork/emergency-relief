@@ -59,7 +59,13 @@ const Header = ({ cachedAddress }: Props) => {
         </Link>
 
         <Link href="/donate">
-          <Button variant={checkRoute('/donate') ? 'primary' : 'text'}>
+          <Button
+            variant={
+              checkRoute('/donate') || checkRoute('/project/[id]')
+                ? 'primary'
+                : 'text'
+            }
+          >
             Donate
           </Button>
         </Link>
