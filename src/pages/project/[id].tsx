@@ -540,10 +540,19 @@ export default function Home({
                 </div>
 
                 <span className="mt-2">
-                  Your donation will go to
-                  <b className="block text-xs">
-                    {selectedChainDonationAddress}
-                  </b>
+                  {Boolean(selectedChainDonationAddress) && (
+                    <>
+                      Your donation will go to
+                      <Link
+                        href={`${chain?.blockExplorers?.default.url}/address/${selectedChainDonationAddress}`}
+                        target="_blank"
+                      >
+                        <b className="block text-xs">
+                          {selectedChainDonationAddress}
+                        </b>
+                      </Link>
+                    </>
+                  )}
                 </span>
 
                 <div className="max-w-md mx-auto">
@@ -564,53 +573,59 @@ export default function Home({
                         onChange={(e) => setAmount(e.target.value)}
                       />
 
-                      {address && tokens && tokens.length > 0 && (
-                        <div className="absolute h-full right-4 flex items-center justify-center space-x-4">
-                          <SelectPrimitive.Root
-                            value={selectedTokenSymbol}
-                            onValueChange={setSelectedTokenSymbol}
-                          >
-                            <SelectPrimitive.Trigger asChild aria-label="Food">
-                              <Button variant="secondary">
-                                <SelectPrimitive.Value />
-                                <SelectPrimitive.Icon>
-                                  <ChevronDownIcon className="w-6 h-6" />
-                                </SelectPrimitive.Icon>
-                              </Button>
-                            </SelectPrimitive.Trigger>
-                            <SelectPrimitive.Content>
-                              <SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700">
-                                <ChevronUpIcon />
-                              </SelectPrimitive.ScrollUpButton>
-                              <SelectPrimitive.Viewport className="bg-white p-2 rounded-lg shadow-lg">
-                                <SelectPrimitive.Group>
-                                  {tokens.map((token) => (
-                                    <SelectPrimitive.Item
-                                      key={token.value}
-                                      value={token.value}
-                                      className={cx(
-                                        'relative flex items-center px-8 py-2 rounded-md text-gray-700 font-medium focus:bg-gray-100',
-                                        'radix-disabled:opacity-50',
-                                        'focus:outline-none select-none',
-                                      )}
-                                    >
-                                      <SelectPrimitive.ItemText>
-                                        {token.label}
-                                      </SelectPrimitive.ItemText>
-                                      <SelectPrimitive.ItemIndicator className="absolute left-2 inline-flex items-center">
-                                        <CheckIcon />
-                                      </SelectPrimitive.ItemIndicator>
-                                    </SelectPrimitive.Item>
-                                  ))}
-                                </SelectPrimitive.Group>
-                              </SelectPrimitive.Viewport>
-                              <SelectPrimitive.ScrollDownButton className="flex items-center justify-center text-gray-700">
-                                <ChevronDownIcon />
-                              </SelectPrimitive.ScrollDownButton>
-                            </SelectPrimitive.Content>
-                          </SelectPrimitive.Root>
-                        </div>
-                      )}
+                      {address &&
+                        tokens &&
+                        tokens.length > 0 &&
+                        selectedChainDonationAddress && (
+                          <div className="absolute h-full right-4 flex items-center justify-center space-x-4">
+                            <SelectPrimitive.Root
+                              value={selectedTokenSymbol}
+                              onValueChange={setSelectedTokenSymbol}
+                            >
+                              <SelectPrimitive.Trigger
+                                asChild
+                                aria-label="Food"
+                              >
+                                <Button variant="secondary">
+                                  <SelectPrimitive.Value />
+                                  <SelectPrimitive.Icon>
+                                    <ChevronDownIcon className="w-6 h-6" />
+                                  </SelectPrimitive.Icon>
+                                </Button>
+                              </SelectPrimitive.Trigger>
+                              <SelectPrimitive.Content>
+                                <SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700">
+                                  <ChevronUpIcon />
+                                </SelectPrimitive.ScrollUpButton>
+                                <SelectPrimitive.Viewport className="bg-white p-2 rounded-lg shadow-lg">
+                                  <SelectPrimitive.Group>
+                                    {tokens.map((token) => (
+                                      <SelectPrimitive.Item
+                                        key={token.value}
+                                        value={token.value}
+                                        className={cx(
+                                          'relative flex items-center px-8 py-2 rounded-md text-gray-700 font-medium focus:bg-gray-100',
+                                          'radix-disabled:opacity-50',
+                                          'focus:outline-none select-none',
+                                        )}
+                                      >
+                                        <SelectPrimitive.ItemText>
+                                          {token.label}
+                                        </SelectPrimitive.ItemText>
+                                        <SelectPrimitive.ItemIndicator className="absolute left-2 inline-flex items-center">
+                                          <CheckIcon />
+                                        </SelectPrimitive.ItemIndicator>
+                                      </SelectPrimitive.Item>
+                                    ))}
+                                  </SelectPrimitive.Group>
+                                </SelectPrimitive.Viewport>
+                                <SelectPrimitive.ScrollDownButton className="flex items-center justify-center text-gray-700">
+                                  <ChevronDownIcon />
+                                </SelectPrimitive.ScrollDownButton>
+                              </SelectPrimitive.Content>
+                            </SelectPrimitive.Root>
+                          </div>
+                        )}
                     </div>
                   </div>
                   <div className="text-xs mt-3">
