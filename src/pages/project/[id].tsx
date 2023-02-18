@@ -236,12 +236,11 @@ export default function Home({
     ? false
     : Number(balance.formatted) < Number(amount);
 
+  const isValidNumber = isNumberString(amount) && Number(amount) > 0;
+
   const isButtonDisabled = useMemo(() => {
     const sharedCondition =
-      !isSupportedChain ||
-      !amount ||
-      isInsufficientBalance ||
-      !isNumberString(amount);
+      !isSupportedChain || !amount || isInsufficientBalance || !isValidNumber;
 
     if (isNativeToken) {
       return sharedCondition || isTransactionLoading || !sendTransaction;
@@ -254,6 +253,7 @@ export default function Home({
     isNativeToken,
     isSupportedChain,
     isTransactionLoading,
+    isValidNumber,
     sendTransaction,
   ]);
 
@@ -554,7 +554,8 @@ export default function Home({
                           'flex-1 bg-transparent pl-4 py-3 font-bold border focus:outline-black rounded-xl',
                           {
                             'border border-[#B33A41] focus:outline-[#B33A41] text-[#B33A41]':
-                              address && isInsufficientBalance,
+                              (address && isInsufficientBalance) ||
+                              (amount && !isValidNumber),
                           },
                         )}
                         type="text"
