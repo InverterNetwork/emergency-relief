@@ -95,6 +95,13 @@ export default function Home({
     }
 
     if (isNetworkSupported(chain.network)) {
+      if (chain.network === 'avalanche' && chain.blockExplorers) {
+        chain.blockExplorers['explorer-xp'] = {
+          name: 'explorer-xp',
+          url: 'https://explorer-xp.avax.network',
+        };
+      }
+
       return chain.network;
     }
 
@@ -394,6 +401,17 @@ export default function Home({
     return formatNumber(amountAsInteger);
   }, [amount, selectedTokenPrice]);
 
+  const getBlockExplorer = (): string => {
+    console.log({ selectedChain });
+    if (
+      selectedChain?.name.toLowerCase() === 'avalanche' &&
+      selectedChainDonationAddress?.startsWith('X-')
+    ) {
+      return chain?.blockExplorers!['explorer-xp'].url as string;
+    }
+    return chain?.blockExplorers?.default.url as string;
+  };
+
   return (
     <>
       <Head>
@@ -446,6 +464,12 @@ export default function Home({
                 </h1>
 
                 <div className="flex space-x-3">
+                  <Link href={project.website} target="_blank">
+                    <div className="p-2 bg-[#E7E5E3] rounded-full">
+                      {renderSocialLinkIcon('website')}
+                    </div>
+                  </Link>
+
                   {project.socialProfiles.map((profile) => (
                     <Link
                       key={profile.platform}
@@ -544,7 +568,7 @@ export default function Home({
                     <>
                       Your donation will go to
                       <Link
-                        href={`${chain?.blockExplorers?.default.url}/address/${selectedChainDonationAddress}`}
+                        href={`${getBlockExplorer()}/address/${selectedChainDonationAddress}`}
                         target="_blank"
                       >
                         <b className="block text-xs">
