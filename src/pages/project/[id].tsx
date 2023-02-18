@@ -539,7 +539,7 @@ export default function Home({
                   </div>
                 </div>
 
-                <span className="mt-2">
+                <div className="mt-2 w-fit">
                   {Boolean(selectedChainDonationAddress) && (
                     <>
                       Your donation will go to
@@ -553,7 +553,7 @@ export default function Home({
                       </Link>
                     </>
                   )}
-                </span>
+                </div>
 
                 <div className="max-w-md mx-auto">
                   <div>
