@@ -7,11 +7,11 @@ import { CreateTransactionDto } from '@/features/transactions/dto/create-transac
 import { Transaction } from '@/features/transactions/entity/transaction.entity';
 
 const encryptTransaction = (transaction: CreateTransactionDto) => {
-  const ENCRYPT_SECRET = 'secret';
+  const CRYPTO_KEY = process.env.NEXT_PUBLIC_CRYPTO_KEY as string;
 
   const encrypted = crypto.AES.encrypt(
     JSON.stringify(transaction),
-    ENCRYPT_SECRET,
+    CRYPTO_KEY,
   ).toString();
 
   return encrypted;
