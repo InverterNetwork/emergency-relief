@@ -736,7 +736,7 @@ export default function Home({
                   >
                     <FaDonate size={24} />
 
-                    <div className="flex flex-col">
+                    <div className="flex flex-col overflow-hidden">
                       <span className="block font-bold text-sm">
                         {transaction.fromWallet}
                       </span>
