@@ -32,7 +32,7 @@ import { useRecoilState } from 'recoil';
 import _ from 'lodash';
 import Link from 'next/link';
 
-import { parseEther } from 'ethers/lib/utils.js';
+import { parseEther, parseUnits } from 'ethers/lib/utils.js';
 import { toast } from 'react-hot-toast';
 import { isNumberString } from 'class-validator';
 
@@ -293,9 +293,14 @@ export default function Home({
       return;
     }
 
+    const value = parseUnits(amount, selectedToken?.decimals);
+
     const tx = await contract.transfer(
       selectedChainDonationAddress as `0x${string}`,
-      parseEther(amount),
+      value,
+      {
+        from: address as `0x${string}`,
+      },
     );
 
     setLastTransactionHash(tx.hash as `0x${string}`);

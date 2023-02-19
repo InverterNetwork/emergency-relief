@@ -15,6 +15,7 @@ type Token = {
   symbol: string;
   address: string;
   abi: typeof erc20ABI;
+  decimals: number;
   coinGeckoId: string | null;
 };
 
@@ -37,6 +38,15 @@ const goerliTokens: Token[] = [
     symbol: 'DERC',
     address: '0x655F2166b0709cd575202630952D71E2bB0d61Af',
     abi: erc20ABI,
+    decimals: 18,
+    coinGeckoId: null,
+  },
+  {
+    name: 'USDC',
+    symbol: 'USDC',
+    address: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+    abi: erc20ABI,
+    decimals: 6,
     coinGeckoId: null,
   },
 ];
@@ -47,6 +57,7 @@ const homesteadTokens: Token[] = [
     symbol: 'USDT',
     address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
     abi: erc20ABI,
+    decimals: 6,
     coinGeckoId: 'tether',
   },
   {
@@ -54,6 +65,7 @@ const homesteadTokens: Token[] = [
     symbol: 'USDC',
     address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
     abi: erc20ABI,
+    decimals: 6,
     coinGeckoId: 'usd-coin',
   },
   {
@@ -61,6 +73,7 @@ const homesteadTokens: Token[] = [
     symbol: 'DAI',
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'dai',
   },
   {
@@ -68,6 +81,7 @@ const homesteadTokens: Token[] = [
     symbol: 'WETH',
     address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'weth',
   },
   {
@@ -75,6 +89,7 @@ const homesteadTokens: Token[] = [
     symbol: 'BUSD',
     address: '0x4fabb145d64652a948d72533023f6e7a623c7c53',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'binance-busd',
   },
   {
@@ -82,6 +97,7 @@ const homesteadTokens: Token[] = [
     symbol: 'MATIC',
     address: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'matic-network',
   },
 ];
@@ -92,6 +108,7 @@ const bscTokens: Token[] = [
     symbol: 'USDT',
     address: '0x55d398326f99059ff775485246999027b3197955',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'tether',
   },
   {
@@ -99,6 +116,7 @@ const bscTokens: Token[] = [
     symbol: 'USDC',
     address: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'usd-coin',
   },
   {
@@ -106,6 +124,7 @@ const bscTokens: Token[] = [
     symbol: 'BUSD',
     address: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'binance-usd',
   },
   {
@@ -113,6 +132,7 @@ const bscTokens: Token[] = [
     symbol: 'DAI',
     address: '0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'dai',
   },
   {
@@ -120,6 +140,7 @@ const bscTokens: Token[] = [
     symbol: 'MATIC',
     address: '0xcc42724c6683b7e57334c4e856f4c9965ed682bd',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'matic-network',
   },
 ];
@@ -130,6 +151,7 @@ const avalancheTokens: Token[] = [
     symbol: 'USDT',
     address: '0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7',
     abi: erc20ABI,
+    decimals: 6,
     coinGeckoId: 'tether',
   },
   {
@@ -137,6 +159,7 @@ const avalancheTokens: Token[] = [
     symbol: 'USDC',
     address: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
     abi: erc20ABI,
+    decimals: 6,
     coinGeckoId: 'usd-coin',
   },
   {
@@ -144,6 +167,7 @@ const avalancheTokens: Token[] = [
     symbol: 'DAI',
     address: '0xd586E7F844cEa2F87f50152665BCbc2C279D8d70',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'dai',
   },
 ];
@@ -154,6 +178,7 @@ const maticTokens: Token[] = [
     symbol: 'WETH',
     address: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'weth',
   },
   {
@@ -161,6 +186,7 @@ const maticTokens: Token[] = [
     symbol: 'USDT',
     address: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
     abi: erc20ABI,
+    decimals: 6,
     coinGeckoId: 'tether',
   },
   {
@@ -168,6 +194,7 @@ const maticTokens: Token[] = [
     symbol: 'USDC',
     address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
     abi: erc20ABI,
+    decimals: 6,
     coinGeckoId: 'usd-coin',
   },
   {
@@ -175,6 +202,7 @@ const maticTokens: Token[] = [
     symbol: 'DAI',
     address: '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'dai',
   },
 ];
@@ -185,6 +213,7 @@ const optimismTokens: Token[] = [
     symbol: 'USDT',
     address: '0x94b008aa00579c1307b0ef2c499ad98a8ce58e58',
     abi: erc20ABI,
+    decimals: 6,
     coinGeckoId: 'tether',
   },
   {
@@ -192,6 +221,7 @@ const optimismTokens: Token[] = [
     symbol: 'USDC',
     address: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607',
     abi: erc20ABI,
+    decimals: 6,
     coinGeckoId: 'usd-coin',
   },
   {
@@ -199,6 +229,7 @@ const optimismTokens: Token[] = [
     symbol: 'DAI',
     address: '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'dai',
   },
   {
@@ -206,6 +237,7 @@ const optimismTokens: Token[] = [
     symbol: 'WBTC',
     address: '0x68f180fcCe6836688e9084f035309E29Bf0A2095',
     abi: erc20ABI,
+    decimals: 8,
     coinGeckoId: 'wrapped-bitcoin',
   },
   {
@@ -213,6 +245,7 @@ const optimismTokens: Token[] = [
     symbol: 'LINK',
     address: '0x350a791Bfc2C21F9Ed5d10980Dad2e2638ffa7f6',
     abi: erc20ABI,
+    decimals: 18,
     coinGeckoId: 'chainlink',
   },
 ];
