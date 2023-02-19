@@ -32,11 +32,23 @@ export default function Home({
 
               <span className="text-lg block">
                 Turkey has declared a state of emergency after two powerful
-                earthquakes, with magnitudes of <Link href="https://www.emsc-csem.org/Earthquake/earthquake.php?id=1218444" target="_blank">
-                7.8 </Link> and <Link href="https://www.emsc-csem.org/Earthquake/earthquake.php?id=1218771" target="_blank">
-                7.5</Link>, struck the country
-                on 6 February 2023, resulting in over 40k+ deaths, 6k+ collapsed
-                buildings, and affecting over 23 million people.
+                earthquakes, with magnitudes of{' '}
+                <Link
+                  href="https://www.emsc-csem.org/Earthquake/earthquake.php?id=1218444"
+                  target="_blank"
+                >
+                  7.8{' '}
+                </Link>{' '}
+                and{' '}
+                <Link
+                  href="https://www.emsc-csem.org/Earthquake/earthquake.php?id=1218771"
+                  target="_blank"
+                >
+                  7.5
+                </Link>
+                , struck the country on 6 February 2023, resulting in over 40k+
+                deaths, 6k+ collapsed buildings, and affecting over 23 million
+                people.
               </span>
 
               <Link href="/donate">
@@ -48,16 +60,22 @@ export default function Home({
 
             <div className="flex flex-1 flex-col justify-between col-span-12 lg:col-span-4 space-y-4">
               <div className="space-y-3 bg-[#F1F1EF] p-6 rounded-3xl">
-                <Link href="https://en.afad.gov.tr/press-bulletin-32-about-the-earthquake-in-kahramanmaras" target="_blank">
+                <Link
+                  href="https://en.afad.gov.tr/press-bulletin-32-about-the-earthquake-in-kahramanmaras"
+                  target="_blank"
+                >
                   <h2 className="text-4xl font-semibold">40,000+</h2>
                   <span className="block text-lg">
-                    Death toll from the t official figures.
+                    Death toll from the latest official figures.
                   </span>
                 </Link>
               </div>
 
               <div className="space-y-3 bg-[#F1F1EF] p-6 rounded-3xl">
-                <Link href="https://www.emsc-csem.org/Earthquake/earthquake.php?id=1218444" target="_blank">
+                <Link
+                  href="https://www.emsc-csem.org/Earthquake/earthquake.php?id=1218444"
+                  target="_blank"
+                >
                   <h2 className="text-4xl font-semibold">7.8</h2>
                   <span className="block text-lg">
                     Magnitudes of the mainshock and the largest aftershock.
@@ -77,12 +95,19 @@ export default function Home({
           <div className="bg-[#F1F1EF] px-6 py-8 rounded-3xl">
             <h2 className="text-4xl font-semibold">About us</h2>
             <span className="mt-10 block text-lg">
-              Emergency Relief is a data commons API that is initiated by the <Link href="https://twitter.com/inverternetwork/" target="_blank"> Inverter Network </Link>, which is a community-driven infrastructure
-              protocol for coordination and conditional streaming to foster
-              open-source software development & research. <Link href="https://twitter.com/inverternetwork/" target="_blank">
-              Inverter Network </Link>
-              collaborates directly with development initiatives and
-              grassroots projects on the ground.
+              Emergency Relief is a data commons API that is initiated by the{' '}
+              <Link href="https://twitter.com/inverternetwork/" target="_blank">
+                {' '}
+                Inverter Network{' '}
+              </Link>
+              , which is a community-driven infrastructure protocol for
+              coordination and conditional streaming to foster open-source
+              software development & research.{' '}
+              <Link href="https://twitter.com/inverternetwork/" target="_blank">
+                Inverter Network{' '}
+              </Link>
+              collaborates directly with development initiatives and grassroots
+              projects on the ground.
               <br />
               <br />
               Our idea of creating the <Link href="/">
@@ -98,15 +123,23 @@ export default function Home({
               future.
               <br />
               <br />
-              We built this data commons with <Link href="https://giveth.io/" target="_blank">
-              Giveth </Link> and <Link href="https://gitcoin.co/" target="_blank">
-              Gitcoin </Link> to enable other
-              funding and donation platforms to easily work with those NGOs by
-              pulling their digital identities easily into their platforms. To
-              ensure the integrity and transparency of those donations with
-              disaster relief, we only list NGOs that are KYC
-              verified by <Link href="https://www.paribu.com/" target="_blank">
-              Paribu Exchange</Link>, a major exchange in Turkey.
+              We built this data commons with{' '}
+              <Link href="https://giveth.io/" target="_blank">
+                Giveth{' '}
+              </Link>{' '}
+              and{' '}
+              <Link href="https://gitcoin.co/" target="_blank">
+                Gitcoin{' '}
+              </Link>{' '}
+              to enable other funding and donation platforms to easily work with
+              those NGOs by pulling their digital identities easily into their
+              platforms. To ensure the integrity and transparency of those
+              donations with disaster relief, we only list NGOs that are KYC
+              verified by{' '}
+              <Link href="https://www.paribu.com/" target="_blank">
+                Paribu Exchange
+              </Link>
+              , a major exchange in Turkey.
             </span>
           </div>
         </main>
