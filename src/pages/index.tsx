@@ -32,7 +32,9 @@ export default function Home({
 
               <span className="text-lg block">
                 Turkey has declared a state of emergency after two powerful
-                earthquakes, with magnitudes of 7.8 and 7.5, struck the country
+                earthquakes, with magnitudes of <Link href="https://www.emsc-csem.org/Earthquake/earthquake.php?id=1218444" target="_blank">
+                7.8 </Link> and <Link href="https://www.emsc-csem.org/Earthquake/earthquake.php?id=1218771" target="_blank">
+                7.5</Link>, struck the country
                 on 6 February 2023, resulting in over 40k+ deaths, 6k+ collapsed
                 buildings, and affecting over 23 million people.
               </span>
@@ -46,23 +48,27 @@ export default function Home({
 
             <div className="flex flex-1 flex-col justify-between col-span-12 lg:col-span-4 space-y-4">
               <div className="space-y-3 bg-[#F1F1EF] p-6 rounded-3xl">
-                <h2 className="text-4xl font-semibold">40,000+</h2>
-                <span className="block text-lg">
-                  Death toll from the lates official figures
-                </span>
+                <Link href="https://en.afad.gov.tr/press-bulletin-32-about-the-earthquake-in-kahramanmaras" target="_blank">
+                  <h2 className="text-4xl font-semibold">40,000+</h2>
+                  <span className="block text-lg">
+                    Death toll from the t official figures.
+                  </span>
+                </Link>
               </div>
 
               <div className="space-y-3 bg-[#F1F1EF] p-6 rounded-3xl">
-                <h2 className="text-4xl font-semibold">7.8</h2>
-                <span className="block text-lg">
-                  Magnitudes of the mainshock and the largest aftershock.
-                </span>
+                <Link href="https://www.emsc-csem.org/Earthquake/earthquake.php?id=1218444" target="_blank">
+                  <h2 className="text-4xl font-semibold">7.8</h2>
+                  <span className="block text-lg">
+                    Magnitudes of the mainshock and the largest aftershock.
+                  </span>
+                </Link>
               </div>
 
               <div className="space-y-3 bg-[#F1F1EF] p-6 rounded-3xl">
                 <h2 className="text-4xl font-semibold">6,000+</h2>
                 <span className="block text-lg">
-                  Collapsed buildings on people trapped in the ruble.
+                  Collapsed buildings on people trapped in the rubble.
                 </span>
               </div>
             </div>
@@ -71,11 +77,11 @@ export default function Home({
           <div className="bg-[#F1F1EF] px-6 py-8 rounded-3xl">
             <h2 className="text-4xl font-semibold">About us</h2>
             <span className="mt-10 block text-lg">
-              Emergency Relief is a data commons API that is initiated by the
-              Inverter Network which is a community driven infrastructure
+              Emergency Relief is a data commons API that is initiated by the <Link href="https://twitter.com/inverternetwork/" target="_blank"> Inverter Network </Link>, which is a community-driven infrastructure
               protocol for coordination and conditional streaming to foster
-              open-source software development & research. Inverter Network
-              collaborates directly with the development initiatives and
+              open-source software development & research. <Link href="https://twitter.com/inverternetwork/" target="_blank">
+              Inverter Network </Link>
+              collaborates directly with development initiatives and
               grassroots projects on the ground.
               <br />
               <br />
@@ -83,7 +89,7 @@ export default function Home({
                 emergencyrelief.xyz
               </Link>{' '}
               is to enable direct and informed contributions to the NGOs that
-              are being mobilised in case of emergencies, this time that being
+              are being mobilized in case of emergencies, this time that being
               the earthquake in Turkey & Syria. We are onboarding widely
               acclaimed verified NGOs to blockchain to help them receive fast,
               secure, global, and transparent aid. We are also working with some
@@ -92,12 +98,15 @@ export default function Home({
               future.
               <br />
               <br />
-              We built this data commons with Giveth and Gitcoin to enable other
+              We built this data commons with <Link href="https://giveth.io/" target="_blank">
+              Giveth </Link> and <Link href="https://gitcoin.co/" target="_blank">
+              Gitcoin </Link> to enable other
               funding and donation platforms to easily work with those NGOs by
               pulling their digital identities easily into their platforms. To
-              ensure the integrity and the transparency of those donations with
-              the disaster relief, we are only listing NGOs that are KYC
-              verified by Paribu Exchange, a major exchange in Turkey.
+              ensure the integrity and transparency of those donations with
+              disaster relief, we only list NGOs that are KYC
+              verified by <Link href="https://www.paribu.com/" target="_blank">
+              Paribu Exchange</Link>, a major exchange in Turkey.
             </span>
           </div>
         </main>
