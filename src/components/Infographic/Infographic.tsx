@@ -10,16 +10,16 @@ const Infographic = () => {
   const canvasRef = useRef(null);
 
   const [selectedCity, setSelectedCity] = useState<
-    'Kahramanmaraş' | 'Gaziantep'
-  >();
+    'Kahramanmaraş' | 'Gaziantep' | 'All' | null
+  >('All');
 
   const handleClickOutside = () => {
-    setSelectedCity(undefined);
+    setSelectedCity(null);
   };
 
   const handleClick = (city: 'Kahramanmaraş' | 'Gaziantep') => {
     if (selectedCity === city) {
-      return setSelectedCity(undefined);
+      return setSelectedCity(city);
     }
 
     setSelectedCity(city);
@@ -28,9 +28,9 @@ const Infographic = () => {
   useOnClickOutside(canvasRef, handleClickOutside);
 
   return (
-    <div className="flex justify-center relative py-4">
+    <div className="flex justify-center relative py-4 mt-14">
       <AnimatePresence>
-        {selectedCity === 'Kahramanmaraş' && (
+        {(selectedCity === 'Kahramanmaraş' || selectedCity === 'All') && (
           <motion.div
             className="absolute left-0 top-0"
             initial={{ opacity: 0, x: -100 }}
@@ -43,7 +43,7 @@ const Infographic = () => {
       </AnimatePresence>
 
       <AnimatePresence>
-        {selectedCity === 'Gaziantep' && (
+        {(selectedCity === 'Gaziantep' || selectedCity === 'All') && (
           <motion.div
             className="absolute right-0 bottom-0"
             initial={{ opacity: 0, x: 100 }}

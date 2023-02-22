@@ -3,19 +3,17 @@ import { cva, VariantProps } from 'class-variance-authority';
 import cx from 'classnames';
 
 const buttonVariants = cva(
-  'flex h-fit rounded-lg gap-2 items-center justify-center leading-0 font-semibold disabled:bg-gray-300',
+  'flex h-fit rounded-full gap-1 items-center justify-center leading-0 font-semibold',
   {
     variants: {
       variant: {
         primary:
-          'bg-primary hover:bg-primary-600 focus:bg-primary-700 text-gray-50',
+          'bg-primary-50 hover:bg-primary-100 focus:bg-primary-200 text-primary-700 mix-blend-multiply',
         secondary:
-          'bg-secondary hover:bg-secondary-600 focus:bg-secondary-700 text-gray-50',
-        text: 'bg-transparent text-gray-900',
-        error: '!bg-error-500 text-gray-50',
+          'bg-secondary-50 hover:bg-secondary-100 focus:bg-secondary-200 text-secondary-700 mix-blend-multiply',
       },
       size: {
-        default: 'text-sm py-3 px-4',
+        default: 'text-sm py-1 px-4',
         small: 'text-sm py-1 px-3',
         large: 'text-lg py-3 px-5',
       },
@@ -40,7 +38,7 @@ export interface Props
   rightNode?: React.ReactNode;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, Props>(
+const Badge = React.forwardRef<HTMLButtonElement, Props>(
   (
     { children, leftNode, rightNode, variant, className, size, ...props },
     ref,
@@ -61,6 +59,6 @@ const Button = React.forwardRef<HTMLButtonElement, Props>(
   },
 );
 
-Button.displayName = 'Button';
+Badge.displayName = 'Badge';
 
-export default Button;
+export default Badge;

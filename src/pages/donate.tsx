@@ -26,7 +26,7 @@ export default function Donate({ address: cachedAddress, projects }: Props) {
       <div className="container mx-auto py-10">
         <Header cachedAddress={cachedAddress || ''} />
 
-        <main className="flex flex-col mt-8 bg-[#F1F1EF] py-4 px-6 rounded-3xl">
+        <main className="flex flex-col mt-8 bg-gray-50 py-4 px-6 rounded-3xl">
           <h2 className="text-2xl font-bold">{projects.length} results</h2>
 
           <div className="mt-3 grid md:grid-cols-3 xl:grid-cols-4 grid-cols-1 gap-3">

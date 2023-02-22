@@ -42,10 +42,13 @@ export default function Home({ address: cachedAddress, projects }: Props) {
 
       <div className="relative flex flex-col justify-center items-center w-full bg-hero bg-cover h-screen p-10">
         <h1 className="font-black text-3xl md:text-5xl text-center lg:text-7xl leading-[150%] text-gray-50">
-          Turkish Village Need Help
+          Emergency Relief
         </h1>
-        <span className="mt-3 text-sm md:text-md text-lg leading-[150%] text-gray-300 text-center">
-          Turkish people need help immediately. Please help Turkey!
+        <span className="mt-4 text-sm md:text-md leading-[150%] text-gray-300 text-center">
+          Crypto Community Unites to Support Earthquake Relief Efforts in
+          Turkiye. Join us in providing aid and support to those affected by the
+          devastating earthquakes in Turkiye through crypto donations and
+          innovative relief efforts.
         </span>
 
         <Link href="#donate" scroll={false}>
@@ -71,32 +74,32 @@ export default function Home({ address: cachedAddress, projects }: Props) {
       </div>
 
       <div id="info" className="container mx-auto py-10 bg-gray-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 hxl:grid-cols-4 gap-8">
+          <Card
+            heading={'projects'}
+            information={'10'}
+            icon={<BsFillGearFill className="h-5 w-5" />}
+          ></Card>
+          <Card
+            heading={'unique donors'}
+            information={'5,425'}
+            icon={<BsPeopleFill className="h-5 w-5" />}
+          ></Card>
+          <Card
+            heading={'raised'}
+            information={'$1M'}
+            icon={<RiCoinsFill className="h-5 w-5" />}
+          ></Card>
+          <Card
+            heading={'in'}
+            information={'16 days'}
+            icon={<BsFillCalendar2WeekFill className="h-5 w-5" />}
+          ></Card>
+        </div>
+
         <Infographic />
 
         <main className="space-y-5 mt-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 hxl:grid-cols-4 gap-8">
-            <Card
-              heading={'projects'}
-              information={'10'}
-              icon={<BsFillGearFill className="h-5 w-5" />}
-            ></Card>
-            <Card
-              heading={'unique donors'}
-              information={'5,425'}
-              icon={<BsPeopleFill className="h-5 w-5" />}
-            ></Card>
-            <Card
-              heading={'raised'}
-              information={'$1M'}
-              icon={<RiCoinsFill className="h-5 w-5" />}
-            ></Card>
-            <Card
-              heading={'in'}
-              information={'16 days'}
-              icon={<BsFillCalendar2WeekFill className="h-5 w-5" />}
-            ></Card>
-          </div>
-
           <div>
             <h2 className="font-bold text-4xl text-gray-900">
               Earthquake Casualties
@@ -126,9 +129,21 @@ export default function Home({ address: cachedAddress, projects }: Props) {
           </div>
 
           <div id="donate">
-            <h2 className="font-bold text-4xl text-gray-900">
+            <h2 className="font-bold text-4xl text-gray-900 mt-8">
               Support Projects
             </h2>
+            <Link
+              href={
+                'https://giveth.io/project/earthquake-relief-qf-matching-pool'
+              }
+              target={'_blank'}
+            >
+              <div className="mt-5 w-full h-[500px] bg-pool rounded-lg shadow-sm flex items-center justify-center">
+                <h1 className="text-5xl font-bold text-gray-50 text-center">
+                  Matching Pool
+                </h1>
+              </div>
+            </Link>
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((project) => (
                 <Link href={`/project/${project.id}`} key={project.id}>

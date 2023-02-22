@@ -42,7 +42,7 @@ const Card = ({ duration, magnitude, time }: Props) => {
 
       <div className="absolute right-6 top-0">
         <div className="h-12 w-12 border-4 border-gray-50 flex items-center justify-center rounded-full">
-          <WiEarthquake className="w-6 h-6" />
+          <WiEarthquake className="w-5 h-5" />
         </div>
       </div>
     </div>

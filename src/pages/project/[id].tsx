@@ -36,7 +36,7 @@ import { parseEther, parseUnits } from 'ethers/lib/utils.js';
 import { toast } from 'react-hot-toast';
 import { isNumberString } from 'class-validator';
 
-import ProjectCard from '@/features/projects/components/ProjectCard/ProjectCard';
+// import ProjectCard from '@/features/projects/components/ProjectCard/ProjectCard';
 import {
   getProjectById,
   getProjects,
@@ -61,6 +61,17 @@ import { createTransaction } from '@/features/transactions/transaction.service';
 import { getPriceOfTokens } from '@/features/markets/market.service';
 import { Market } from '@/features/markets/entity/market.entity';
 import { formatNumber } from '@/utils/number';
+import Badge from '@/components/Badge/Badge';
+import { headerCase } from 'change-case';
+import ProjectCard from '@/components/ProjectCard/ProjectCard';
+import { BiDonateHeart } from 'react-icons/bi';
+
+import {
+  AiFillTwitterCircle,
+  AiFillInstagram,
+  AiFillLinkedin,
+} from 'react-icons/ai';
+import { BsPatchCheckFill } from 'react-icons/bs';
 
 type Props = {
   address: string | null;
@@ -362,27 +373,47 @@ export default function Home({
 
   const renderSocialLinkIcon = (platform: string) => {
     if (platform === SocialProfilePlatform.TWITTER) {
-      return <TwitterLogoIcon className="w-8 h-8" />;
+      return <AiFillTwitterCircle className="w-4 h-4" color="#4E5BA6" />;
     }
 
     if (platform === SocialProfilePlatform.INSTAGRAM) {
-      return <InstagramLogoIcon className="w-8 h-8" />;
+      return <AiFillInstagram className="w-4 h-4" color="#4E5BA6" />;
     }
 
     if (platform === SocialProfilePlatform.LINKEDIN) {
-      return <LinkedInLogoIcon className="w-8 h-8" />;
+      return <AiFillLinkedin className="w-4 h-4" color="#4E5BA6" />;
     }
 
-    return <Web className="w-8 h-8" />;
+    return <Web className="w-4 h-4" color="#4E5BA6" />;
   };
 
   const renderCredential = (statement: string, url: string | null) => {
     const renderContent = () => (
-      <div className="flex w-fit h-10 px-3 rounded-full items-center justify-center bg-[#E7E5E3] space-x-2 select-none">
-        <CheckIcon className="bg-black rounded-full w-7 h-7" color="white" />
+      <Badge
+        leftNode={
+          <BsPatchCheckFill className=" rounded-full w-4 h-4" color="#669F2A" />
+        }
+      >
+        {statement}
+      </Badge>
+    );
 
-        <span className="block font-bold text-lg">{statement}</span>
-      </div>
+    if (url) {
+      return (
+        <Link href={url} target="_blank">
+          {renderContent()}
+        </Link>
+      );
+    }
+
+    return <>{renderContent()}</>;
+  };
+
+  const renderLink = (platform: string, url: string | null) => {
+    const renderContent = () => (
+      <Badge variant={'secondary'} leftNode={renderSocialLinkIcon(platform)}>
+        {headerCase(platform)}
+      </Badge>
     );
 
     if (url) {
@@ -427,77 +458,33 @@ export default function Home({
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <div className="container mx-auto py-10">
-        <Header cachedAddress={cachedAddress || undefined} />
+      <Header cachedAddress={cachedAddress || undefined} />
 
-        <div className="grid grid-cols-12 gap-8 mt-8">
-          <main className="col-span-12 lg:col-span-9 space-y-5">
-            <div className="bg-[#F1F1EF] p-2 pb-3 rounded-3xl">
-              <div className="relative flex justify-center">
+      <div className="container mx-auto py-10">
+        <h1 className="font-bold text-5xl pt-10 mt-8">{project.name}</h1>
+        <div className="grid grid-cols-12 gap-8 mt-5">
+          <main className="col-span-12 lg:col-span-8 space-y-5">
+            <div>
+              <div className="relative flex justify-center aspect-video">
                 <Image
-                  className="rounded-3xl h-52 object-cover"
+                  className="rounded-lg shadow-sm w-full h-full object-cover"
                   src={{
                     src: project.bannerImageUrl || '/turkey.png',
-                    width: 1000,
+                    width: 1600,
                     height: 500,
                   }}
                   alt="Turkey earthquake"
                 />
-
-                <div className="absolute -bottom-20 h-40 w-40">
-                  <div className="relative">
-                    <CheckIcon
-                      className="z-10 absolute bottom-0 right-0 bg-[#262626] rounded-full w-11 h-11 border-[5px] border-white"
-                      color="white"
-                    />
-
-                    <Image
-                      className="rounded-full h-40 w-40 border-[8px] border-white bg-[#E7E5E3] object-contain"
-                      src={{
-                        src: project.logoImageUrl || '/world.png',
-                        width: 160,
-                        height: 160,
-                      }}
-                      alt="Turkey earthquake"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-20 mt-3 flex flex-col items-center justify-center flex-1 space-y-3">
-                <h1 className="text-4xl font-semibold text-center">
-                  {project.name}
-                </h1>
-
-                <div className="flex space-x-3">
-                  <Link href={project.website} target="_blank">
-                    <div className="p-2 bg-[#E7E5E3] rounded-full">
-                      {renderSocialLinkIcon('website')}
-                    </div>
-                  </Link>
-
-                  {project.socialProfiles.map((profile) => (
-                    <Link
-                      key={profile.platform}
-                      href={profile.profileUrl}
-                      target="_blank"
-                    >
-                      <div className="p-2 bg-[#E7E5E3] rounded-full">
-                        {renderSocialLinkIcon(profile.platform)}
-                      </div>
-                    </Link>
-                  ))}
-                </div>
               </div>
             </div>
 
-            <div className="bg-[#F1F1EF] p-6 space-y-3 rounded-3xl">
-              <h2 className="text-2xl font-semibold">About</h2>
-              <span className="block">{project.description}</span>
-            </div>
+            <div className="py-8 space-y-3">
+              <h2 className="font-bold text-4xl">About</h2>
+              <p className="text-md text-gray-600 block">
+                {project.description}
+              </p>
 
-            <div className="bg-[#F1F1EF] p-6 space-y-3 rounded-3xl">
-              <h2 className="text-2xl font-semibold">Credentials</h2>
+              <h3 className="font-semibold text-lg">Credentials</h3>
 
               <div className="flex gap-3 flex-wrap">
                 {project.credentials.map((credential, i) => (
@@ -509,16 +496,27 @@ export default function Home({
                   </div>
                 ))}
               </div>
+
+              <h3 className="font-semibold text-lg">Links</h3>
+
+              <div className="flex gap-3 flex-wrap">
+                {renderLink('website', project.website)}
+                {project.socialProfiles.map((profile, i) => (
+                  <div key={i}>
+                    {renderLink(profile.platform, profile.profileUrl)}
+                  </div>
+                ))}
+              </div>
             </div>
 
             {isMounted && (
               <div
-                className={cx('bg-[#F1F1EF] p-6 rounded-3xl', {
+                className={cx('', {
                   'group insufficient-balance': isInsufficientBalance,
                 })}
               >
                 <div className="flex justify-between">
-                  <h2 className="text-4xl font-semibold">
+                  <h2 className="font-bold text-4xl">
                     Donate on {chain?.nativeCurrency.symbol || 'ETH'}
                   </h2>
 
@@ -527,28 +525,28 @@ export default function Home({
                       value={selectedChainName}
                       onValueChange={handleSwitchChain}
                     >
-                      <SelectPrimitive.Trigger asChild aria-label="Food">
+                      <SelectPrimitive.Trigger asChild aria-label="Donate">
                         <Button variant="secondary">
                           <SelectPrimitive.Value />
                           <SelectPrimitive.Icon>
-                            <ChevronDownIcon className="w-6 h-6" />
+                            <ChevronDownIcon className="w-5 h-5" />
                           </SelectPrimitive.Icon>
                         </Button>
                       </SelectPrimitive.Trigger>
-                      <SelectPrimitive.Content className="z-20">
+                      <SelectPrimitive.Content className="!z-50">
                         <SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700">
                           <ChevronUpIcon />
                         </SelectPrimitive.ScrollUpButton>
-                        <SelectPrimitive.Viewport className="bg-white p-2 rounded-lg shadow-lg">
+                        <SelectPrimitive.Viewport className="bg-gray-200 p-2 rounded-lg shadow-lg">
                           <SelectPrimitive.Group>
                             {chains.map((chain) => (
                               <SelectPrimitive.Item
                                 key={chain.value}
                                 value={chain.value}
                                 className={cx(
-                                  'relative flex items-center px-8 py-2 rounded-md text-gray-700 font-medium focus:bg-gray-100',
+                                  'relative flex items-center text-sm px-8 py-3 rounded-md text-gray-900 focus:bg-gray-100 cursor-pointer',
                                   'radix-disabled:opacity-50',
-                                  'focus:outline-none select-none',
+                                  'focus:bg-gray-300 focus:outline-none select-none',
                                 )}
                               >
                                 <SelectPrimitive.ItemText>
@@ -572,27 +570,29 @@ export default function Home({
                 <div className="mt-2 w-fit">
                   {Boolean(selectedChainDonationAddress) && (
                     <>
-                      Your donation will go to
+                      <p className="text-sm text-gray-600">
+                        Your donation will go to
+                      </p>
                       <Link
                         href={`${blockExplorerUrl}/address/${selectedChainDonationAddress}`}
                         target="_blank"
                       >
-                        <b className="block text-xs">
+                        <p className="block font-semibold text-sm">
                           {selectedChainDonationAddress}
-                        </b>
+                        </p>
                       </Link>
                     </>
                   )}
                 </div>
 
-                <div className="max-w-md mx-auto">
+                <div className="max-w-full mx-auto">
                   <div>
-                    <div className="h-16 bg-[#E7E5E3] rounded-xl flex mt-7 relative">
+                    <div className="h-16 bg-whote rounded-xl flex mt-7 relative">
                       <input
                         className={cx(
-                          'flex-1 bg-transparent pl-4 py-3 font-bold border focus:outline-black rounded-xl',
+                          'flex-1 bg-transparent pl-4 py-3 font-bold border focus:outline-gray-300 rounded-xl',
                           {
-                            'border border-[#B33A41] focus:outline-[#B33A41] text-[#B33A41]':
+                            'border border-error-500 focus:outline-error-500 text-error-500':
                               (address && isInsufficientBalance) ||
                               (amount && !isValidNumber),
                           },
@@ -614,12 +614,12 @@ export default function Home({
                             >
                               <SelectPrimitive.Trigger
                                 asChild
-                                aria-label="Food"
+                                aria-label="Donate"
                               >
                                 <Button variant="secondary">
                                   <SelectPrimitive.Value />
                                   <SelectPrimitive.Icon>
-                                    <ChevronDownIcon className="w-6 h-6" />
+                                    <ChevronDownIcon className="w-5 h-5" />
                                   </SelectPrimitive.Icon>
                                 </Button>
                               </SelectPrimitive.Trigger>
@@ -627,16 +627,16 @@ export default function Home({
                                 <SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700">
                                   <ChevronUpIcon />
                                 </SelectPrimitive.ScrollUpButton>
-                                <SelectPrimitive.Viewport className="bg-white p-2 rounded-lg shadow-lg">
+                                <SelectPrimitive.Viewport className="bg-gray-200 p-2 rounded-lg shadow-lg ">
                                   <SelectPrimitive.Group>
                                     {tokens.map((token) => (
                                       <SelectPrimitive.Item
                                         key={token.value}
                                         value={token.value}
                                         className={cx(
-                                          'relative flex items-center px-8 py-2 rounded-md text-gray-700 font-medium focus:bg-gray-100',
+                                          'relative flex items-center text-sm px-8 py-3 rounded-md text-gray-900 focus:bg-gray-100 cursor-pointer ',
                                           'radix-disabled:opacity-50',
-                                          'focus:outline-none select-none',
+                                          'focus:bg-gray-300 focus:outline-none select-none',
                                         )}
                                       >
                                         <SelectPrimitive.ItemText>
@@ -658,7 +658,7 @@ export default function Home({
                         )}
                     </div>
                   </div>
-                  <div className="text-xs mt-3">
+                  <div className="text-xs mt-3 ">
                     {selectedTokenPrice && <span>= USD {amountInUSD} / </span>}
 
                     <span>
@@ -703,45 +703,48 @@ export default function Home({
               </div>
             )}
 
-            <div className="bg-[#F1F1EF] p-6 space-y-3 rounded-3xl">
-              <h2 className="text-2xl font-semibold">Other organisations</h2>
+            <div>
+              <h2 className="mt-14 font-bold text-4xl text-gray-900">
+                Support Other Projects
+              </h2>
 
-              <div className="grid md:grid-cols-3 xl:grid-cols-4 grid-cols-1 gap-3">
-                {projects.slice(0, 8).map((p) => (
-                  <ProjectCard
-                    key={p.id}
-                    id={p.id}
-                    logoImageUrl={p.logoImageUrl || ''}
-                    name={p.name}
-                    summary={p.summary}
-                  />
+              <div className="grid grid-cols-2 lg:grid-cols-2 mt-8 xl:grid-cols-3 gap-8">
+                {projects.map((p) => (
+                  <Link href={`/project/${p.id}`} key={p.id}>
+                    <ProjectCard
+                      key={p.id}
+                      project={{
+                        imageUrl: p.bannerImageUrl,
+                        name: p.name,
+                        description: p.summary,
+                        raised: '$10,000',
+                        numberOfUniqueDonors: 1203,
+                      }}
+                    ></ProjectCard>
+                  </Link>
                 ))}
               </div>
-
-              <Link className="block font-bold" href="/donate">
-                Browse More
-              </Link>
             </div>
           </main>
 
-          <aside className="col-span-12 lg:col-span-3 space-y-3">
-            <h2 className="text-2xl font-bold">Donation history</h2>
+          <aside className="col-span-12 lg:col-span-4 space-y-3">
+            <h2 className="text-3xl font-bold">Donation history</h2>
 
             {project.transactions.length > 0 ? (
               <>
                 {project.transactions.map((transaction) => (
                   <div
                     key={transaction.id}
-                    className="flex bg-[#F1F1EF] rounded-2xl p-2 space-x-3 items-center"
+                    className="flex bg-gray-200 rounded-lg p-3 space-x-3 items-center shadow-sm"
                   >
-                    <FaDonate size={24} />
+                    <BiDonateHeart className="w-5 h-5" />
 
                     <div className="flex flex-col overflow-hidden">
-                      <span className="block font-bold text-sm">
-                        {transaction.fromWallet}
+                      <span className=" text-gray-600 text-sm">
+                        from: {transaction.fromWallet}
                       </span>
 
-                      <span className="block mt-0.5">
+                      <span className="block font-bold text-gray-900 mt-0.5">
                         {transaction.amount} {transaction.token}
                       </span>
                     </div>
@@ -750,7 +753,7 @@ export default function Home({
               </>
             ) : (
               <div>
-                <span className="text-sm text-gray-500">No donations yet</span>
+                <span className="text-sm text-gray-600">No donations yet.</span>
               </div>
             )}
           </aside>

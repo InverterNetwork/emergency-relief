@@ -45,9 +45,23 @@ module.exports = {
           800: '#1D2939',
           900: '#101828',
         },
+        error: {
+          25: '#FFFBFA',
+          50: '#FEF3F2',
+          100: '#FEE4E2',
+          200: '#FECDCA',
+          300: '#FDA29B',
+          400: '#F97066',
+          500: '#F04438',
+          600: '#D92D20',
+          700: '#B42318',
+          800: '#912018',
+          900: '#7A271A',
+        },
       },
       backgroundImage: {
         hero: "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/hero-background.webp')",
+        pool: "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://i.ytimg.com/vi/bTrV5v7GLcQ/maxresdefault.jpg')",
       },
       screens: {
         hxl: '1400px',

@@ -102,8 +102,8 @@ export type Project = {
   description: string;
   summary: string;
   website: string;
-  logoImageUrl: string | null;
-  bannerImageUrl: string | null;
+  logoImageUrl: string;
+  bannerImageUrl: string;
   impactLocation: string | null;
   donationWallets: ProjectDonationWallet[];
   categories: ProjectCategory[];

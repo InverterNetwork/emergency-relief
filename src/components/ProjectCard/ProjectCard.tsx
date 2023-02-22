@@ -44,8 +44,8 @@ const ProjectCard = React.forwardRef<HTMLDivElement, Props>(
               alt="logo"
               src={{
                 src: project.imageUrl,
-                width: 100,
-                height: 100,
+                width: 1600,
+                height: 900,
               }}
             />
           </div>
@@ -57,7 +57,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, Props>(
             <div className="text-md text-gray-600 description">
               {project.description}
             </div>
-            <div className="text-xm text-gray-600">
+            {/* <div className="text-xm text-gray-600">
               <span className="font-semibold text-primary ">
                 {project.raised} raised
               </span>{' '}
@@ -66,7 +66,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, Props>(
                 {project.numberOfUniqueDonors}
               </span>{' '}
               unique donors
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
