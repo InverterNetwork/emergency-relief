@@ -10,3 +10,8 @@
   line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+
+html,
+body {
+  scroll-behavior: smooth;
+}

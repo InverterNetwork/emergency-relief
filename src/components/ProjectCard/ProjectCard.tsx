@@ -1,6 +1,7 @@
 import React from 'react';
 import { cva, VariantProps } from 'class-variance-authority';
 import cx from 'classnames';
+import Image from 'next/image';
 
 const projectCardVariants = cva('flex', {
   variants: {
@@ -36,28 +37,38 @@ const ProjectCard = React.forwardRef<HTMLDivElement, Props>(
 
     return (
       <div ref={ref} className={cx(butttonClasses, className)} {...props}>
-        <>
-          <div className="flex flex-col items-start w-full">
-            <div className="bg-[url('/ahbap.png')] bg-cover w-full aspect-video rounded-xl shadow-sm"></div>
+        <div className="flex flex-col items-start w-full">
+          <div className="relative aspect-video w-full rounded-xl shadow-sm">
+            <Image
+              className="absolute w-full h-full object-contain rounded-xl"
+              alt="logo"
+              src={{
+                src: project.imageUrl,
+                width: 100,
+                height: 100,
+              }}
+            />
+          </div>
 
-            <div className="flex flex-col text-left mt-3 gap-y-2">
-              <div className="font-bold text-md text-gray-900">
-                {project.name}
-              </div>
-              <div className="text-md text-gray-600">{project.description}</div>
-              <div className="text-xm text-gray-600">
-                <span className="font-semibold text-primary ">
-                  {project.raised} raised
-                </span>{' '}
-                with{' '}
-                <span className="font-semibold text-secondary">
-                  {project.numberOfUniqueDonors}
-                </span>{' '}
-                unique donors
-              </div>
+          <div className="flex flex-col text-left mt-3 gap-y-2">
+            <div className="font-bold text-md text-gray-900">
+              {project.name}
+            </div>
+            <div className="text-md text-gray-600 description">
+              {project.description}
+            </div>
+            <div className="text-xm text-gray-600">
+              <span className="font-semibold text-primary ">
+                {project.raised} raised
+              </span>{' '}
+              with{' '}
+              <span className="font-semibold text-secondary">
+                {project.numberOfUniqueDonors}
+              </span>{' '}
+              unique donors
             </div>
           </div>
-        </>
+        </div>
       </div>
     );
   },

@@ -52,22 +52,24 @@ const Header = ({ cachedAddress }: Props) => {
   };
 
   return (
-    <header className="container py-4 flex-col md:flex-row gap-y-8 flex justify-between items-center mx-auto">
-      <Link href={'/'}>
-        <div className="font-black text-gray-900 text-lg uppercase">
-          Emergency<span className="text-primary">Relief</span>
-        </div>
-      </Link>
+    <header className="absolute left-0 right-0 top-0 z-10 bg-gray-100 py-4 gap-y-8">
+      <div className="mx-auto container flex items-center justify-between">
+        <Link href={'/'}>
+          <div className="font-black text-gray-900 text-sm md:text-lg uppercase">
+            Emergency<span className="text-primary">Relief</span>
+          </div>
+        </Link>
 
-      {isMounted && (
-        <WalletConnectButton
-          address={isDisconnected ? address : address || cachedAddress}
-          isConnected={isConnected}
-          isLoading={isLoading}
-          onDisconnectWalletClick={handleDisconnectWalletClick}
-          onCopyAddressClick={handleCopyAddressClick}
-        />
-      )}
+        {isMounted && (
+          <WalletConnectButton
+            address={isDisconnected ? address : address || cachedAddress}
+            isConnected={isConnected}
+            isLoading={isLoading}
+            onDisconnectWalletClick={handleDisconnectWalletClick}
+            onCopyAddressClick={handleCopyAddressClick}
+          />
+        )}
+      </div>
     </header>
   );
 };

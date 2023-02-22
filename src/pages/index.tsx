@@ -9,6 +9,7 @@ import {
   BsFillCalendar2WeekFill,
   BsFillGearFill,
   BsPeopleFill,
+  BsChevronDown,
 } from 'react-icons/bs';
 import { FaBullseye, FaUserInjured } from 'react-icons/fa';
 import { GiTombstone } from 'react-icons/gi';
@@ -18,12 +19,16 @@ import Button from '@/components/Button/Button';
 import Card from '@/components/Card/Card';
 import Header from '@/components/Header/Header';
 import ProjectCard from '@/components/ProjectCard/ProjectCard';
+import Infographic from '@/components/Infographic/Infographic';
+import { Project } from '@/features/projects/entity/project.entity';
+import { getProjects } from '@/features/projects/project.service';
 
-export default function Home({
-  address: cachedAddress,
-}: {
+type Props = {
   address: string | null;
-}) {
+  projects: Project[];
+};
+
+export default function Home({ address: cachedAddress, projects }: Props) {
   return (
     <>
       <Head>
@@ -35,27 +40,41 @@ export default function Home({
 
       <Header cachedAddress={cachedAddress || undefined} />
 
-      <div className="flex flex-col justify-center items-center w-full bg-hero bg-cover aspect-video p-10">
+      <div className="relative flex flex-col justify-center items-center w-full bg-hero bg-cover h-screen p-10">
         <h1 className="font-black text-3xl md:text-5xl text-center lg:text-7xl leading-[150%] text-gray-50">
           Turkish Village Need Help
         </h1>
         <span className="mt-3 text-sm md:text-md text-lg leading-[150%] text-gray-300 text-center">
           Turkish people need help immediately. Please help Turkey!
         </span>
-        <Button
-          className="mt-6"
-          leftNode={<BiDonateHeart className="h-5 w-5" />}
-        >
-          Donate Now
-        </Button>
-        <Link href="#" className="mt-3 text-gray-300">
-          Learn more
+
+        <Link href="#donate" scroll={false}>
+          <Button
+            className="mt-6"
+            leftNode={<BiDonateHeart className="h-5 w-5" />}
+          >
+            Donate Now
+          </Button>
         </Link>
+
+        <div className="absolute bottom-0 mb-5 text-gray-300 animate-pulse select-none">
+          <Link
+            href="#info"
+            scroll={false}
+            className="flex flex-col items-center justify-center"
+          >
+            <span>Scroll down to learn more</span>
+
+            <BsChevronDown className="mt-2 h-5 w-5" />
+          </Link>
+        </div>
       </div>
 
-      <div className="container mx-auto py-10 bg-gray-100">
+      <div id="info" className="container mx-auto py-10 bg-gray-100">
+        <Infographic />
+
         <main className="space-y-5 mt-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 hxl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 hxl:grid-cols-4 gap-8">
             <Card
               heading={'projects'}
               information={'10'}
@@ -82,7 +101,7 @@ export default function Home({
             <h2 className="font-bold text-4xl text-gray-900">
               Earthquake Casualties
             </h2>
-            <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 hxl:grid-cols-4 gap-8">
+            <div className="mt-5 grid grid-cols-1 md:grid-cols-2 hxl:grid-cols-4 gap-8">
               <Card
                 heading={'deaths'}
                 information={'+41,000'}
@@ -106,41 +125,24 @@ export default function Home({
             </div>
           </div>
 
-          <div>
+          <div id="donate">
             <h2 className="font-bold text-4xl text-gray-900">
               Support Projects
             </h2>
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              <ProjectCard
-                project={{
-                  imageUrl: '',
-                  name: 'Ahbap Association',
-                  description:
-                    'Ahbap Association, founded by Haluk Levent in 2017, aims to provide all...',
-                  raised: '$10,000',
-                  numberOfUniqueDonors: 1203,
-                }}
-              ></ProjectCard>
-              <ProjectCard
-                project={{
-                  imageUrl: '',
-                  name: 'Ahbap Association',
-                  description:
-                    'Ahbap Association, founded by Haluk Levent in 2017, aims to provide all...',
-                  raised: '$10,000',
-                  numberOfUniqueDonors: 1203,
-                }}
-              ></ProjectCard>
-              <ProjectCard
-                project={{
-                  imageUrl: '',
-                  name: 'Ahbap Association',
-                  description:
-                    'Ahbap Association, founded by Haluk Levent in 2017, aims to provide all...',
-                  raised: '$10,000',
-                  numberOfUniqueDonors: 1203,
-                }}
-              ></ProjectCard>
+              {projects.map((project) => (
+                <Link href={`/project/${project.id}`} key={project.id}>
+                  <ProjectCard
+                    project={{
+                      imageUrl: project.logoImageUrl || '',
+                      name: project.name,
+                      description: project.summary,
+                      raised: '$10,000',
+                      numberOfUniqueDonors: 1203,
+                    }}
+                  />
+                </Link>
+              ))}
             </div>
           </div>
         </main>
@@ -149,19 +151,22 @@ export default function Home({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  address: string | null;
-}> = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  req,
+  res,
+}) => {
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=59',
   );
 
   const address = getCookie('address', { req, res });
+  const projects = await getProjects();
 
   return {
     props: {
       address: address?.toString() || null,
+      projects,
     },
   };
 };
