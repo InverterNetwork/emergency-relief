@@ -1,22 +1,20 @@
-import Link from 'next/link';
 import Head from 'next/head';
-
 import { getCookie } from 'cookies-next';
 import { GetServerSideProps } from 'next';
 
+import Header from '@/components/Header/Header';
+import Button from '@/components/Button/Button';
+import Link from 'next/link';
 import { BiDonateHeart } from 'react-icons/bi';
+import { GiTombstone } from 'react-icons/gi';
+import { FaBullseye, FaUserInjured } from 'react-icons/fa';
+import Card from '@/components/Card/Card';
 import {
   BsFillCalendar2WeekFill,
   BsFillGearFill,
   BsPeopleFill,
 } from 'react-icons/bs';
-import { FaBullseye, FaUserInjured } from 'react-icons/fa';
-import { GiTombstone } from 'react-icons/gi';
 import { RiCoinsFill, RiEarthquakeFill } from 'react-icons/ri';
-
-import Button from '@/components/Button/Button';
-import Card from '@/components/Card/Card';
-import Header from '@/components/Header/Header';
 import ProjectCard from '@/components/ProjectCard/ProjectCard';
 
 export default function Home({
@@ -35,11 +33,11 @@ export default function Home({
 
       <Header cachedAddress={cachedAddress || undefined} />
 
-      <div className="flex flex-col justify-center items-center w-full bg-hero bg-cover aspect-video p-10">
-        <h1 className="font-black text-3xl md:text-5xl text-center lg:text-7xl leading-[150%] text-gray-50">
+      <div className="flex flex-col justify-center items-center w-full bg-hero bg-cover aspect-video">
+        <h1 className="font-black text-7xl leading-[150%] text-gray-50">
           Turkish Village Need Help
         </h1>
-        <span className="mt-3 text-sm md:text-md text-lg leading-[150%] text-gray-300 text-center">
+        <span className="mt-3 text-lg leading-[150%] text-gray-300">
           Turkish people need help immediately. Please help Turkey!
         </span>
         <Button

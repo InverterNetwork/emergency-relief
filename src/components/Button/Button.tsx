@@ -3,17 +3,18 @@ import { cva, VariantProps } from 'class-variance-authority';
 import cx from 'classnames';
 
 const buttonVariants = cva(
-  'flex h-fit rounded-full gap-3 items-center justify-center leading-0 font-semibold',
+  'flex h-fit rounded-lg gap-2 items-center justify-center leading-0 font-semibold',
   {
     variants: {
       variant: {
-        primary: 'bg-[#262626] text-white',
+        primary:
+          'bg-primary hover:bg-primary-600 focus:bg-primary-700 text-gray-50',
         secondary: 'bg-[#E7E5E3] text-[#262626]',
         text: 'bg-transparent text-[#262626]',
         error: 'bg-[#B33A41] text-[#F1F1EF]',
       },
       size: {
-        default: 'text-base py-2 px-4',
+        default: 'text-sm py-3 px-4',
         small: 'text-sm py-1 px-3',
         large: 'text-lg py-3 px-5',
       },

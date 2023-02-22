@@ -52,24 +52,12 @@ const Header = ({ cachedAddress }: Props) => {
   };
 
   return (
-    <header className="flex-col md:flex-row gap-y-8 flex justify-between items-center">
-      <div className="p-3 flex space-x-5 bg-[#F1F1EF] rounded-full order-1 md:-order-1">
-        <Link href="/">
-          <Button variant={checkRoute('/') ? 'primary' : 'text'}>About</Button>
-        </Link>
-
-        <Link href="/donate">
-          <Button
-            variant={
-              checkRoute('/donate') || checkRoute('/project/[id]')
-                ? 'primary'
-                : 'text'
-            }
-          >
-            Donate
-          </Button>
-        </Link>
-      </div>
+    <header className="container py-4 flex-col md:flex-row gap-y-8 flex justify-between items-center mx-auto">
+      <Link href={'/'}>
+        <div className="font-black text-gray-900 text-lg uppercase">
+          Emergency<span className="text-primary">Relief</span>
+        </div>
+      </Link>
 
       {isMounted && (
         <WalletConnectButton

@@ -5,6 +5,7 @@ import DropdownMenu from '@/features/wallet/components/WalletConnectButton/Dropd
 import { showWalletConnectModalAtom } from '@/features/wallet/components/WalletConnectButton/store/modals.store';
 import Button from '@/components/Button/Button';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
+import { BsWalletFill } from 'react-icons/bs';
 
 type Props = {
   address?: string;
@@ -46,7 +47,10 @@ function WalletConnectButton({
           </Button>
         </DropdownMenu>
       ) : (
-        <Button onClick={() => setShowWalletConnectModal(true)}>
+        <Button
+          leftNode={<BsWalletFill className="h-5 w-5" color="#FFFFFF" />}
+          onClick={() => setShowWalletConnectModal(true)}
+        >
           Connect Wallet
         </Button>
       )}

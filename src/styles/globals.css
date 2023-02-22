@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  color: #212121;
-}
-
 .description {
   overflow: hidden;
   text-overflow: ellipsis;

@@ -66,14 +66,14 @@ const WalletConnectModal = () => {
                 'fixed z-50',
                 'w-[95vw] max-w-md rounded-lg p-4 md:w-full',
                 'top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]',
-                'bg-white',
+                'bg-gray-100',
                 'focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75',
               )}
             >
-              <DialogPrimitive.Title className="text-sm font-medium text-gray-900">
+              <DialogPrimitive.Title className="font-bold text-md text-gray-900">
                 Connect a wallet
               </DialogPrimitive.Title>
-              <DialogPrimitive.Description className="mt-2 text-sm font-normal text-gray-700">
+              <DialogPrimitive.Description className="mt-2 text-md text-gray-600">
                 Select a wallet to connect to your account.
               </DialogPrimitive.Description>
 
@@ -83,7 +83,7 @@ const WalletConnectModal = () => {
                     key={connector.name}
                     onClick={() => handleConnectorClick(connector)}
                     className={clsx(
-                      ' bg-[#262626] text-white font-medium py-2 px-4 rounded-full outline-none select-none w-full',
+                      'bg-primary rounded-lg gap-2 items-center justify-center leading-0 font-semibold w-full text-gray-50 text-sm py-3 px-4',
                     )}
                   >
                     {connector.name}
