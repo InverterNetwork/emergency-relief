@@ -44,12 +44,12 @@ export default function Home({ address: cachedAddress, projects }: Props) {
         <h1 className="font-black text-3xl md:text-5xl text-center lg:text-7xl leading-[150%] text-gray-50">
           Emergency Relief
         </h1>
-        <span className="mt-4 text-sm md:text-md leading-[150%] text-gray-300 text-center">
+        <p className="mt-4 text-sm md:text-md leading-[150%] text-gray-300 text-center w-full lg:w-[60%]">
           Crypto Community Unites to Support Earthquake Relief Efforts in
-          Turkiye. Join us in providing aid and support to those affected by the
-          devastating earthquakes in Turkiye through crypto donations and
-          innovative relief efforts.
-        </span>
+          Turkiye. <br></br>Join us in providing aid and support to those
+          affected by the devastating earthquakes in Turkiye through crypto
+          donations and innovative relief efforts.
+        </p>
 
         <Link href="#donate" scroll={false}>
           <Button
@@ -97,22 +97,26 @@ export default function Home({ address: cachedAddress, projects }: Props) {
           ></Card>
         </div>
 
+        <h2 className="font-bold text-4xl text-gray-900 mt-14">
+          Earthquake Infographic
+        </h2>
         <Infographic />
 
-        <main className="space-y-5 mt-8">
+        <main className="space-y-5 mt-14">
           <div>
             <h2 className="font-bold text-4xl text-gray-900">
               Earthquake Casualties
             </h2>
+
             <div className="mt-5 grid grid-cols-1 md:grid-cols-2 hxl:grid-cols-4 gap-8">
               <Card
                 heading={'deaths'}
-                information={'+41,000'}
+                information={'+43,556'}
                 icon={<GiTombstone className="h-5 w-5" />}
               ></Card>
               <Card
                 heading={'injuries'}
-                information={'+21,000'}
+                information={'+108,281'}
                 icon={<FaUserInjured className="h-5 w-5" />}
               ></Card>
               <Card
@@ -126,10 +130,14 @@ export default function Home({ address: cachedAddress, projects }: Props) {
                 icon={<FaBullseye className="h-5 w-5" />}
               ></Card>
             </div>
+
+            <span className="text-sm text-gray-600 italic flex mt-8 justify-center">
+              These numbers are updated on 23.02.2022
+            </span>
           </div>
 
           <div id="donate">
-            <h2 className="font-bold text-4xl text-gray-900 mt-8">
+            <h2 className="font-bold text-4xl text-gray-900 mt-14">
               Support Projects
             </h2>
             <Link

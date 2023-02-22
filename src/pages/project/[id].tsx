@@ -516,9 +516,7 @@ export default function Home({
                 })}
               >
                 <div className="flex justify-between">
-                  <h2 className="font-bold text-4xl">
-                    Donate on {chain?.nativeCurrency.symbol || 'ETH'}
-                  </h2>
+                  <h2 className="font-bold text-4xl">Donate Now</h2>
 
                   <div>
                     <SelectPrimitive.Root
@@ -570,7 +568,11 @@ export default function Home({
                 <div className="mt-2 w-fit">
                   {Boolean(selectedChainDonationAddress) && (
                     <>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-xs text-gray-600">
+                        We can only support EVM compatible chains of NGOs&apos;
+                        wallets listed on verified exchanges.
+                      </p>
+                      <p className="mt-3 text-sm text-gray-600">
                         Your donation will go to
                       </p>
                       <Link
@@ -705,7 +707,7 @@ export default function Home({
 
             <div>
               <h2 className="mt-14 font-bold text-4xl text-gray-900">
-                Support Other Projects
+                Support Other NGOs
               </h2>
 
               <div className="grid grid-cols-2 lg:grid-cols-2 mt-8 xl:grid-cols-3 gap-8">

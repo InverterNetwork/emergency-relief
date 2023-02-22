@@ -38,6 +38,7 @@
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.7.1",
+    "react-modal-image": "^2.6.0",
     "recoil": "^0.7.6",
     "typescript": "4.9.4",
     "usehooks-ts": "^2.9.1",
