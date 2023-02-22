@@ -463,7 +463,7 @@ export default function Home({
       <div className="container mx-auto py-10">
         <h1 className="font-bold text-5xl pt-10 mt-8">{project.name}</h1>
         <div className="grid grid-cols-12 gap-8 mt-5">
-          <main className="col-span-12 lg:col-span-8 space-y-5">
+          <main className="col-span-12 space-y-5">
             <div>
               <div className="relative flex justify-center aspect-video">
                 <Image
@@ -729,7 +729,7 @@ export default function Home({
             </div>
           </main>
 
-          <aside className="col-span-12 lg:col-span-4 space-y-3">
+          {/* <aside className="col-span-12 lg:col-span-4 space-y-3">
             <h2 className="text-3xl font-bold">Donation history</h2>
 
             {project.transactions.length > 0 ? (
@@ -758,7 +758,7 @@ export default function Home({
                 <span className="text-sm text-gray-600">No donations yet.</span>
               </div>
             )}
-          </aside>
+          </aside> */}
         </div>
       </div>
     </>
