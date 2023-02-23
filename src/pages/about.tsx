@@ -51,7 +51,7 @@ export default function About({ address: cachedAddress }: Props) {
           </p>
 
           <Image
-            className="w-full h-full mt-10"
+            className="w-full md:w-[50%] mx-auto h-full mt-10"
             src={{
               src: '/earthquake-area.png',
               width: 1600,
@@ -169,13 +169,13 @@ export default function About({ address: cachedAddress }: Props) {
             target={'_blank'}
             className={'w-full'}
           >
-            <Button className="mt-8 w-full">
+            <Button className="mt-8 mx-auto">
               Contribute to the Giveth Matching Pool
             </Button>
           </Link>
 
           <Image
-            className="w-full h-full mt-10"
+            className="w-full md:w-[50%] mx-auto h-full mt-10"
             src={{
               src: '/article-donations.png',
               width: 1600,
