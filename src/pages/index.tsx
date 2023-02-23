@@ -22,6 +22,7 @@ import ProjectCard from '@/components/ProjectCard/ProjectCard';
 import Infographic from '@/components/Infographic/Infographic';
 import { Project } from '@/features/projects/entity/project.entity';
 import { getProjects } from '@/features/projects/project.service';
+import dayjs from 'dayjs';
 
 type Props = {
   address: string | null;
@@ -84,25 +85,38 @@ export default function Home({ address: cachedAddress, projects }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-2 hxl:grid-cols-4 gap-8">
           <Card
             heading={'projects'}
-            information={'10'}
+            information={'13'}
             icon={<BsFillGearFill className="h-5 w-5" />}
           ></Card>
           <Card
             heading={'unique donors'}
-            information={'5,425'}
+            information={'+4,000'}
             icon={<BsPeopleFill className="h-5 w-5" />}
           ></Card>
           <Card
             heading={'raised'}
-            information={'$1M'}
+            information={'+$5.7M'}
             icon={<RiCoinsFill className="h-5 w-5" />}
           ></Card>
           <Card
             heading={'in'}
-            information={'16 days'}
+            information={dayjs().diff(dayjs('2023-02-07'), 'days').toString()}
             icon={<BsFillCalendar2WeekFill className="h-5 w-5" />}
           ></Card>
         </div>
+
+        <span className="text-sm text-gray-600 italic flex mt-8 justify-center text-center">
+          These numbers are updated on 23.02.2022. Most updated metrics can be
+          found on&nbsp;
+          <Link
+            className="text-secondary-600 font-semibold hover:text-secondary-900"
+            href={'https://dune.com/queries/1992852/3296008'}
+            target="_blank"
+          >
+            Dune
+          </Link>
+          .
+        </span>
 
         <h2 className="font-bold text-4xl text-gray-900 mt-14">
           Earthquake Infographic
@@ -138,8 +152,19 @@ export default function Home({ address: cachedAddress, projects }: Props) {
               ></Card>
             </div>
 
-            <span className="text-sm text-gray-600 italic flex mt-8 justify-center">
-              These numbers are updated on 23.02.2022
+            <span className="text-sm text-gray-600 italic flex mt-8 justify-center text-center">
+              These numbers are updated on 23.02.2022. Most updated metrics can
+              be found on&nbsp;
+              <Link
+                className="text-secondary-600 font-semibold hover:text-secondary-900"
+                href={
+                  'https://en.wikipedia.org/wiki/2023_Turkey%E2%80%93Syria_earthquake'
+                }
+                target="_blank"
+              >
+                Wikipedia
+              </Link>
+              .
             </span>
           </div>
 

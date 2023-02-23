@@ -28,6 +28,7 @@
     "cookies-next": "^2.1.1",
     "crypto-js": "^4.1.1",
     "currency.js": "^2.0.4",
+    "dayjs": "^1.11.7",
     "eslint-config-next": "13.1.2",
     "ethers": "^5.7.2",
     "framer-motion": "^8.5.0",
