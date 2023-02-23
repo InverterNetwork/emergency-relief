@@ -3,7 +3,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 import cx from 'classnames';
 
 const buttonVariants = cva(
-  'flex h-fit rounded-lg gap-2 items-center justify-center leading-0 font-semibold disabled:bg-gray-300',
+  'flex h-fit rounded-lg gap-2 items-center justify-center leading-0 font-semibold disabled:bg-gray-300 shadow-md',
   {
     variants: {
       variant: {
