@@ -51,19 +51,21 @@ export default function Home({ address: cachedAddress, projects }: Props) {
           donations and innovative relief efforts.
         </p>
 
-        <Link href="#donate" scroll={false}>
-          <Button
-            className="mt-6"
-            leftNode={<BiDonateHeart className="h-5 w-5" />}
-          >
-            Donate Now
-          </Button>
-        </Link>
-        <Link href="/about" scroll={false}>
-          <Button variant="secondary" className="mt-6">
-            About
-          </Button>
-        </Link>
+        <div className="flex flex-row space-x-4">
+          <Link href="#donate" scroll={false}>
+            <Button
+              className="mt-6"
+              leftNode={<BiDonateHeart className="h-5 w-5" />}
+            >
+              Donate Now
+            </Button>
+          </Link>
+          <Link href="/about" scroll={false}>
+            <Button variant="secondary" className="mt-6">
+              About Us
+            </Button>
+          </Link>
+        </div>
 
         <div className="absolute bottom-0 mb-5 text-gray-300 animate-pulse select-none">
           <Link

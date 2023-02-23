@@ -51,7 +51,7 @@ export default function About({ address: cachedAddress }: Props) {
           </p>
 
           <Image
-            className="w-full md:w-[50%] mx-auto h-full mt-10"
+            className="w-full md:w-[50%] h-full mt-10"
             src={{
               src: '/earthquake-area.png',
               width: 1600,
@@ -152,6 +152,15 @@ export default function About({ address: cachedAddress }: Props) {
                 funding round
               </li>
             </ul>
+            <Image
+              className="w-full md:w-[50%] h-full mt-10"
+              src={{
+                src: '/article-donations.png',
+                width: 1600,
+                height: 500,
+              }}
+              alt="Turkey earthquake"
+            ></Image>
             <br></br>
             Ultimately, the collected donations must still reach the largest
             number of organisations and survivors. Thus, an incredibly impactful
@@ -173,16 +182,6 @@ export default function About({ address: cachedAddress }: Props) {
               Contribute to the Giveth Matching Pool
             </Button>
           </Link>
-
-          <Image
-            className="w-full md:w-[50%] mx-auto h-full mt-10"
-            src={{
-              src: '/article-donations.png',
-              width: 1600,
-              height: 500,
-            }}
-            alt="Turkey earthquake"
-          ></Image>
 
           <h4 className="font-semibold text-md mt-8">References:</h4>
           <div className="text-sm flex flex-col space-y-1 italic text-gray-600">
