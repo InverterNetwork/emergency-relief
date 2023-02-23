@@ -105,7 +105,7 @@ export default function Home({ address: cachedAddress, projects }: Props) {
           ></Card>
         </div>
 
-        <span className="text-sm text-gray-600 italic flex mt-8 justify-center text-center">
+        <span className="text-sm text-gray-600 italic mt-8 text-center block">
           These numbers are updated on 23.02.2022. Most updated metrics can be
           found on&nbsp;
           <Link
@@ -152,7 +152,7 @@ export default function Home({ address: cachedAddress, projects }: Props) {
               ></Card>
             </div>
 
-            <span className="text-sm text-gray-600 italic flex mt-8 justify-center text-center">
+            <span className="text-sm text-gray-600 italic mt-8 text-center block">
               These numbers are updated on 23.02.2022. Most updated metrics can
               be found on&nbsp;
               <Link
