@@ -26,7 +26,7 @@ export default function About({ address: cachedAddress }: Props) {
           <Image
             className="w-full h-full mt-10"
             src={{
-              src: '/inverter.png',
+              src: '/inverter-banner.png',
               width: 1600,
               height: 500,
             }}
@@ -49,6 +49,17 @@ export default function About({ address: cachedAddress }: Props) {
             affected is larger than the whole of Hungary and 2.5 times the size
             of the Netherlands.
           </p>
+
+          <Image
+            className="w-full h-full mt-10"
+            src={{
+              src: '/earthquake-area.png',
+              width: 1600,
+              height: 500,
+            }}
+            alt="Turkey earthquake"
+          ></Image>
+
           <h2 className="font-bold text-2xl md:text-3xl mt-8">
             First actions on the ground to verify projects
           </h2>
@@ -162,6 +173,17 @@ export default function About({ address: cachedAddress }: Props) {
               Contribute to the Giveth Matching Pool
             </Button>
           </Link>
+
+          <Image
+            className="w-full h-full mt-10"
+            src={{
+              src: '/article-donations.png',
+              width: 1600,
+              height: 500,
+            }}
+            alt="Turkey earthquake"
+          ></Image>
+
           <h4 className="font-semibold text-md mt-8">Referenes:</h4>
           <div className="text-sm flex flex-col space-y-1 italic text-gray-600">
             <Link
@@ -180,49 +202,56 @@ export default function About({ address: cachedAddress }: Props) {
               }
               target={'_blank'}
             >
-              https://www.washingtonpost.com/world/2023/02/08/how-big-was-turkey-syria-earthquake/
+              https://www.washingtonpost.com/world/2023/02/08/how-big-was-turkey-syria-earthquake
             </Link>
             <Link
               className="hover:text-gray-900 focus:text-gray-900"
               href={'https://afetplatformu.org.tr/hakkimizda/'}
               target={'_blank'}
             >
-              https://afetplatformu.org.tr/hakkimizda/
+              https://afetplatformu.org.tr/hakkimizda
             </Link>
             <Link
               className="hover:text-gray-900 focus:text-gray-900"
               href={'https://afetplatformu.org.tr/uyeler/'}
               target={'_blank'}
             >
-              https://afetplatformu.org.tr/uyeler/
+              https://afetplatformu.org.tr/uyeler
             </Link>
             <Link
               className="hover:text-gray-900 focus:text-gray-900"
               href={'https://tr.tradingview.com/news/cointurk:dc943b02fd9e8:0/'}
               target={'_blank'}
             >
-              https://tr.tradingview.com/news/cointurk:dc943b02fd9e8:0/
+              https://tr.tradingview.com/news/cointurk:dc943b02fd9e8:0
             </Link>
             <Link
               className="hover:text-gray-900 focus:text-gray-900"
               href={'https://webrazzi.com/2023/02/07/murat-pak-nft-cause/'}
               target={'_blank'}
             >
-              https://webrazzi.com/2023/02/07/murat-pak-nft-cause/
+              https://webrazzi.com/2023/02/07/murat-pak-nft-cause
             </Link>
             <Link
               className="hover:text-gray-900 focus:text-gray-900"
               href={'https://webrazzi.com/2023/02/07/ahbap-kripto-para-bagis/'}
               target={'_blank'}
             >
-              https://webrazzi.com/2023/02/07/ahbap-kripto-para-bagis/
+              https://webrazzi.com/2023/02/07/ahbap-kripto-para-bagis
             </Link>
             <Link
               className="hover:text-gray-900 focus:text-gray-900"
-              href={'https://turkiyereliefdao.org/ https://ankarelief.org'}
+              href={'https://turkiyereliefdao.org/'}
               target={'_blank'}
             >
-              https://turkiyereliefdao.org/ https://ankarelief.org
+              https://turkiyereliefdao.org
+            </Link>
+            <Link
+              className="hover:text-gray-900 focus:text-gray-900"
+              href={'https://ankarelief.org'}
+              target={'_blank'}
+            >
+              https://ankarelief.org
             </Link>
           </div>
         </main>

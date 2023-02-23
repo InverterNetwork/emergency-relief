@@ -7,11 +7,7 @@ import {
   CheckIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  InstagramLogoIcon,
-  TwitterLogoIcon,
-  LinkedInLogoIcon,
 } from '@radix-ui/react-icons';
-import { FaDonate } from 'react-icons/fa';
 import cx from 'classnames';
 import currency from 'currency.js';
 import { useEffect, useMemo, useState } from 'react';
@@ -64,7 +60,6 @@ import { formatNumber } from '@/utils/number';
 import Badge from '@/components/Badge/Badge';
 import { headerCase } from 'change-case';
 import ProjectCard from '@/components/ProjectCard/ProjectCard';
-import { BiDonateHeart } from 'react-icons/bi';
 
 import {
   AiFillTwitterCircle,
@@ -463,13 +458,13 @@ export default function Home({
       <div className="container mx-auto py-10">
         <h1 className="font-bold text-5xl pt-10 mt-8">{project.name}</h1>
         <div className="grid grid-cols-12 gap-8 mt-5">
-          <main className="col-span-12 space-y-5">
+          <main className="col-span-12 lg:col-span-8 space-y-5">
             <div>
               <div className="relative flex justify-center aspect-video">
                 <Image
                   className="rounded-lg shadow-sm w-full h-full object-cover"
                   src={{
-                    src: project.bannerImageUrl || '/turkey.png',
+                    src: project.bannerImageUrl,
                     width: 1600,
                     height: 500,
                   }}
@@ -508,64 +503,18 @@ export default function Home({
                 ))}
               </div>
             </div>
+          </main>
 
+          <aside className="col-span-12 lg:col-span-4 space-y-3">
             {isMounted && (
               <div
                 className={cx('', {
                   'group insufficient-balance': isInsufficientBalance,
                 })}
               >
-                <div className="flex justify-between">
-                  <h2 className="font-bold text-4xl">Donate Now</h2>
+                <h2 className="font-bold text-4xl">Donate Now</h2>
 
-                  <div>
-                    <SelectPrimitive.Root
-                      value={selectedChainName}
-                      onValueChange={handleSwitchChain}
-                    >
-                      <SelectPrimitive.Trigger asChild aria-label="Donate">
-                        <Button variant="secondary">
-                          <SelectPrimitive.Value />
-                          <SelectPrimitive.Icon>
-                            <ChevronDownIcon className="w-5 h-5" />
-                          </SelectPrimitive.Icon>
-                        </Button>
-                      </SelectPrimitive.Trigger>
-                      <SelectPrimitive.Content className="!z-50">
-                        <SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700">
-                          <ChevronUpIcon />
-                        </SelectPrimitive.ScrollUpButton>
-                        <SelectPrimitive.Viewport className="bg-gray-200 p-2 rounded-lg shadow-lg">
-                          <SelectPrimitive.Group>
-                            {chains.map((chain) => (
-                              <SelectPrimitive.Item
-                                key={chain.value}
-                                value={chain.value}
-                                className={cx(
-                                  'relative flex items-center text-sm px-8 py-3 rounded-md text-gray-900 focus:bg-gray-100 cursor-pointer',
-                                  'radix-disabled:opacity-50',
-                                  'focus:bg-gray-300 focus:outline-none select-none',
-                                )}
-                              >
-                                <SelectPrimitive.ItemText>
-                                  {chain.label}
-                                </SelectPrimitive.ItemText>
-                                <SelectPrimitive.ItemIndicator className="absolute left-2 inline-flex items-center">
-                                  <CheckIcon />
-                                </SelectPrimitive.ItemIndicator>
-                              </SelectPrimitive.Item>
-                            ))}
-                          </SelectPrimitive.Group>
-                        </SelectPrimitive.Viewport>
-                        <SelectPrimitive.ScrollDownButton className="flex items-center justify-center text-gray-700">
-                          <ChevronDownIcon />
-                        </SelectPrimitive.ScrollDownButton>
-                      </SelectPrimitive.Content>
-                    </SelectPrimitive.Root>
-                  </div>
-                </div>
-
-                <div className="mt-2 w-fit">
+                <div className="mt-2 w-full break-all">
                   {Boolean(selectedChainDonationAddress) && (
                     <>
                       <p className="text-xs text-gray-600">
@@ -588,8 +537,54 @@ export default function Home({
                 </div>
 
                 <div className="max-w-full mx-auto">
+                  <div className="mt-5">
+                    <SelectPrimitive.Root
+                      value={selectedChainName}
+                      onValueChange={handleSwitchChain}
+                    >
+                      <SelectPrimitive.Trigger asChild aria-label="Donate">
+                        <Button variant="secondary" className="w-full">
+                          <SelectPrimitive.Value />
+                          <SelectPrimitive.Icon>
+                            <ChevronDownIcon className="w-5 h-5" />
+                          </SelectPrimitive.Icon>
+                        </Button>
+                      </SelectPrimitive.Trigger>
+                      <SelectPrimitive.Content className="!z-50">
+                        <SelectPrimitive.ScrollUpButton className="flex items-center justify-center text-gray-700">
+                          <ChevronUpIcon />
+                        </SelectPrimitive.ScrollUpButton>
+                        <SelectPrimitive.Viewport className="bg-gray-200 p-2 rounded-lg shadow-lg w-full">
+                          <SelectPrimitive.Group>
+                            {chains.map((chain) => (
+                              <SelectPrimitive.Item
+                                key={chain.value}
+                                value={chain.value}
+                                className={cx(
+                                  'relative flex items-center text-sm px-8 py-3 rounded-md text-gray-900 focus:bg-gray-100 cursor-pointer w-full',
+                                  'radix-disabled:opacity-50',
+                                  'focus:bg-gray-300 focus:outline-none select-none',
+                                )}
+                              >
+                                <SelectPrimitive.ItemText>
+                                  {chain.label}
+                                </SelectPrimitive.ItemText>
+                                <SelectPrimitive.ItemIndicator className="absolute left-2 inline-flex items-center">
+                                  <CheckIcon />
+                                </SelectPrimitive.ItemIndicator>
+                              </SelectPrimitive.Item>
+                            ))}
+                          </SelectPrimitive.Group>
+                        </SelectPrimitive.Viewport>
+                        <SelectPrimitive.ScrollDownButton className="flex items-center justify-center text-gray-700">
+                          <ChevronDownIcon />
+                        </SelectPrimitive.ScrollDownButton>
+                      </SelectPrimitive.Content>
+                    </SelectPrimitive.Root>
+                  </div>
+
                   <div>
-                    <div className="h-16 bg-whote rounded-xl flex mt-7 relative">
+                    <div className="h-16 bg-whote rounded-xl flex mt-5 relative">
                       <input
                         className={cx(
                           'flex-1 bg-transparent pl-4 py-3 font-bold border focus:outline-gray-300 rounded-xl',
@@ -704,30 +699,7 @@ export default function Home({
                 </div>
               </div>
             )}
-
-            <div>
-              <h2 className="mt-14 font-bold text-4xl text-gray-900">
-                Support Other NGOs
-              </h2>
-
-              <div className="grid grid-cols-2 lg:grid-cols-2 mt-8 xl:grid-cols-3 gap-8">
-                {projects.map((p) => (
-                  <Link href={`/project/${p.id}`} key={p.id}>
-                    <ProjectCard
-                      key={p.id}
-                      project={{
-                        imageUrl: p.bannerImageUrl,
-                        name: p.name,
-                        description: p.summary,
-                        raised: '$10,000',
-                        numberOfUniqueDonors: 1203,
-                      }}
-                    ></ProjectCard>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </main>
+          </aside>
 
           {/* <aside className="col-span-12 lg:col-span-4 space-y-3">
             <h2 className="text-3xl font-bold">Donation history</h2>
@@ -759,6 +731,29 @@ export default function Home({
               </div>
             )}
           </aside> */}
+        </div>
+
+        <div>
+          <h2 className="mt-14 lg:mt-8 font-bold text-4xl text-gray-900">
+            Support Other NGOs
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 mt-8">
+            {projects.map((p) => (
+              <Link href={`/project/${p.id}`} key={p.id}>
+                <ProjectCard
+                  key={p.id}
+                  project={{
+                    imageUrl: p.bannerImageUrl,
+                    name: p.name,
+                    description: p.summary,
+                    raised: '$10,000',
+                    numberOfUniqueDonors: 1203,
+                  }}
+                ></ProjectCard>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </>
