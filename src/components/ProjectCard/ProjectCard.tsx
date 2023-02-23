@@ -40,7 +40,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, Props>(
         <div className="flex flex-col items-start w-full">
           <div className="relative aspect-video w-full rounded-xl shadow-sm">
             <Image
-              className="absolute w-full h-full object-contain rounded-xl"
+              className="absolute w-full h-full object-contain object-center rounded-xl"
               alt="logo"
               src={{
                 src: project.imageUrl,

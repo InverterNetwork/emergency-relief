@@ -3,12 +3,12 @@ import { cva, VariantProps } from 'class-variance-authority';
 import cx from 'classnames';
 
 const buttonVariants = cva(
-  'flex h-fit rounded-lg gap-2 items-center justify-center leading-0 font-semibold disabled:bg-gray-300 shadow-md',
+  'flex h-fit rounded-lg gap-2 items-center justify-center leading-0 font-semibold disabled:bg-gray-300',
   {
     variants: {
       variant: {
         primary:
-          'bg-primary hover:bg-primary-600 focus:bg-primary-700 text-gray-50',
+          'bg-primary hover:bg-primary-600 focus:bg-primary-700 text-gray-50 shadow-sm',
         secondary:
           'bg-secondary hover:bg-secondary-600 focus:bg-secondary-700 text-gray-50',
         text: 'bg-transparent text-gray-900',

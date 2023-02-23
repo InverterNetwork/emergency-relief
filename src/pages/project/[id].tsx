@@ -32,7 +32,6 @@ import { parseEther, parseUnits } from 'ethers/lib/utils.js';
 import { toast } from 'react-hot-toast';
 import { isNumberString } from 'class-validator';
 
-// import ProjectCard from '@/features/projects/components/ProjectCard/ProjectCard';
 import {
   getProjectById,
   getProjects,

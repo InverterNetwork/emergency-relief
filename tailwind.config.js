@@ -61,13 +61,23 @@ module.exports = {
       },
       backgroundImage: {
         hero: "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/hero-background.webp')",
-        pool: "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://i.ytimg.com/vi/bTrV5v7GLcQ/maxresdefault.jpg')",
+        pool: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/matching-pool.jpeg')",
       },
       screens: {
         hxl: '1400px',
       },
       fontSize: {
         md: ['16px', '24px'],
+      },
+      boxShadow: {
+        xs: '0px 1px 2px rgba(16, 24, 40, 0.05)',
+        sm: '0px 1px 2px rgba(16, 24, 40, 0.06), 0px 1px 3px rgba(16, 24, 40, 0.1)',
+        md: '0px 2px 4px rgba(16, 24, 40, 0.06), 0px 4px 8px rgba(16, 24, 40, 0.1)',
+        lg: '0px 4px 6px rgba(16, 24, 40, 0.03), 0px 12px 16px rgba(16, 24, 40, 0.08)',
+        xl: '0px 8px 8px rgba(16, 24, 40, 0.03), 0px 20px 24px rgba(16, 24, 40, 0.08)',
+        xl: '0px 8px 8px rgba(16, 24, 40, 0.03), 0px 20px 24px rgba(16, 24, 40, 0.08)',
+        '2xl': '0px 24px 48px rgba(16, 24, 40, 0.18)',
+        '3xl': '0px 32px 64px rgba(16, 24, 40, 0.14)',
       },
       container: {
         padding: {

@@ -59,6 +59,11 @@ export default function Home({ address: cachedAddress, projects }: Props) {
             Donate Now
           </Button>
         </Link>
+        <Link href="/about" scroll={false}>
+          <Button variant="secondary" className="mt-6">
+            About
+          </Button>
+        </Link>
 
         <div className="absolute bottom-0 mb-5 text-gray-300 animate-pulse select-none">
           <Link
@@ -146,7 +151,7 @@ export default function Home({ address: cachedAddress, projects }: Props) {
               }
               target={'_blank'}
             >
-              <div className="mt-5 w-full h-[500px] bg-pool rounded-lg shadow-sm flex items-center justify-center">
+              <div className="mt-5 w-full aspect-[3] bg-pool bg-cover bg-center rounded-lg shadow-sm flex items-center justify-center">
                 <h1 className="text-5xl font-bold text-gray-50 text-center">
                   Matching Pool
                 </h1>

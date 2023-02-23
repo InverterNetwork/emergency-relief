@@ -184,7 +184,7 @@ export default function About({ address: cachedAddress }: Props) {
             alt="Turkey earthquake"
           ></Image>
 
-          <h4 className="font-semibold text-md mt-8">Referenes:</h4>
+          <h4 className="font-semibold text-md mt-8">References:</h4>
           <div className="text-sm flex flex-col space-y-1 italic text-gray-600">
             <Link
               className="hover:text-gray-900 focus:text-gray-900"
