@@ -155,24 +155,12 @@ export default function About({ address: cachedAddress }: Props) {
                 funding round
               </li>
             </ul>
-            <Image
-              className="w-full md:w-[50%] h-full mt-10"
-              src={{
-                src: '/article-donations.png',
-                width: 1600,
-                height: 500,
-              }}
-              alt="Turkey earthquake"
-            ></Image>
             <br></br>
             Ultimately, the collected donations must still reach the largest
             number of organisations and survivors. Thus, an incredibly impactful
             approach would be to contribute to the Giveth Matching Pool, where
-            the contributions are increased through a quadratic funding tool.
-            Even a small donation of just 10 Euros could buy 28 loaves of bread,
-            130 bottles of water, 460 diapers or 1 infrared heater. And if you
-            make that donation on Giveth, you get back at least 50% of your
-            contribution in GIV tokens.
+            the contributions are elevated through a matching pool that is
+            distributed through quadratic funding by Gitcoin.
           </p>
           <Link
             href={

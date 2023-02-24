@@ -183,7 +183,7 @@ export default function Home({ address: cachedAddress, projects }: Props) {
               }
               target={'_blank'}
             >
-              <div className="mt-5 w-full aspect-[2] sm:aspect-[3] bg-pool bg-cover bg-center rounded-lg shadow-sm flex items-center justify-center">
+              <div className="mt-5 w-full aspect-[2] sm:aspect-[3] bg-pool bg-cover bg-center rounded-xl shadow-sm flex items-center justify-center">
                 <h1 className="text-3xl sm:text-5xl font-bold text-gray-50 text-center">
                   Contribute to the Giveth Matching Pool
                 </h1>
