@@ -10,7 +10,7 @@ export default function About({ address: cachedAddress }: Props) {
   return (
     <>
       <Head>
-        <title>About Emergency Relief</title>
+        <title>404</title>
         <meta
           name="description"
           content="Innovative Relief Donations Platform"

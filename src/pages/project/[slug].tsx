@@ -69,7 +69,7 @@ import { BsPatchCheckFill } from 'react-icons/bs';
 
 type Props = {
   address: string | null;
-  project: Project;
+  project: Project | null;
   projects: Project[];
   prices: Market[];
 };
@@ -97,7 +97,7 @@ export default function Home({
 
   const defaultChain = useMemo(() => {
     if (!chain) {
-      return project.donationWallets[0].chain;
+      return project!.donationWallets[0].chain;
     }
 
     if (isNetworkSupported(chain.network)) {
@@ -112,12 +112,12 @@ export default function Home({
     }
 
     return 'Unsupported';
-  }, [chain, project.donationWallets]);
+  }, [chain, project!.donationWallets]);
 
   const [selectedChainName, setSelectedChainName] = useState(defaultChain);
 
   const chains = useMemo(() => {
-    const chains = project.donationWallets.map((address) => ({
+    const chains = project!.donationWallets.map((address) => ({
       value: address.chain,
       label: getNetworkByName(address.chain)?.name,
     }));
@@ -130,7 +130,7 @@ export default function Home({
     }
 
     return _.uniqBy(chains, (chain) => chain.value);
-  }, [chain, project.donationWallets]);
+  }, [chain, project!.donationWallets]);
 
   const selectedChain = getNetworkByName(selectedChainName);
 
@@ -162,7 +162,7 @@ export default function Home({
     return tokens;
   }, [chain, selectedChain?.tokens]);
 
-  const selectedChainDonationWallet = project.donationWallets.find(
+  const selectedChainDonationWallet = project!.donationWallets.find(
     (address) => address.chain === selectedChainName,
   );
 
@@ -215,7 +215,7 @@ export default function Home({
         amount: currency(amount).toString(),
         fromWallet: address as `0x${string}`,
         toWalletId: selectedChainDonationWallet.id,
-        projectId: project.id,
+        projectId: project!.id,
         transactionHash: data.hash as `0x${string}`,
         token: balance.symbol as string,
       });
@@ -314,7 +314,7 @@ export default function Home({
       amount: currency(amount).toString(),
       fromWallet: address as `0x${string}`,
       toWalletId: selectedChainDonationWallet.id,
-      projectId: project.id,
+      projectId: project!.id,
       transactionHash: tx.hash as `0x${string}`,
       token: balance.symbol,
     });
@@ -446,7 +446,7 @@ export default function Home({
   return (
     <>
       <Head>
-        <title>Emergency Relief - {project.name}</title>
+        <title>Emergency Relief - {project!.name}</title>
         <meta
           name="description"
           content="Innovative Relief Donations Platform"
@@ -458,7 +458,7 @@ export default function Home({
       <Header cachedAddress={cachedAddress || undefined} />
 
       <div className="container mx-auto py-10">
-        <h1 className="font-bold text-5xl pt-10 mt-8">{project.name}</h1>
+        <h1 className="font-bold text-5xl pt-10 mt-8">{project!.name}</h1>
         <div className="grid grid-cols-12 gap-8 mt-5">
           <main className="col-span-12 lg:col-span-8 space-y-5">
             <div>
@@ -466,7 +466,7 @@ export default function Home({
                 <Image
                   className="rounded-lg shadow-sm w-full h-full object-cover"
                   src={{
-                    src: project.bannerImageUrl,
+                    src: project!.bannerImageUrl,
                     width: 1600,
                     height: 500,
                   }}
@@ -478,13 +478,13 @@ export default function Home({
             <div className="py-8 space-y-3">
               <h2 className="font-bold text-4xl">About</h2>
               <p className="text-md text-gray-600 block">
-                {project.description}
+                {project!.description}
               </p>
 
               <h3 className="font-semibold text-lg">Credentials</h3>
 
               <div className="flex gap-3 flex-wrap">
-                {project.credentials.map((credential, i) => (
+                {project!.credentials.map((credential, i) => (
                   <div key={i}>
                     {renderCredential(
                       credential.statement,
@@ -497,8 +497,8 @@ export default function Home({
               <h3 className="font-semibold text-lg">Links</h3>
 
               <div className="flex gap-3 flex-wrap">
-                {renderLink('website', project.website)}
-                {project.socialProfiles.map((profile, i) => (
+                {renderLink('website', project!.website)}
+                {project!.socialProfiles.map((profile, i) => (
                   <div key={i}>
                     {renderLink(profile.platform, profile.profileUrl)}
                   </div>
@@ -742,9 +742,9 @@ export default function Home({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 mt-8">
             {projects
-              .filter((p) => p.id !== project.id)
+              .filter((p) => p.id !== project!.id)
               .map((p) => (
-                <Link href={`/project/${p.id}`} key={p.id}>
+                <Link href={`/project/${p.slug}`} key={p.id}>
                   <ProjectCard
                     key={p.id}
                     project={{
@@ -781,6 +781,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     getProjects(),
     getPriceOfTokens(),
   ]);
+
+  if (!project) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
