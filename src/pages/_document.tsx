@@ -18,7 +18,7 @@ export default function Document() {
           <span className="text-sm text-gray-600 mt-4">
             © 2023 Emergency Relief. All rights reserved.
           </span>
-          <Link href={'/'} className="block ">
+          <Link href={'/terms-and-conditions'} className="block ">
             <span className="font-semibold text-sm text-gray-600 mt-4 hover:text-gray-900">
               Terms and Conditions
             </span>
