@@ -5,6 +5,7 @@ import {
   identityNetworkName,
   isNetworkSupported,
 } from '@/features/wallet/chain.service';
+import { redirect } from 'next/dist/server/api-utils';
 
 const prepareProjectForDisplay = (project: Project) => {
   const clonedProject = { ...project };
@@ -43,8 +44,12 @@ const prepareProjectForDisplay = (project: Project) => {
   return clonedProject;
 };
 
-export const getProjectById = async (id: string) => {
-  const { data } = await http.get<Project>(urls.getProject(id));
+export const getProjectBySlug = async (slug: string) => {
+  const { data } = await http.get<Project>(urls.getProject(slug));
+
+  if (!data) {
+    return null;
+  }
 
   return prepareProjectForDisplay(data);
 };

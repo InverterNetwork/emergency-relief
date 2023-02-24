@@ -2,7 +2,7 @@ const urls = {
   getOrganization: (id: string) => `organizations/${id}`,
   getOrganizationProjects: (ownerId: string) => `projects/owner/${ownerId}`,
   getOrganizations: `organizations`,
-  getProject: (id: string) => `projects/${id}`,
+  getProject: (slug: string) => `projects/slug/${slug}`,
   getProjects: `projects`,
   createTransaction: `transactions`,
   getTransactionsByProjectId: (projectId: number) =>
