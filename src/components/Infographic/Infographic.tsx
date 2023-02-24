@@ -191,7 +191,7 @@ const Infographic = () => {
           alt="All 11 cities affected by earthquake"
           imageBackgroundColor={'transparent'}
         />
-        <span className="mt-3 text-sm text-gray-600 italic">
+        <span className="mt-3 text-sm text-gray-600 italic text-center">
           Click image to see all 11 cities affected by earthquake
         </span>
       </div>
