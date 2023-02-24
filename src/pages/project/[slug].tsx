@@ -33,7 +33,7 @@ import { toast } from 'react-hot-toast';
 import { isNumberString } from 'class-validator';
 
 import {
-  getProjectById,
+  getProjectBySlug,
   getProjects,
 } from '@/features/projects/project.service';
 import {
@@ -777,7 +777,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   const address = getCookie('address', { req, res });
 
   const [project, projects, prices] = await Promise.all([
-    getProjectById(query.id as string),
+    getProjectBySlug(query.slug as string),
     getProjects(),
     getPriceOfTokens(),
   ]);

@@ -43,8 +43,8 @@ const prepareProjectForDisplay = (project: Project) => {
   return clonedProject;
 };
 
-export const getProjectById = async (id: string) => {
-  const { data } = await http.get<Project>(urls.getProject(id));
+export const getProjectBySlug = async (slug: string) => {
+  const { data } = await http.get<Project>(urls.getProject(slug));
 
   return prepareProjectForDisplay(data);
 };

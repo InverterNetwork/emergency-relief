@@ -191,7 +191,7 @@ export default function Home({ address: cachedAddress, projects }: Props) {
             </Link>
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((project) => (
-                <Link href={`/project/${project.id}`} key={project.id}>
+                <Link href={`/project/${project.slug}`} key={project.id}>
                   <ProjectCard
                     project={{
                       imageUrl: project.logoImageUrl || '',

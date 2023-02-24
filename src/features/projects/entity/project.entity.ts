@@ -97,6 +97,7 @@ export type ProjectPartner = {
  */
 export type Project = {
   id: number;
+  slug: string;
   ownerId: number;
   name: string;
   description: string;
