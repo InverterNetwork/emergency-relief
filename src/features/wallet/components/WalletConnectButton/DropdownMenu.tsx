@@ -4,6 +4,8 @@ import cx from 'classnames';
 import React, { ReactNode, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
+import { IoIosExit, IoIosCopy } from 'react-icons/io';
+
 interface Props {
   children: ReactNode;
   onDisconnectWalletClick: () => void;
@@ -33,8 +35,8 @@ const DropdownMenu = ({
               align="end"
               sideOffset={5}
               className={cx(
-                'w-36 rounded-lg px-1.5 py-1 shadow-md z-10',
-                'bg-[#262626]',
+                'w-36 rounded-lg px-2 py-2 shadow-md z-10',
+                'bg-gray-200',
               )}
               initial={{ opacity: 0, translateY: 10, scale: 0.9 }}
               animate={{ opacity: 1, translateY: 0, scale: 1 }}
@@ -51,27 +53,27 @@ const DropdownMenu = ({
               <DropdownMenuPrimitive.Item
                 key="Copy Address"
                 className={cx(
-                  'flex cursor-default select-none items-center rounded-md px-2 py-2 text-xs outline-none',
-                  'text-gray-400 focus:bg-[#262626]',
+                  'flex select-none items-center rounded-md px-3 py-3 text-xs outline-none',
+                  'text-gray-900 focus:bg-gray-300 cursor-pointer',
                 )}
                 onSelect={onCopyAddressClick}
               >
-                <CopyIcon className="mr-2 h-3.5 w-3.5" color="#999999" />
+                <IoIosCopy className="mr-2 h-4 w-4" />
 
-                <span className="flex-grow text-white">Copy Address</span>
+                <span className="flex-grow ">Copy Address</span>
               </DropdownMenuPrimitive.Item>
 
               <DropdownMenuPrimitive.Item
                 key="Disconnect"
                 className={cx(
-                  'flex cursor-default select-none items-center rounded-md px-2 py-2 text-xs outline-none',
-                  'text-gray-400 focus:bg-[#262626]',
+                  'flex select-none items-center rounded-md px-3 py-3 text-xs outline-none',
+                  'text-gray-900 focus:bg-gray-300 cursor-pointer',
                 )}
                 onSelect={onDisconnectWalletClick}
               >
-                <ExitIcon className="mr-2 h-3.5 w-3.5" color="#999999" />
+                <IoIosExit className="mr-2 h-4 w-4" />
 
-                <span className="flex-grow text-white">Disconnect</span>
+                <span className="flex-grow">Disconnect</span>
               </DropdownMenuPrimitive.Item>
             </Content>
           )}

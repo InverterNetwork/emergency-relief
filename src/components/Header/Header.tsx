@@ -52,34 +52,24 @@ const Header = ({ cachedAddress }: Props) => {
   };
 
   return (
-    <header className="flex-col md:flex-row gap-y-8 flex justify-between items-center">
-      <div className="p-3 flex space-x-5 bg-[#F1F1EF] rounded-full order-1 md:-order-1">
-        <Link href="/">
-          <Button variant={checkRoute('/') ? 'primary' : 'text'}>About</Button>
+    <header className="absolute left-0 right-0 top-0 z-10 bg-gray-100 py-4 gap-y-8">
+      <div className="mx-auto container flex items-center justify-between">
+        <Link href={'/'}>
+          <div className="font-black text-gray-900 text-sm md:text-lg uppercase">
+            Emergency<span className="text-primary">Relief</span>
+          </div>
         </Link>
 
-        <Link href="/donate">
-          <Button
-            variant={
-              checkRoute('/donate') || checkRoute('/project/[id]')
-                ? 'primary'
-                : 'text'
-            }
-          >
-            Donate
-          </Button>
-        </Link>
+        {isMounted && (
+          <WalletConnectButton
+            address={isDisconnected ? address : address || cachedAddress}
+            isConnected={isConnected}
+            isLoading={isLoading}
+            onDisconnectWalletClick={handleDisconnectWalletClick}
+            onCopyAddressClick={handleCopyAddressClick}
+          />
+        )}
       </div>
-
-      {isMounted && (
-        <WalletConnectButton
-          address={isDisconnected ? address : address || cachedAddress}
-          isConnected={isConnected}
-          isLoading={isLoading}
-          onDisconnectWalletClick={handleDisconnectWalletClick}
-          onCopyAddressClick={handleCopyAddressClick}
-        />
-      )}
     </header>
   );
 };

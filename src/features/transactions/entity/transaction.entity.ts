@@ -1,3 +1,5 @@
+import { ProjectDonationWallet } from '@/features/projects/entity/project.entity';
+
 export type Transaction = {
   id: number;
   transactionHash: string;
@@ -6,6 +8,7 @@ export type Transaction = {
   projectId: number;
   token: string;
   amount: string;
+  toWallet: ProjectDonationWallet;
   status: TransactionStatus;
   createdAt: string;
   completedAt: string | null;
