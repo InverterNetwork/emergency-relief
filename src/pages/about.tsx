@@ -162,17 +162,20 @@ export default function About({ address: cachedAddress }: Props) {
             the contributions are elevated through a matching pool that is
             distributed through quadratic funding by Gitcoin.
           </p>
-          <Link
-            href={
-              'https://giveth.io/project/earthquake-relief-qf-matching-pool'
-            }
-            target={'_blank'}
-            className={'w-full'}
-          >
-            <Button className="mt-8 mx-auto">
-              Contribute to the Giveth Matching Pool
-            </Button>
-          </Link>
+
+          <div className="mt-8 mx-auto">
+            <Link
+              href={
+                'https://giveth.io/project/earthquake-relief-qf-matching-pool'
+              }
+              className={'flex w-max h-max'}
+              target={'_blank'}
+            >
+              <Button className="mx-auto">
+                Contribute to the Giveth Matching Pool
+              </Button>
+            </Link>
+          </div>
 
           <h4 className="font-semibold text-md mt-8">References:</h4>
           <div className="text-sm flex flex-col space-y-1 italic text-gray-600">
