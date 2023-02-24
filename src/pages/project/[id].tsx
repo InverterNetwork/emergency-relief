@@ -738,20 +738,22 @@ export default function Home({
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 mt-8">
-            {projects.map((p) => (
-              <Link href={`/project/${p.id}`} key={p.id}>
-                <ProjectCard
-                  key={p.id}
-                  project={{
-                    imageUrl: p.bannerImageUrl,
-                    name: p.name,
-                    description: p.summary,
-                    raised: '$10,000',
-                    numberOfUniqueDonors: 1203,
-                  }}
-                ></ProjectCard>
-              </Link>
-            ))}
+            {projects
+              .filter((p) => p.id !== project.id)
+              .map((p) => (
+                <Link href={`/project/${p.id}`} key={p.id}>
+                  <ProjectCard
+                    key={p.id}
+                    project={{
+                      imageUrl: p.bannerImageUrl,
+                      name: p.name,
+                      description: p.summary,
+                      raised: '$10,000',
+                      numberOfUniqueDonors: 1203,
+                    }}
+                  ></ProjectCard>
+                </Link>
+              ))}
           </div>
         </div>
       </div>

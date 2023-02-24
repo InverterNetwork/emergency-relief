@@ -14,7 +14,7 @@ const Infographic = () => {
 
   const [selectedCity, setSelectedCity] = useState<
     'Kahramanmaraş' | 'Gaziantep' | 'All' | null
-  >('All');
+  >(null);
 
   const handleClickOutside = () => {
     setSelectedCity(null);
@@ -183,7 +183,7 @@ const Infographic = () => {
         </svg>
       </div>
 
-      <div className="flex flex-col justify-center items-center mt-8 bg-gray-200 p-4 rounded-lg shadow-sm w-fit mx-auto">
+      <div className="flex flex-col justify-center items-center mt-8 bg-gray-200 p-4 rounded-lg shadow-sm w-fit mx-auto hover:bg-gray-300">
         <ModalImage
           small={'/cities-small.svg'}
           large={'/cities.svg'}

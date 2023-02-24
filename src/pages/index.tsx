@@ -100,7 +100,9 @@ export default function Home({ address: cachedAddress, projects }: Props) {
           ></Card>
           <Card
             heading={'in'}
-            information={dayjs().diff(dayjs('2023-02-07'), 'days').toString()}
+            information={`${dayjs()
+              .diff(dayjs('2023-02-07'), 'days')
+              .toString()} days`}
             icon={<BsFillCalendar2WeekFill className="h-5 w-5" />}
           ></Card>
         </div>
@@ -178,9 +180,9 @@ export default function Home({ address: cachedAddress, projects }: Props) {
               }
               target={'_blank'}
             >
-              <div className="mt-5 w-full aspect-[3] bg-pool bg-cover bg-center rounded-lg shadow-sm flex items-center justify-center">
-                <h1 className="text-5xl font-bold text-gray-50 text-center">
-                  Matching Pool
+              <div className="mt-5 w-full aspect-[2] sm:aspect-[3] bg-pool bg-cover bg-center rounded-lg shadow-sm flex items-center justify-center">
+                <h1 className="text-3xl sm:text-5xl font-bold text-gray-50 text-center">
+                  Contribute to the Giveth Matching Pool
                 </h1>
               </div>
             </Link>
